@@ -12,8 +12,6 @@ if(!isset($_SESSION["current_user_id"])) {
 }
 ?>
 <html>
-<br> <br> <br>
-
 
 	<!-- Banner Start -->
 	<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?>"> SGN </a> <br>

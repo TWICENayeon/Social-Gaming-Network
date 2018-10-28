@@ -13,20 +13,24 @@ if(!isset($_SESSION["current_user_id"])) {
 ?>
 <html>
 
-<!-- Banner Start --> 
-<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?> "> SGN </a> <br>
-<form action="search_results.php" method="get">
-	<input type="text" name = "search_term" placeholder="Search. . ." >
-	<input type="submit" value="Search">
-</form>
-<br>
-<a href="http://localhost/sgn/my_groups.php"> My Groups </a> <br>
-<a href="http://localhost/sgn/my_events.php"> My Events </a> <br>
-<br>
-<br>
-
-<a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br> <br>
-<!-- Banner End -->	
+<!-- Banner Start -->
+	<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?>"> SGN </a> <br>
+	<form action="search_results.php" method="get">
+		<input type="text" name = "search_term" placeholder="Search. . ." >
+		<input type="submit" value="Search">
+	</form>
+	<br>
+	<a href="http://localhost/sgn/my_groups.php"> My Groups </a> <br>
+	<a href="http://localhost/sgn/my_events.php"> My Events </a> <br>
+	<a href="http://localhost/sgn/my_friends.php"> My Friends </a> <br>
+	<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <br>
+	<a href="http://localhost/sgn/esports.php"> Esports </a> <br>
+	<br>
+	<br>
+	
+	<a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br>
+	
+	<!-- Banner End-->
 	
 	
 <!-- Print out all of the current user's events --> 	
@@ -41,7 +45,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		  echo "Failed to connect to MySQL: " . $conn->connect_error;
 		}
 		
-		$search_user_events =  "SELECT friend_id_2 AS friend_id, username AS friend_username
+		$search_user_friends =  "SELECT friend_id_2 AS friend_id, username AS friend_username
 								FROM sgn_database.friendships JOIN sgn_database.users
 								ON friendships.friend_id_2 = users.user_id
 								WHERE friend_id_1 = " . $_SESSION["current_user_id"] . "
@@ -52,7 +56,7 @@ if(!isset($_SESSION["current_user_id"])) {
 								WHERE friend_id_2 = " . $_SESSION["current_user_id"] . "
 								ORDER BY friend_id ASC;";
 		
-		$result = $conn->query($search_user_events);
+		$result = $conn->query($search_user_friends);
 		
 		
 		

@@ -32,7 +32,6 @@ if(!isset($_SESSION["current_user_id"])) {
 	
 	<!-- Banner End-->
 	
-	
 <!-- Print out all of the current user's events --> 	
 <?php echo "<u>" . $_SESSION["current_username"]?>'s Events </u>
 
@@ -51,8 +50,6 @@ if(!isset($_SESSION["current_user_id"])) {
 								WHERE attendee_id = " . $_SESSION["current_user_id"] . ";";
 		
 		$result = $conn->query($search_user_events);
-		
-		
 		
 		
 		$conn->close();

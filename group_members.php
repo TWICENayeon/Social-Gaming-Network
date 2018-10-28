@@ -15,7 +15,7 @@
 ?>
 
 
-
+	
 <html>
 	
 	<?php 
@@ -132,7 +132,7 @@
 		
 		
 		
-		
+		// TODO: Check the logic here - Takes the first tuple of all the members
 		if($result->num_rows > 0) {
 			echo "<br> <br>";
 			while($tuple = $result->fetch_assoc()) {

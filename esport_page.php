@@ -75,8 +75,7 @@
 	<a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br>
 	
 	<!-- Banner End-->
-	
-	<a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br> <br> <br>
+
 	
 	<?php 
 		echo "<u> " . $result["esport_name"] . "</u>'s esports page <br> <br> <br> <br>";
@@ -94,6 +93,7 @@
       new Twitch.Embed("twitch-embed", {
         width: 854,
         height: 480,
+		layout: "video",
         channel: <?php echo "\"" . $result["esport_stream_name"] . "\"" ?>
       });
     </script>

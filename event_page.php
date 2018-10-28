@@ -63,7 +63,7 @@
 		
 		if($result->num_rows == 1) {
 			$tuple = $result->fetch_assoc();
-			echo "<u>" . $tuple["event_name"] . "</u>'s event page <br>Date:" . $tuple["event_start_date"] . "<br>Time:" . $tuple["event_start_time"] . "<br> <br> <br> <br> <br>";
+			echo "<u>" . $tuple["event_name"] . "</u>'s event page <br>Date:	" . $tuple["event_start_date"] . "<br>Time:		" . $tuple["event_start_time"] . "<br> <br> <br> <br> <br>";
 		}
 		else {
 			echo "<br> <br> Resulting for current event's tuple returned a non-one tuple result.";
@@ -125,8 +125,55 @@
 			echo "\nReceived a result that has more than one tuple for search attendance query\n";
 			exit();
 	}
-	?>
+	$search_existing_tournament_query = "SELECT tournament_id
+										 FROM sgn_database.tournaments
+										 WHERE host_event_id =  " . $_SESSION["page_id"] . ";";
 	
+	$result = $conn->query($search_existing_tournament_query);
+	echo "<br><br><br><br><br>";
+	if($result->num_rows == 1) {
+		echo "<a href='http://localhost/sgn/tournament_page.php?page_id=" . $result->fetch_assoc()["tournament_id"] . "'> Tournament Link </a> <br>";
+	}
+	else if($result->num_rows == 0) {
+		// Get the role of the current member
+		$search_member_role_query = "SELECT membership_role
+									 FROM sgn_database.memberships
+									 WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = 
+									 (	SELECT hosting_group_id
+										FROM sgn_database.group_events
+										WHERE hosted_event_id = " . $_SESSION["page_id"] . ");";
+		echo $search_member_role_query;
+		
+		$result = $conn->query($search_member_role_query);
+		
+
+		
+		
+		
+		//echo "membership role: " . ($result->fetch_assoc())["membership_role"];
+		
+		// Option to create a new tournament if the user has the privilege to
+		if($result->num_rows == 1) {
+			$tuple = $result->fetch_assoc();
+			//echo $tuple["membership_role"] . "<br> <br> <br>";
+			if($tuple["membership_role"] > 0) {
+				echo "<br> <br> <br> <br> <br> <br>
+				Form to add a tournament to the event
+				<form action='new_tournament.php?event_id=" . $_SESSION["page_id"] .  "' method='post'>
+				Name: <input type='text' name = 'tournament_name'> <br>
+				Date: <input type='date' name = 'tournament_date'> <br>
+				Time: <input type='time' name = 'tournament_time'> <br>
+				<input type='submit' value='Submit'>
+				</form>  <br> <br> <br> <br> <br> <br>";
+			}
+		}
+		else {
+			echo "Got a non-one tuple return";
+		}
+	}
+	
+	?>
+	<br><br><br><br><br><br>
 	<!-- Form to add a new post to the wall -->
 	<form action="new_post.php" method="post">
 		<input type="text" name = "post_text" placeholder="Write a post. . ." >

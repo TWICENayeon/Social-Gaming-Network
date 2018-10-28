@@ -170,6 +170,8 @@
 				<form action='new_event.php' method='post'>
 					New Event's Name: <input type='text' name = 'new_event_name' > <br>
 					New Event's Description: <input type='text' name = 'new_event_description' > <br>
+					New Event's Date: <input type='date' name = 'new_event_date'> <br>
+					New Event's Time: <input type='time' name = 'new_event_time' step = '2'> <br>
 					Privacy: <input type='radio' name = 'new_event_privacy'> <br>
 					<input type='submit' value='Create'>
 				</form>";

@@ -36,7 +36,7 @@
 		}
 		
 		$new_event_query = "INSERT INTO sgn_database.events (event_name, event_description, event_start_date, event_start_time, event_privacy)
-							VALUES ('" . $_POST["new_event_name"] . "', '" . $_POST["new_event_description"] . "', CURRENT_DATE(), CURRENT_TIME(), " . $new_event_privacy . ");";
+							VALUES ('" . $_POST["new_event_name"] . "', '" . $_POST["new_event_description"] . "', '" . $_POST["new_event_date"] . "', '" . $_POST["new_event_time"] .  "', '" . $new_event_privacy . "');";
 
 
 		echo $new_event_query;
