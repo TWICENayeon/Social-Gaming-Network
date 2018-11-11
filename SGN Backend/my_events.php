@@ -33,7 +33,7 @@ if(!isset($_SESSION["current_user_id"])) {
 	<!-- Banner End-->
 	
 <!-- Print out all of the current user's events --> 	
-<?php echo "<u>" . $_SESSION["current_username"]?>'s Events </u>
+<?php echo "<u>" . $_SESSION["current_username"]?>'s Future Events </u>
 
  <?php
 	$conn = new mysqli("localhost", "root", "");
@@ -44,15 +44,37 @@ if(!isset($_SESSION["current_user_id"])) {
 		  echo "Failed to connect to MySQL: " . $conn->connect_error;
 		}
 		
-		$search_user_events =  "SELECT event_id, event_name
+		$search_future_user_events =  "SELECT event_id, event_name
 								FROM sgn_database.attendees JOIN sgn_database.events
 								ON attendees.attended_event_id = events.event_id
-								WHERE attendee_id = " . $_SESSION["current_user_id"] . ";";
+								WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date > CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time > CURRENT_TIME));";
 		
-		$result = $conn->query($search_user_events);
+		$result = $conn->query($search_future_user_events);
+		
+		// echo $search_future_user_events;
 		
 		
-		$conn->close();
+		
+		if($result->num_rows > 0) {
+			while($tuple = $result->fetch_assoc()) {
+				echo "<br> <br><a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
+			}
+		}
+		?>
+		<br><br><br><br><br>
+		<?php echo "<u>" . $_SESSION["current_username"]?>'s Past Events </u>
+		
+		<?php
+		
+		$search_future_user_events =  "SELECT event_id, event_name
+								FROM sgn_database.attendees JOIN sgn_database.events
+								ON attendees.attended_event_id = events.event_id
+								WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME));";
+		
+		$result = $conn->query($search_future_user_events);
+		
+		// echo $search_future_user_events;
+		
 		
 		
 		if($result->num_rows > 0) {
@@ -61,6 +83,7 @@ if(!isset($_SESSION["current_user_id"])) {
 			}
 		}
 		
+		$conn->close();
 ?>
 
 </html>

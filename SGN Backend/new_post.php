@@ -25,11 +25,20 @@
 		echo  "<br>";
 		echo "Connection successful";
 		echo  "<br>";
+		
+		$conn->select_db("sgn_database");
 
+		$parent_post_id_value = "0";
+		
+		if(isset($_POST["parent_post_id"])) {
+			$parent_post_id_value = $_POST["parent_post_id"];
+		}
+		
+		
 		
 		// TODO: Escape single quotes and other sensitive characters
-		$insert_new_post = "INSERT INTO sgn_database.posts (poster_id, wall_type, wall_owner_id, post_text, post_date, post_time, post_votes) 
-							VALUES (" . $_SESSION["current_user_id"] . ", " . $_SESSION["page_type"] . ", " . $_SESSION["page_id"] . ", '" . $_POST["post_text"] . "', CURRENT_DATE(), CURRENT_TIME(),0);";
+		$insert_new_post = "INSERT INTO sgn_database.posts (parent_post_id, poster_id, wall_type, wall_owner_id, post_text, post_date, post_time, post_votes) 
+							VALUES (" . $parent_post_id_value . ", " . $_SESSION["current_user_id"] . ", " . $_SESSION["page_type"] . ", " . $_SESSION["page_id"] . ", '" . $_POST["post_text"] . "', CURRENT_DATE(), CURRENT_TIME(),0);";
 
 
 		echo $insert_new_post;
@@ -40,22 +49,22 @@
 			exit();
 		}
 
-	// Redirect back to the page
-	if(ob_get_length()) {
-		ob_end_clean();
-	}
+		// Redirect back to the page
+		if(ob_get_length()) {
+			ob_end_clean();
+		}
 
-	// TODO: Redirect to the page that has been posted
-	// Not just to the user's page
-	if($_SESSION["page_type"] === 0) {
-		header("Location: http://localhost/sgn/user_page.php?page_id=" . $_SESSION["page_id"]);
-	}
-	else if($_SESSION["page_type"] === 1) {
-		header("Location: http://localhost/sgn/group_page.php?page_id=" . $_SESSION["page_id"]);
-	}
-	else if($_SESSION["page_type"] === 2) {
-		header("Location: http://localhost/sgn/event_page.php?page_id=" . $_SESSION["page_id"]);
-	}
+		// TODO: Redirect to the page that has been posted
+		// Not just to the user's page
+		if($_SESSION["page_type"] === 0) {
+			header("Location: http://localhost/sgn/user_page.php?page_id=" . $_SESSION["page_id"]);
+		}
+		else if($_SESSION["page_type"] === 1) {
+			header("Location: http://localhost/sgn/group_page.php?page_id=" . $_SESSION["page_id"]);
+		}
+		else if($_SESSION["page_type"] === 2) {
+			header("Location: http://localhost/sgn/event_page.php?page_id=" . $_SESSION["page_id"]);
+		}
 	}
 
 

@@ -97,14 +97,15 @@
 									 WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = " . $_SESSION["page_id"] . ";";
 		
 		
+		
 		$result = $conn->query($search_member_role_query);
 		
 		// echo $_SESSION["current_user_id"] . "<br> <br> <br>";
 		// echo $_GET["page_id"] . "<br> <br> <br>";
 		
+		$current_user_tuple = $result->fetch_assoc();
 		
 		if($result->num_rows == 1) {
-			$current_user_tuple = $result->fetch_assoc();
 			//echo $tuple["membership_role"] . "<br> <br> <br>";
 			echo "Welcome ";
 			if($current_user_tuple["membership_role"] == 2) {
@@ -127,6 +128,8 @@
 									ON member_id = user_id
 									WHERE of_group_id = " . $_SESSION["page_id"] . "
 									ORDER BY username ASC";
+									
+		// echo $group_members_query;
 		
 		$result = $conn->query($group_members_query);
 		

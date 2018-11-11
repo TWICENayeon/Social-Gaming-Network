@@ -48,12 +48,12 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_user_friends =  "SELECT friend_id_2 AS friend_id, username AS friend_username
 								FROM sgn_database.friendships JOIN sgn_database.users
 								ON friendships.friend_id_2 = users.user_id
-								WHERE friend_id_1 = " . $_SESSION["current_user_id"] . "
+								WHERE friend_id_1 = " . $_SESSION["current_user_id"] . " AND active = true
 								UNION
 								SELECT friend_id_1 AS friend_id, username
 								FROM sgn_database.friendships JOIN sgn_database.users
 								ON friendships.friend_id_1 = users.user_id
-								WHERE friend_id_2 = " . $_SESSION["current_user_id"] . "
+								WHERE friend_id_2 = " . $_SESSION["current_user_id"] . " AND active = true
 								ORDER BY friend_id ASC;";
 		
 		$result = $conn->query($search_user_friends);
@@ -61,12 +61,28 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		
 		
-		$conn->close();
+		// $conn->close();
 		
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
-				echo "<br> <br> <a href='http://localhost/sgn/user_page.php?page_id=" . $tuple["friend_id"] . "'>" . $tuple["friend_username"] . " </a> <br> <br>";
+				echo "<br> <br> <a href='http://localhost/sgn/user_page.php?page_id=" . $tuple["friend_id"] . "'>" . $tuple["friend_username"] . " </a> <br>";
+				// Should send chat_room_id instead
+				$search_friend_chat_id = "SELECT chat_id
+											FROM sgn_database.friendships
+											WHERE (friend_id_1 = " . $tuple["friend_id"] . " AND friend_id_2 = " . $_SESSION["current_user_id"] .  " ) OR  
+											(friend_id_1 = " . $_SESSION["current_user_id"] . " AND friend_id_2 = " . $tuple["friend_id"] . ");";
+											
+				// echo $search_friend_chat_id . "<br><br><br>";
+											
+											
+				$chat_room_id_value = (($conn->query($search_friend_chat_id))->fetch_assoc())["chat_id"];
+				
+				
+				echo "<form action='chat_room_page.php' method='post'>
+						  <input type='hidden' name='chat_room_id' value=" . $chat_room_id_value . ">
+						  <input type='submit' value='Chat'>
+				</form> <br><br><br>";
 			}
 		}
 		

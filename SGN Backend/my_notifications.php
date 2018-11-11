@@ -17,26 +17,26 @@ if(!isset($_SESSION["current_user_id"])) {
 	$conn = new mysqli("localhost", "root", "");
 
 		
-		if ($conn->connect_errno)
-		{
-		  echo "Failed to connect to MySQL: " . $conn->connect_error;
-		}
+	if ($conn->connect_errno)
+	{
+	  echo "Failed to connect to MySQL: " . $conn->connect_error;
+	}
 
 ?>
 
 <?php
-	// Resolve notification
-			if(!empty($_GET["notification_id"])) {
-				$resolve_notification_query = "UPDATE sgn_database.notifications
-												SET resolved_status = 1
-												WHERE notification_id = " . $_GET["notification_id"] . ";";
+	// // Resolve notification
+			// if(!empty($_GET["notification_id"])) {
+				// $resolve_notification_query = "UPDATE sgn_database.notifications
+												// SET resolved_status = 1
+												// WHERE notification_id = " . $_GET["notification_id"] . ";";
 			
-				if($conn->query($resolve_notification_query) === false) {
-					echo "Failed to resolve notification";
-				}
-			}
+				// if($conn->query($resolve_notification_query) === false) {
+					// echo "Failed to resolve notification";
+				// }
+			// }
 
-?>
+ ?>
 
 <html>
 
@@ -66,21 +66,19 @@ if(!isset($_SESSION["current_user_id"])) {
 
  <?php
 		
-		$search_user_notifications =  "SELECT message, resolved_status, date_created, time_created
+		$search_user_notifications =  "SELECT *
 									FROM sgn_database.notifications
-									WHERE recipient_id = " . $_SESSION["current_user_id"] . ";";
+									WHERE recipient_id = " . $_SESSION["current_user_id"] . "
+									ORDER BY notification_id DESC;";
 		
 		$result = $conn->query($search_user_notifications);
 		
 		
-		//echo $search_user_notifications;
-		
-		
-		$conn->close();
 		
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
+				echo "<br><br>";
 				if($tuple["resolved_status"] == 1) {
 						$isResolved = true;
 						echo "<p style='color:#C6C6C6'>";
@@ -88,11 +86,18 @@ if(!isset($_SESSION["current_user_id"])) {
 				else {
 					echo "<p>";
 				}
-				echo stripslashes($tuple["message"]) . " <br>" . $tuple["date_created"] . " " . $tuple["time_created"] . " <br> <br>";
-					echo "</p>";
+				echo stripslashes($tuple["message"]) . " <br>" . $tuple["date_created"] . " " . $tuple["time_created"] . " </p>";
+				if(!$tuple["resolved_status"]) {
+					echo "<form action='process_notification.php' method='post'>
+							<input type='hidden' name='notification_id' value = " . $tuple["notification_id"] . ">
+							<input type='submit' name = 'accept' value='Accept'>
+							<input type='submit' name='decline' value='Decline'>
+						</form>";
+				}
 			}
 		}
 		
+		$conn->close();
 ?>
 
 </html>

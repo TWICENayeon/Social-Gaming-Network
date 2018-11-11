@@ -52,15 +52,34 @@
 		
 		// Process sign up or leave of event
 		if(!empty($_POST["sign_up"])) {
-			$new_participance_query =  "INSERT INTO sgn_database.tournament_participants 
-										VALUES (" . $_SESSION["page_id"] . ", " . $_SESSION["current_user_id"] . ");";
+			$search_participance_query =  "SELECT participant_id
+										FROM sgn_database.tournament_participants
+										WHERE tournament_id = " . $_SESSION["page_id"] . " AND participant_id = ". $_SESSION["current_user_id"] .";";
 		
-			$result = $conn->query($new_participance_query);
-		
+			//echo $search_participance_query;
+			$result = $conn->query($search_participance_query);
+			if($result->num_rows == 0) {
+				$num_participants_query = "SELECT count(participant_id) AS partCount
+										FROM sgn_database.tournament_participants
+										WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+										
+				$result = $conn->query($num_participants_query);
+				
+				$num_parti = intval(($result->fetch_assoc())["partCount"]);
+				
+				$new_participance_query =  "INSERT INTO sgn_database.tournament_participants 
+											VALUES (" . $_SESSION["page_id"] . ", " . $_SESSION["current_user_id"] . "," . (string) ($num_parti + 1) . ");";
 			
-			if($result === false) {
-				echo("Failed to insert new attendence");
-				exit();
+				$result = $conn->query($new_participance_query);
+			
+				
+				if($result === false) {
+					echo("Failed to insert new attendence");
+					exit();
+				}
+			}
+			else {
+				echo "You have already signed up.";
 			}
 		}
 		else if(!empty($_POST["leave"])) {
@@ -78,7 +97,7 @@
 		
 		$search_tournament_event =  "SELECT tournament_name, tournament_date, tournament_time
 									FROM sgn_database.tournaments
-									WHERE tournament_id = " . $_GET["page_id"] .";";
+									WHERE tournament_id = " . $_SESSION["page_id"] .";";
 		
 		$result = ($conn->query($search_tournament_event));
 		
@@ -87,13 +106,14 @@
 			echo "<u>" . $tuple["tournament_name"] . "</u>'s tournament page <br>Date:	" . $tuple["tournament_date"] . "<br>Time:		" . $tuple["tournament_time"] . " <br> <br> <br>";
 		}
 		else {
-			echo "<br> <br> Resulting for current event's tuple returned a non-one tuple result.";
+			echo "Hello";
+			echo "<br> <br> Resulting for current event's tuple returned a non-one tuple result. <br><br>";
 			echo $search_tournament_event;
 			exit();
 		}
 		$search_participant_count_event =  "SELECT COUNT(tournament_id) as partCount
 											FROM sgn_database.tournament_participants
-											WHERE tournament_id = " . $_GET["page_id"] .";";
+											WHERE tournament_id = " . $_SESSION["page_id"] .";";
 											
 		$result = ($conn->query($search_participant_count_event));
 		
@@ -107,64 +127,275 @@
 			exit();
 		}
 		
-		$search_participants_name =  "SELECT username 
-											FROM sgn_database.tournament_participants INNER JOIN sgn_database.users
-											ON tournament_participants.participant_id = users.user_id 
-											WHERE tournament_id = " . $_GET["page_id"] .";";
+		// List out all the current participants
+		$search_participants_name =  "SELECT username, ordering
+										FROM sgn_database.tournament_participants INNER JOIN sgn_database.users
+										ON tournament_participants.participant_id = users.user_id 
+										WHERE tournament_id = " . $_SESSION["page_id"] .
+										" ORDER BY ordering ASC;";
 											
 		$result = ($conn->query($search_participants_name));
 		
-		if($result->num_rows > 0) {
-			echo "Current Participants: <br><br>";
+		echo "Current Participants: <br><br>";
+		if($result->num_rows >= 0) {
 			while($tuple = $result->fetch_assoc()) { 
-				echo $tuple["username"] . " <br>";
+				echo $tuple["ordering"] . ") " .$tuple["username"] . " <br>";
 			}
 		}
 		else {
-			echo "<br> <br> Result for participant count returned a non-one tuple result.";
+			echo "<br> <br> Result for participant count returned a non-one tuple result. Hello Hello Hello";
 			echo $search_tournament_event;
 			exit();
 		}
 		
 		echo "<br><br><br><br><br><br>";
 		
-		// Sign up or leave event button
-		$search_participance_query =  "SELECT participant_id
-										FROM sgn_database.tournament_participants
-										WHERE tournament_id = " . $_SESSION["page_id"] . " AND participant_id = ". $_SESSION["current_user_id"] .";";
 		
-		//echo $search_participance_query;
-		$result = $conn->query($search_participance_query);
+		$tournament_start_query = "SELECT started
+									FROM sgn_database.tournaments
+									WHERE started = 1 AND tournament_id = " . $_SESSION["page_id"] .";";
+									
+		$start_result = ($conn->query($tournament_start_query));
 		
-		if($result->num_rows == 0) {
-			echo "
+		$start_value = intval(($start_result->fetch_assoc())["started"]);
+		
+		if($start_value == 0) {
+		
+			// Sign up or leave event button
+			$search_participance_query =  "SELECT participant_id
+											FROM sgn_database.tournament_participants
+											WHERE tournament_id = " . $_SESSION["page_id"] . " AND participant_id = ". $_SESSION["current_user_id"] .";";
+			
+			//echo $search_participance_query;
+			$result = $conn->query($search_participance_query);
+			
+			if($result->num_rows == 0) {
+				echo "
+					<form action='tournament_page.php?page_id=" . $_SESSION["page_id"] . "' method='post'>
+						<input type='submit' name='sign_up' value='Sign Up'>
+					</form> ";
+				}
+			else if($result->num_rows == 1) {
+				echo "
 				<form action='tournament_page.php?page_id=" . $_SESSION["page_id"] . "' method='post'>
-					<input type='submit' name='sign_up' value='Sign Up'>
+					<input type='submit' name='leave' value='Leave'>
 				</form> ";
+				}
+			else {
+					echo "\nReceived a result that has more than one tuple for search attendance query\n";
+					exit();
 			}
-		else if($result->num_rows == 1) {
-			echo "
-			<form action='tournament_page.php?page_id=" . $_SESSION["page_id"] . "' method='post'>
-				<input type='submit' name='leave' value='Leave'>
-			</form> ";
-			}
-		else {
-				echo "\nReceived a result that has more than one tuple for search attendance query\n";
-				exit();
+		
 		}
 		
-	
-		// if($result->num_rows == 1) {
-			// $tuple = $result->fetch_assoc();
-			// echo "<u>" . $tuple["event_name"] . "</u>'s event page <br>Date:	" . $tuple["event_start_date"] . "<br>Time:		" . $tuple["event_start_time"] . "<br> <br> <br> <br> <br>";
-		// }
-		// else {
-			// echo "<br> <br> Resulting for current event's tuple returned a non-one tuple result.";
-			// exit();
-		// }
+		
+		
 		
 	?>
+	<br><br><br>
 	
-	Tournament page under construction
+	<br><br><br>
+	
+	<?php 
+		$tournament_start_query = "SELECT started
+									FROM sgn_database.tournaments
+									WHERE started = 1 AND tournament_id = " . $_SESSION["page_id"] .";";
+									
+		$start_result = ($conn->query($tournament_start_query));
+		
+		 
+		
+		if($start_result->num_rows == 0) {
+			$user_group_status_query = "SELECT membership_role
+											FROM sgn_database.memberships
+											WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = 
+											(	SELECT hosting_group_id
+											FROM sgn_database.group_events
+											WHERE hosted_event_id =
+											(SELECT host_event_id
+											FROM sgn_database.tournaments
+											WHERE tournament_id = " . $_SESSION["page_id"] . "))";
+											
+				// echo "user group status query: " . $user_group_status_query . "<br><br><br><br>";
+											
+			$status_value = intval((($conn->query($user_group_status_query))->fetch_assoc())["membership_role"]);
+			
+			if($status_value == 1) {
+				
+				
+				
+				echo "<form action='update_tournament_ordering.php' method='post'>
+						Name:
+					  <select name='user_id'>";
+				$counter = 0;
+				$search_participants_name =  "SELECT username, user_id, ordering
+											FROM sgn_database.tournament_participants INNER JOIN sgn_database.users
+											ON tournament_participants.participant_id = users.user_id 
+											WHERE tournament_id = " . $_SESSION["page_id"] ."
+											ORDER BY ordering ASC;";
+				
+				$result = ($conn->query($search_participants_name));
+				while($tuple = $result->fetch_assoc()) { 
+					echo "<option value='" . $tuple["user_id"] . "'>" . $tuple["username"] . "</option>";
+					$counter += 1;
+				}
+						
+						
+				echo "
+				  </select>
+				  Order:
+				  <select name='order'>";
+				$i = 1;
+				$result = ($conn->query($search_participants_name));
+				while($i <= $counter) { 
+					echo "<option value='" . $i . "'>" . $i . "</option>";
+					$i += 1;
+				}
+							
+				echo "
+				  </select>
+				  <br><br>
+				  <input type='submit'>
+				</form>";
+				echo "
+					<form action='tournament_start.php' method='post'>
+						<br>
+					  <input type='submit' value='Start Tournament'>
+					</form>";
+			}
+			else {
+				echo "The tournament has not started yet.";
+			}
+		}
+		else {
+			
+			echo "<br><br><br>Tournament started!! <br><br><br>";
+			// $round_counter = 1;
+			$num_participants_query = "SELECT count(participant_id) AS partCount
+										FROM sgn_database.tournament_participants
+										WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+										
+			$result = $conn->query($num_participants_query);
+			
+			$num_parti = intval(($result->fetch_assoc())["partCount"]);
+			for($round_counter = 1; $round_counter <= ceil(log($num_parti, 2)); ++$round_counter) {
+				
+				
+				$fetch_rounds_query = "SELECT relative_match_id, participant_1_id, participant_2_id
+										FROM sgn_database.tournament_matches
+										WHERE tournament_id = " . $_SESSION["page_id"] . " AND round = " . $round_counter . ";";
+										
+				// echo "fetch_rounds_query" . $fetch_rounds_query . "<br><br><br><br>";
+				// echo "<br><br><br> " . $fetch_rounds_query . "<br><br><br>";		
+				$result = ($conn->query($fetch_rounds_query));		
+				$num_tuples = $result->num_rows;
+				// echo "<br><br><br> num tuples" . $num_tuples . "<br><br><br>";
+				if ($num_tuples == 0) {
+					// ++$round_counter;
+					continue;
+				}
+				echo "---------------------------------------------<br>";
+				echo "ROUND " . $round_counter . "!<br><br>";
+				for($i = 0; $i < $num_tuples; ++$i) {
+					$tuple = $result->fetch_assoc();
+					// echo "round counter: " . $round_counter . "<br><br>";
+					// echo "relative_match_id: " . $tuple["relative_match_id"] . "<br><br>";
+					// echo "participant 1: " . $tuple["participant_1_id"] . "<br><br>";
+					// echo "participant 2: " . $tuple["participant_2_id"] . "<br><br>";
+					$parti_1_username = "";
+					if (isset($tuple["participant_1_id"])) {
+						$parti_1_username_query = "SELECT username
+													FROM sgn_database.users
+													WHERE user_id = " . $tuple["participant_1_id"] . ";";
+						$parti_1_username = (($conn->query($parti_1_username_query))->fetch_assoc())["username"];
+					}
+					else {
+					}
+					$parti_2_username = "";
+					if (isset($tuple["participant_2_id"])) {
+						$parti_2_username_query = "SELECT username
+												FROM sgn_database.users
+												WHERE user_id = " . $tuple["participant_2_id"] . ";";
+												
+						$parti_2_username = (($conn->query($parti_2_username_query))->fetch_assoc())["username"];
+					}
+					
+					echo "Match: <br>";
+					if(!empty($parti_1_username)) {
+						echo $parti_1_username;
+					}
+					else {
+						echo "__________";
+					}
+					echo "<br>";
+					if(!empty($parti_2_username)) {
+						echo $parti_2_username;
+					}
+					else {
+						echo "__________";
+					}
+					echo "<br><br>";
+					
+					$check_finished_query = "SELECT finished, participant_1_id, participant_2_id
+												FROM sgn_database.tournament_matches
+												WHERE tournament_id = " . $_SESSION["page_id"] . " AND relative_match_id = " . $tuple["relative_match_id"] . " AND round = " . $round_counter . ";";
+					
+					
+					// echo $check_finished_query;
+					$finished_result = ($conn->query($check_finished_query));
+					$finished_tuple = $finished_result->fetch_assoc();
+					$finished_status = $finished_tuple["finished"];
+					
+					if ($finished_status) {
+						// echo 
+						echo "Match Complete!<br><br><br>";
+					}
+					else if(!empty($finished_tuple["participant_1_id"] && !empty($finished_tuple["participant_2_id"]))){
+						echo"<form action='update_tournament_score.php' method='post'>
+							Winner:
+						  <select name='winner_id'>
+							<option value=" . $finished_tuple["participant_1_id"] . "> " . $parti_1_username . "</option>
+							<option value=" . $finished_tuple["participant_2_id"] . "> " . $parti_2_username . "</option>
+						  </select>
+						  <br>
+						  <input type='hidden' name='old_round_num' value=" . $round_counter . ">
+						  <input type='hidden' name='old_match_num' value=" . $tuple["relative_match_id"] . ">
+						  <input type='submit'>
+						</form> <br><br><br>";
+					}
+				}
+			}
+			
+			$get_winner_query = "SELECT participant_1_id
+									FROM sgn_database.tournament_matches
+									WHERE tournament_id = " . $_SESSION["page_id"] . " AND relative_match_id = 0 AND round = 0;";
+									
+			
+			
+			$result = $conn->query($get_winner_query);
+			
+			if ($result->num_rows == 1) {
+				$winner_id = intval(($result)->fetch_assoc()["participant_1_id"]);
+				
+				// echo $winner_id;
+				
+				// echo "<br><br><br>";
+				
+				$winner_username_query = "SELECT username
+											FROM sgn_database.users
+											WHERE user_id = " . $winner_id . ";";
+				// echo $get_winner_query;
+				// echo "<br><br><br>";
+				// echo $winner_username_query;
+											
+				$winner_username = (($conn->query($winner_username_query))->fetch_assoc())["username"];
+				
+				
+				echo "The winner of this tournament is >>>> " . $winner_username . " <<<< !!!";
+			}
+			
+			
+		}
+	?>
 
 </html>
