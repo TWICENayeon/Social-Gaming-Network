@@ -14,8 +14,43 @@
 	$_SESSION["page_id"] = $_GET["page_id"];
 	$_SESSION["page_type"] = 4 // tournament type of page;
 ?>
+<html>
 
-<!-- Banner Start -->
+
+
+<?php
+	
+		// Connect to the database
+		$conn = new mysqli("localhost", "root", "");
+
+		if ($conn->connect_errno)
+		{
+		  echo "Failed to connect to MySQL: " . $conn->connect_error;
+		}
+		
+		$conn->select_db("sgn_database");
+?>
+
+
+<?php
+// Get number of unresolved notifications
+	$fetch_num_unresolved_notifications_query = "SELECT COUNT(resolved_status) AS num_unresolved
+												FROM notifications
+												WHERE recipient_id = " . $_SESSION["current_user_id"] . " and resolved_status = false;";
+	
+	// echo $fetch_num_unresolved_notifications_query;
+												
+	$num_unresolved_string = (($conn->query($fetch_num_unresolved_notifications_query))->fetch_assoc())["num_unresolved"];
+
+
+
+?>
+
+
+	
+	
+
+	<!-- Banner Start -->
 	<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?>"> SGN </a> <br>
 	<form action="search_results.php" method="get">
 		<input type="text" name = "search_term" placeholder="Search. . ." >
@@ -25,7 +60,9 @@
 	<a href="http://localhost/sgn/my_groups.php"> My Groups </a> <br>
 	<a href="http://localhost/sgn/my_events.php"> My Events </a> <br>
 	<a href="http://localhost/sgn/my_friends.php"> My Friends </a> <br>
+	<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <?php if(intval($num_unresolved_string) > 0) {echo "[" . $num_unresolved_string . "]";}?> <br>
 	<a href="http://localhost/sgn/esports.php"> Esports </a> <br>
+	<a href="http://localhost/sgn/settings.php"> User settings </a> <br>
 	<br>
 	<br>
 	
@@ -35,19 +72,12 @@
 
 
 
-<html>
+
 	
 	<?php 
 	
 
 		//echo $_SESSION["page_id"] .  "<br><br><br><br><br><br>";
-		// Connect to the database
-		$conn = new mysqli("localhost", "root", "");
-
-		if ($conn->connect_errno)
-		{
-		  echo "Failed to connect to MySQL: " . $conn->connect_error;
-		}
 		
 		
 		// Process sign up or leave of event
@@ -193,6 +223,57 @@
 		
 	?>
 	<br><br><br>
+	
+	<?php
+	// Process new stream submission 
+	if(isset($_POST["new_stream_name"])) {
+		$update_tournament_stream = "UPDATE tournaments
+										SET twitch_stream = '" . $_POST["new_stream_name"] . "'
+										WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+		
+		echo $update_tournament_stream . "<br><br><br>";
+										
+		$conn->query($update_tournament_stream);
+		
+	}
+	
+	
+	
+	$has_stream_query = "SELECT twitch_stream
+							FROM tournaments
+							WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+							
+	$tournament_stream_name = (($conn->query($has_stream_query))->fetch_assoc())["twitch_stream"];
+	
+	// Form to submit new stream name
+	echo "
+		<form action='tournament_page.php?page_id=" . $_SESSION["page_id"] . "' method='post'>
+			Enter Stream Name: <input type='text' name='new_stream_name' value=''>
+			<input type='submit' name='submit'>
+		</form> ";
+		
+	echo $has_stream_query;
+	echo $tournament_stream_name;
+	
+	if(!empty($tournament_stream_name)) {
+		//twitch stream 
+		echo " 
+				<div id='twitch-embed-one'></div>
+
+				<script src='https://embed.twitch.tv/embed/v1.js'></script>
+
+				<script type='text/javascript'>
+				  new Twitch.Embed('twitch-embed-one', {
+					width: 854,
+					height: 480,
+					layout: 'video',
+					channel: \"" . $tournament_stream_name . "\"
+				  });
+				</script>";
+		
+	}
+	 
+	?>
 	
 	<br><br><br>
 	

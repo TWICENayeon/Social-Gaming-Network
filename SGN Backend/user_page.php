@@ -30,6 +30,8 @@
 		  echo "Failed to connect to MySQL: " . $conn->connect_error;
 		}
 		
+		$conn->select_db("sgn_database");
+		
 		// Fetch the posts on the current wall
 		$search_current_username =  "SELECT username
 									FROM sgn_database.users
@@ -38,6 +40,25 @@
 		$result = ($conn->query($search_current_username)->fetch_assoc());
 		
 	?>
+	<?php
+// Get number of unresolved notifications
+	$fetch_num_unresolved_notifications_query = "SELECT COUNT(resolved_status) AS num_unresolved
+												FROM notifications
+												WHERE recipient_id = " . $_SESSION["current_user_id"] . " and resolved_status = false;";
+	
+	// echo $fetch_num_unresolved_notifications_query;
+												
+	$num_unresolved_string = (($conn->query($fetch_num_unresolved_notifications_query))->fetch_assoc())["num_unresolved"];
+
+
+
+?>
+
+
+
+
+	
+	
 
 	<!-- Banner Start -->
 	<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?>"> SGN </a> <br>
@@ -49,7 +70,7 @@
 	<a href="http://localhost/sgn/my_groups.php"> My Groups </a> <br>
 	<a href="http://localhost/sgn/my_events.php"> My Events </a> <br>
 	<a href="http://localhost/sgn/my_friends.php"> My Friends </a> <br>
-	<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <br>
+	<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <?php if(intval($num_unresolved_string) > 0) {echo "[" . $num_unresolved_string . "]";}?> <br>
 	<a href="http://localhost/sgn/esports.php"> Esports </a> <br>
 	<a href="http://localhost/sgn/settings.php"> User settings </a> <br>
 	<br>

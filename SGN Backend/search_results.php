@@ -13,24 +13,56 @@ if(!isset($_SESSION["current_user_id"])) {
 ?>
 <html>
 
-	<!-- Banner Start -->
-	<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?>"> SGN </a> <br>
-	<form action="search_results.php" method="get">
-		<input type="text" name = "search_term" placeholder="Search. . ." >
-		<input type="submit" value="Search">
-	</form>
-	<br>
-	<a href="http://localhost/sgn/my_groups.php"> My Groups </a> <br>
-	<a href="http://localhost/sgn/my_events.php"> My Events </a> <br>
-	<a href="http://localhost/sgn/my_friends.php"> My Friends </a> <br>
-	<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <br>
-	<a href="http://localhost/sgn/esports.php"> Esports </a> <br>
-	<br>
-	<br>
+<?php
 	
-	<a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br>
+		// Connect to the database
+		$conn = new mysqli("localhost", "root", "");
+
+		if ($conn->connect_errno)
+		{
+		  echo "Failed to connect to MySQL: " . $conn->connect_error;
+		}
+		
+		$conn->select_db("sgn_database");
+?>
+
+<?php
+// Get number of unresolved notifications
+	$fetch_num_unresolved_notifications_query = "SELECT COUNT(resolved_status) AS num_unresolved
+												FROM notifications
+												WHERE recipient_id = " . $_SESSION["current_user_id"] . " and resolved_status = false;";
 	
-	<!-- Banner End-->
+	// echo $fetch_num_unresolved_notifications_query;
+												
+	$num_unresolved_string = (($conn->query($fetch_num_unresolved_notifications_query))->fetch_assoc())["num_unresolved"];
+
+
+
+?>
+
+
+
+
+	
+	
+
+<!-- Banner Start -->
+<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?>"> SGN </a> <br>
+<form action="search_results.php" method="get">
+	<input type="text" name = "search_term" placeholder="Search. . ." >
+	<input type="submit" value="Search">
+</form>
+<br>
+<a href="http://localhost/sgn/my_groups.php"> My Groups </a> <br>
+<a href="http://localhost/sgn/my_events.php"> My Events </a> <br>
+<a href="http://localhost/sgn/my_friends.php"> My Friends </a> <br>
+<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <?php if(intval($num_unresolved_string) > 0) {echo "[" . $num_unresolved_string . "]";}?> <br>
+<a href="http://localhost/sgn/esports.php"> Esports </a> <br>
+<a href="http://localhost/sgn/settings.php"> User settings </a> <br>
+<br>
+<br>
+
+<a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br>
 
 <p>
 
@@ -38,24 +70,13 @@ if(!isset($_SESSION["current_user_id"])) {
 <!-- Results within users -->
 <u>Users</u>
  <?php
-	$conn = new mysqli("localhost", "root", "");
-
 		
-		if ($conn->connect_errno)
-		{
-		  echo "Failed to connect to MySQL: " . $conn->connect_error;
-		}
 		
 		$search_users =  "SELECT username, user_id
 						  FROM sgn_database.users
 						  WHERE username LIKE '%" . $_GET["search_term"]. "%';";
 		
 		$result = $conn->query($search_users);
-		
-		
-		
-		
-		$conn->close();
 		
 		
 		if($result->num_rows > 0) {
@@ -72,13 +93,6 @@ if(!isset($_SESSION["current_user_id"])) {
 <!-- Results in Groups -->
 <u>Groups</u>
 <?php
-	$conn = new mysqli("localhost", "root", "");
-
-		
-		if ($conn->connect_errno)
-		{
-		  echo "Failed to connect to MySQL: " . $conn->connect_error;
-		}
 		
 		$search_groups =  "SELECT group_id, group_name
 						  FROM sgn_database.groups

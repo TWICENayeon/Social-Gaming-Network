@@ -31,7 +31,7 @@
 	
 
 ?>
-
+<html>
 
 <?php
 // Get number of unresolved notifications
@@ -49,7 +49,7 @@
 
 
 
-<html>
+
 	
 	
 
@@ -66,7 +66,7 @@
 	<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <?php if(intval($num_unresolved_string) > 0) {echo "[" . $num_unresolved_string . "]";}?> <br>
 	<a href="http://localhost/sgn/esports.php"> Esports </a> <br>
 	<a href="http://localhost/sgn/settings.php"> User settings </a> <br>
-	<a href="http://localhost/sgn/settings_event.php"> Event Settings </a> <br>
+	
 	<br>
 	<br>
 	
