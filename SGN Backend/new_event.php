@@ -84,7 +84,8 @@
 
 	// TODO: Redirect to the page that has been posted
 	// Not just to the user's page
-	header("Location: http://localhost/sgn/event_page.php?page_id=" . $new_event_id);
+	$_SESSION["page_id"] = $new_event_id;
+	header("Location: http://localhost/sgn/event_page.php");
 	}
 	
 

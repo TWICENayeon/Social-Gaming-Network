@@ -11,9 +11,19 @@
 		exit();
 	}
 	
-	$_SESSION["page_id"] = $_GET["page_id"];
+	if(isset($_GET["page_id"])) {
+		$_SESSION["page_id"] = $_GET["page_id"];
+	}
+	
+	if(isset($_POST["page_id"])) {
+		$_SESSION["page_id"] = $_POST["page_id"];
+	}
 	$_SESSION["page_type"] = 3;
 ?>
+
+<head>
+  <link rel="stylesheet" href="post_link.css">
+</head>
 
 
 <?php
@@ -132,7 +142,7 @@
 		// Get esports data
 		$fetch_esports_data =  "SELECT esport_name, esport_stream_name
 									FROM sgn_database.esports
-									WHERE esport_id = " . $_GET["page_id"] .";";
+									WHERE esport_id = " . $_SESSION["page_id"] .";";
 		
 		$result = ($conn->query($fetch_esports_data)->fetch_assoc());
 		
@@ -244,8 +254,10 @@
 		$has_privilege = (($conn->query($get_post_article_privilege_query))->fetch_assoc())["posts_articles"];
 	
 		if($has_privilege) {
-			echo "<form action = '' method = 'POST' enctype = 'multipart/form-data'>
-				 Upload Article:<br><input type = 'file' name = 'article' /> <br>
+			echo "<form action = 'new_article.php' method = 'POST'>
+				 Upload Article:<br>
+				 Title:<input type = 'text' name = 'title' /> <br>
+				 Body:<br><textarea name = 'body' rows='10' cols='30'> </textarea> <br>
 				 <input type = 'submit'/>
 				 <ul>
 				 </ul>
@@ -294,18 +306,24 @@
 		}
 	
 	?>
-	
-	
+	<br><br><br><br>
+	Articles: 
 	<?php
-		$get_articles_query = "SELECT article_file_name
+		$get_articles_query = "SELECT article_id, article_title
 								FROM esport_articles
 								WHERE esport_id = " . $_SESSION["page_id"] . ";";
 								
 		$result = $conn->query($get_articles_query);
 		
 		while($tuple = $result->fetch_assoc()) {
-			echo file_get_contents("articles/" . $tuple["article_file_name"]);
-			echo "<br><br><br><br>";
+			// echo "<br> <br> <a href='http://localhost/sgn/esport_article.php?page_id=" . $tuple["article_id"] . "'>" . $tuple["article_title"] . " </a> <br>";
+			echo "<form method='post' action='esport_article.php' >
+				  <input type='hidden' name='page_id' value='" . $tuple["article_id"]. "'>
+				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
+					. $tuple["article_title"] . 
+				  "<br></button>
+				</form>";
+			echo "<br><br>";
 		}
 	?>
 

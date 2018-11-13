@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-
 <?php
-	// Gain access to session array
 	session_start();
 	
 	// Check if there is a user signed in_array
@@ -10,32 +7,43 @@
 		header("Location: http://localhost/sgn/index.php");
 		exit();
 	}
-?>
-
-<head>
-  <link rel="stylesheet" href="post_link.css">
-</head>
-
-<?php
 	
-		// Connect to the database
-		$conn = new mysqli("localhost", "root", "");
+	if(isset($_GET["page_id"])) {
+		echo "GET USED! <br><br><br><br>";
+		$_SESSION["page_id"] = $_GET["page_id"];
+	}
+	
+	if(isset($_POST["page_id"])) {
+		echo "POST USED! <br><br><br><br>";
+		$_SESSION["page_id"] = $_POST["page_id"];
+	}
+	
+	
+	
+	echo $_SESSION["current_username"] . "<br>";
 
-		if ($conn->connect_errno)
-		{
-		  echo "Failed to connect to MySQL: " . $conn->connect_error;
-		}
-		
-		$conn->select_db("sgn_database");
 ?>
 
+<?php
 
-<html>
+	// Connect to the database
+	$conn = new mysqli("localhost", "root", "");
+	
+	
+	if ($conn->connect_errno)
+	{
+	  echo "Failed to connect to MySQL: " . $conn->connect_error;
+	}
+	
+	$conn->select_db("sgn_database");
 
 
+
+?>
 
 <?php
-// Get number of unresolved notifications
+
+	// Get number of unresolved notifications
 	$fetch_num_unresolved_notifications_query = "SELECT COUNT(resolved_status) AS num_unresolved
 												FROM notifications
 												WHERE recipient_id = " . $_SESSION["current_user_id"] . " and resolved_status = false;";
@@ -69,30 +77,40 @@
 <a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br>
 	
 	<!-- Banner End-->
-	<u>Esports </u> 
-	
-<?php 
 
-		$search_all_esports = "SELECT *
-							   FROM sgn_database.esports;";
+
+<?php
+	// Get article text file from article id
+	$article_file_name = "articles/" . $_SESSION["page_id"] . ".txt";
+
+	$handle = fopen($article_file_name, "r");
+	
+	echo "<pre><span class=\"inner-pre\" style=\"font-family: 'Times New Roman';\" \"Times New Roman\" style=\"font-size: 12px\">TITLE: ". fgets($handle) . 
+		"</span></pre>";
+	
+	
+	
+	echo "<pre><span class=\"inner-pre\" style=\"font-family: 'Times New Roman';\" \"Times New Roman\" style=\"font-size: 12px\">Author: ". fgets($handle) . 
+		"</span></pre>";
 		
+	echo "<br><br>";
 		
-		$result = $conn->query($search_all_esports);
-		
-		// echo $_SESSION["current_user_id"] . "<br> <br> <br>";
-		// echo $_GET["page_id"] . "<br> <br> <br>";
-		
-		if($result->num_rows > 0) {
-			while($tuple = $result->fetch_assoc()) {
-				// echo "<br> <br> <a href='http://localhost/sgn/esport_page.php?page_id=" . $tuple["esport_id"] . "'>" . $tuple["esport_name"] . " </a> <br> <br>";
-				echo "<form method='post' action='esport_page.php' >
-				  <input type='hidden' name='page_id' value='" . $tuple["esport_id"]. "'>
-				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
-					. $tuple["esport_name"] . 
-				  "<br></button>
-				</form>";
-			}
-		}
+	echo "<pre><span class=\"inner-pre\" style=\"font-family: 'Times New Roman';\" \"Times New Roman\" style=\"font-size: 12px\">"
+	. fread($handle, filesize($article_file_name)) . 
+	"</span></pre>";
+	
 ?>
 
-</html>
+<pre><span class="inner-pre" style="font-family: 'Times New Roman';" "Times New Roman" style="font-size: 12px">
+<?php
+	echo fread($handle, filesize($article_file_name));
+?>
+</span></pre>
+
+
+
+<?php
+
+	fclose($handle);
+	
+?>

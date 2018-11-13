@@ -13,6 +13,10 @@
 	if(isset($_GET["page_id"])) {
 		$_SESSION["page_id"] = $_GET["page_id"];
 	}
+	
+	if(isset($_POST["page_id"])) {
+		$_SESSION["page_id"] = $_POST["page_id"];
+	}
 	$_SESSION["page_type"] = 0;
 ?>
 
@@ -235,7 +239,7 @@
 		$search_user_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time
 									FROM sgn_database.posts JOIN sgn_database.users
 									ON posts.poster_id = users.user_id
-									WHERE wall_owner_id = " . $_GET["page_id"] . " AND wall_type = 0 AND parent_post_id = 0" .
+									WHERE wall_owner_id = " . $_SESSION["page_id"] . " AND wall_type = 0 AND parent_post_id = 0" .
 								   " ORDER BY post_id DESC;";
 		
 		$result = $conn->query($search_user_wall_posts);
@@ -347,7 +351,7 @@
 					
 					
 					// Print child
-					echo "<br> <br> " . $child_tuple["username"] . "<br>" . $child_tuple["post_date"] . "<br>" . $child_tuple["post_time"] . "<br>". $child_tuple["post_text"] . "<br>"  . $vote_total . " <br> <br>";
+					echo "<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $child_tuple["username"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $child_tuple["post_date"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $child_tuple["post_time"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;". $child_tuple["post_text"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"  . $vote_total . " <br> <br>";
 					$fetch_upvote_query = "SELECT value 
 										FROM sgn_database.post_votes
 										WHERE voter_id = " . $_SESSION["current_user_id"] . " AND voted_id = " . $child_tuple["post_id"] . " AND value = 1;";

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 
+<head>
+  <link rel="stylesheet" href="post_link.css">
+</head>
+
+
 <?php
 // Allows access to the session array
 session_start();
@@ -92,7 +97,15 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
-				echo "<br> <br> <a href='http://localhost/sgn/user_page.php?page_id=" . $tuple["friend_id"] . "'>" . $tuple["friend_username"] . " </a> <br>";
+				
+				echo "<form method='post' action='user_page.php' >
+				  <input type='hidden' name='page_id' value='" . $tuple["friend_id"]. "'>
+				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
+					. $tuple["friend_username"] . 
+				  "<br></button>
+				</form>";
+				// echo "Above is post link <br>";
+				// echo "<br> <br> <a href='http://localhost/sgn/user_page.php?page_id=" . $tuple["friend_id"] . "'>" . $tuple["friend_username"] . " </a> <br>";
 				// Should send chat_room_id instead
 				$search_friend_chat_id = "SELECT chat_id
 											FROM sgn_database.friendships

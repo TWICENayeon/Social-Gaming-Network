@@ -11,9 +11,19 @@
 		exit();
 	}
 	
-	$_SESSION["page_id"] = $_GET["page_id"];
+	if(isset($_GET["page_id"])) {
+		$_SESSION["page_id"] = $_GET["page_id"];
+	}
+	
+	if(isset($_POST["page_id"])) {
+		$_SESSION["page_id"] = $_POST["page_id"];
+	}
 	$_SESSION["page_type"] = 2;
 ?>
+
+<head>
+  <link rel="stylesheet" href="post_link.css">
+</head>
 
 <?php
 // Connect to database
@@ -178,10 +188,15 @@
 	$result = $conn->query($search_existing_tournament_query);
 	echo "<br><br><br><br><br>";
 	if($result->num_rows == 1) {
-		echo "<a href='http://localhost/sgn/tournament_page.php?page_id=" . $result->fetch_assoc()["tournament_id"] . "'> Tournament Link </a> <br>";
+		// echo "<a href='http://localhost/sgn/tournament_page.php?page_id=" . $result->fetch_assoc()["tournament_id"] . "'> Tournament Link </a> <br>";
+		echo "<form method='post' action='tournament_page.php' >
+				  <input type='hidden' name='page_id' value='" . $tuple["tournament_id"]. "'>
+				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>Tournament Link
+				  <br></button>
+				</form>";
 	}
 	else if($result->num_rows == 0) {
-		if($event_past_value === "TRUE") {
+		if($event_past_value === "FALSE") {
 			// Get the role of the current member
 			$search_member_role_query = "SELECT membership_role
 										 FROM sgn_database.memberships
@@ -236,7 +251,7 @@
 		$search_event_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time
 									FROM sgn_database.posts JOIN sgn_database.users
 									ON posts.poster_id = users.user_id
-									WHERE wall_owner_id = " . $_GET["page_id"] . " AND wall_type = 2 AND parent_post_id = 0" .
+									WHERE wall_owner_id = " . $_SESSION["page_id"] . " AND wall_type = 2 AND parent_post_id = 0" .
 								   " ORDER BY post_id DESC;";
 								   
 		// echo $search_event_wall_posts . "<br><br><br>";

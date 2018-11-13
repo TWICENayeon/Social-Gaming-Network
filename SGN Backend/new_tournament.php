@@ -46,7 +46,8 @@
 		}
 
 		// echo "Heading to tournament page";
-		header("Location: http://localhost/sgn/tournament_page.php?page_id=" . $new_tournament_id);
+		$_SESSION["page_id"] = $new_tournament_id;
+		header("Location: http://localhost/sgn/tournament_page.php");
 	}
 	else {
 		echo "Complete and utter failure";

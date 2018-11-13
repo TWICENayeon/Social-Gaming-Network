@@ -57,13 +57,13 @@
 		// TODO: Redirect to the page that has been posted
 		// Not just to the user's page
 		if($_SESSION["page_type"] === 0) {
-			header("Location: http://localhost/sgn/user_page.php?page_id=" . $_SESSION["page_id"]);
+			header("Location: http://localhost/sgn/user_page.php?");
 		}
 		else if($_SESSION["page_type"] === 1) {
-			header("Location: http://localhost/sgn/group_page.php?page_id=" . $_SESSION["page_id"]);
+			header("Location: http://localhost/sgn/group_page.php");
 		}
 		else if($_SESSION["page_type"] === 2) {
-			header("Location: http://localhost/sgn/event_page.php?page_id=" . $_SESSION["page_id"]);
+			header("Location: http://localhost/sgn/event_page.php");
 		}
 	}
 

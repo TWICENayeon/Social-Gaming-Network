@@ -11,6 +11,11 @@ if(!isset($_SESSION["current_user_id"])) {
 	exit();
 }
 ?>
+
+<head>
+  <link rel="stylesheet" href="post_link.css">
+</head>
+
 <html>
 
 <?php
@@ -84,7 +89,13 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
-				echo "<br> <br><a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
+				// echo "<br> <br><a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
+				echo "<form method='post' action='event_page.php' >
+				  <input type='hidden' name='page_id' value='" . $tuple["event_id"]. "'>
+				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
+					. $tuple["event_name"] . 
+				  "<br></button>
+				</form>";
 			}
 		}
 		?>
@@ -106,7 +117,13 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
-				echo "<br> <br> <a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
+				// echo "<br> <br> <a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
+				echo "<form method='post' action='event_page.php' >
+				  <input type='hidden' name='page_id' value='" . $tuple["event_id"]. "'>
+				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
+					. $tuple["event_name"] . 
+				  "<br></button>
+				</form>";
 			}
 		}
 		

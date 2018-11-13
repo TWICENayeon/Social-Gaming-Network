@@ -11,7 +11,15 @@
 		exit();
 	}
 	
-	$_SESSION["page_id"] = $_GET["page_id"];
+	if(isset($_GET["page_id"])) {
+		echo "GET USED! <br><br><br><br>";
+		$_SESSION["page_id"] = $_GET["page_id"];
+	}
+	
+	if(isset($_POST["page_id"])) {
+		echo "POST USED! <br><br><br><br>";
+		$_SESSION["page_id"] = $_POST["page_id"];
+	}
 	$_SESSION["page_type"] = 1;
 	
 ?>
@@ -35,7 +43,7 @@
 		// Fetch the posts on the current wall
 		$search_group_name =  "SELECT group_name
 									FROM sgn_database.groups
-									WHERE group_id = " . $_GET["page_id"] .";";
+									WHERE group_id = " . $_SESSION["page_id"] .";";
 		
 		$group_name_tuple = ($conn->query($search_group_name)->fetch_assoc());
 		
@@ -48,13 +56,13 @@
 	<?php 
 		$search_member_role_query = "SELECT membership_role
 									 FROM sgn_database.memberships
-									 WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = " . $_GET["page_id"] . ";";
+									 WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = " . $_SESSION["page_id"] . ";";
 		
 		
 		$result = $conn->query($search_member_role_query);
 		
 		// echo $_SESSION["current_user_id"] . "<br> <br> <br>";
-		// echo $_GET["page_id"] . "<br> <br> <br>";
+		// echo $_SESSION["page_id"] . "<br> <br> <br>";
 		
 		
 		if($result->num_rows == 1) {
@@ -285,7 +293,7 @@
 		$search_event_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time
 									FROM sgn_database.posts JOIN sgn_database.users
 									ON posts.poster_id = users.user_id
-									WHERE wall_owner_id = " . $_GET["page_id"] . " AND wall_type = 1 AND parent_post_id = 0" .
+									WHERE wall_owner_id = " . $_SESSION["page_id"] . " AND wall_type = 1 AND parent_post_id = 0" .
 								   " ORDER BY post_id DESC;";
 		
 		$result = $conn->query($search_event_wall_posts);

@@ -11,7 +11,15 @@
 		exit();
 	}
 	
-	$_SESSION["page_id"] = $_GET["page_id"];
+	if(isset($_GET["page_id"])) {
+		echo "GET USED! <br><br><br><br>";
+		$_SESSION["page_id"] = $_GET["page_id"];
+	}
+	
+	if(isset($_POST["page_id"])) {
+		echo "POST USED! <br><br><br><br>";
+		$_SESSION["page_id"] = $_POST["page_id"];
+	}
 	$_SESSION["page_type"] = 4 // tournament type of page;
 ?>
 <html>
@@ -136,7 +144,7 @@
 			echo "<u>" . $tuple["tournament_name"] . "</u>'s tournament page <br>Date:	" . $tuple["tournament_date"] . "<br>Time:		" . $tuple["tournament_time"] . " <br> <br> <br>";
 		}
 		else {
-			echo "Hello";
+			// echo "Hello";
 			echo "<br> <br> Resulting for current event's tuple returned a non-one tuple result. <br><br>";
 			echo $search_tournament_event;
 			exit();
@@ -231,7 +239,7 @@
 										SET twitch_stream = '" . $_POST["new_stream_name"] . "'
 										WHERE tournament_id = " . $_SESSION["page_id"] . ";";
 		
-		echo $update_tournament_stream . "<br><br><br>";
+		// echo $update_tournament_stream . "<br><br><br>";
 										
 		$conn->query($update_tournament_stream);
 		
@@ -252,8 +260,8 @@
 			<input type='submit' name='submit'>
 		</form> ";
 		
-	echo $has_stream_query;
-	echo $tournament_stream_name;
+	// echo $has_stream_query;
+	// echo $tournament_stream_name;
 	
 	if(!empty($tournament_stream_name)) {
 		//twitch stream 
@@ -301,43 +309,56 @@
 											
 			$status_value = intval((($conn->query($user_group_status_query))->fetch_assoc())["membership_role"]);
 			
-			if($status_value == 1) {
+			
+			
+			
+			
+			if($status_value == 1 ) {
 				
+				$num_participants_query = "SELECT count(participant_id) AS partCount
+										FROM sgn_database.tournament_participants
+										WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+										
+				$result = $conn->query($num_participants_query);
 				
+				$num_parti = intval(($result->fetch_assoc())["partCount"]);
 				
-				echo "<form action='update_tournament_ordering.php' method='post'>
-						Name:
-					  <select name='user_id'>";
-				$counter = 0;
-				$search_participants_name =  "SELECT username, user_id, ordering
-											FROM sgn_database.tournament_participants INNER JOIN sgn_database.users
-											ON tournament_participants.participant_id = users.user_id 
-											WHERE tournament_id = " . $_SESSION["page_id"] ."
-											ORDER BY ordering ASC;";
+				if($num_parti > 0) {
 				
-				$result = ($conn->query($search_participants_name));
-				while($tuple = $result->fetch_assoc()) { 
-					echo "<option value='" . $tuple["user_id"] . "'>" . $tuple["username"] . "</option>";
-					$counter += 1;
-				}
-						
-						
-				echo "
-				  </select>
-				  Order:
-				  <select name='order'>";
-				$i = 1;
-				$result = ($conn->query($search_participants_name));
-				while($i <= $counter) { 
-					echo "<option value='" . $i . "'>" . $i . "</option>";
-					$i += 1;
-				}
+					echo "<form action='update_tournament_ordering.php' method='post'>
+							Name:
+						  <select name='user_id'>";
+					$counter = 0;
+					$search_participants_name =  "SELECT username, user_id, ordering
+												FROM sgn_database.tournament_participants INNER JOIN sgn_database.users
+												ON tournament_participants.participant_id = users.user_id 
+												WHERE tournament_id = " . $_SESSION["page_id"] ."
+												ORDER BY ordering ASC;";
+					
+					$result = ($conn->query($search_participants_name));
+					while($tuple = $result->fetch_assoc()) { 
+						echo "<option value='" . $tuple["user_id"] . "'>" . $tuple["username"] . "</option>";
+						$counter += 1;
+					}
 							
-				echo "
-				  </select>
-				  <br><br>
-				  <input type='submit'>
-				</form>";
+							
+					echo "
+					  </select>
+					  Order:
+					  <select name='order'>";
+					$i = 1;
+					$result = ($conn->query($search_participants_name));
+					while($i <= $counter) { 
+						echo "<option value='" . $i . "'>" . $i . "</option>";
+						$i += 1;
+					}
+								
+					echo "
+					  </select>
+					  <br><br>
+					  <input type='submit'>
+					</form>";
+				}
 				echo "
 					<form action='tournament_start.php' method='post'>
 						<br>

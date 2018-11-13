@@ -10,10 +10,10 @@
 		header("Location: http://localhost/sgn/index.php");
 		exit();
 	}
-	if(isset($_POST["chat_room_id"]) {
+	if(isset($_POST["chat_room_id"])) {
 		$_SESSION["page_id"] = $_POST["chat_room_id"];
 	}
-	if(isset($_GET["chat_room_id"]) {
+	if(isset($_GET["chat_room_id"])) {
 		$_SESSION["page_id"] = $_GET["chat_room_id"];
 	}
 	$_SESSION["page_type"] = 5;		// Chat page 

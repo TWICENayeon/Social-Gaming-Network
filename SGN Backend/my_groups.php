@@ -12,6 +12,10 @@ if(!isset($_SESSION["current_user_id"])) {
 }
 ?>
 
+<head>
+  <link rel="stylesheet" href="post_link.css">
+</head>
+
 <html>
 
 <?php
@@ -101,7 +105,13 @@ Create a new group
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
-				echo "<br> <br> <a href='http://localhost/sgn/group_page.php?page_id=" . $tuple["group_id"] . "'>" . $tuple["group_name"] . " </a> <br> <br>";
+				// echo "<br> <br> <a href='http://localhost/sgn/group_page.php?page_id=" . $tuple["group_id"] . "'>" . $tuple["group_name"] . " </a> <br> <br>";
+				echo "<form method='post' action='group_page.php' >
+				  <input type='hidden' name='page_id' value='" . $tuple["group_id"]. "'>
+				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
+					. $tuple["group_name"] . 
+				  "<br></button>
+				</form>";
 			}
 		}
 		
