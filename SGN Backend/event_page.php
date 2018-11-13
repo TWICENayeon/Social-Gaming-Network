@@ -190,7 +190,7 @@
 	if($result->num_rows == 1) {
 		// echo "<a href='http://localhost/sgn/tournament_page.php?page_id=" . $result->fetch_assoc()["tournament_id"] . "'> Tournament Link </a> <br>";
 		echo "<form method='post' action='tournament_page.php' >
-				  <input type='hidden' name='page_id' value='" . $tuple["tournament_id"]. "'>
+				  <input type='hidden' name='page_id' value='" . $result->fetch_assoc()["tournament_id"]. "'>
 				  <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>Tournament Link
 				  <br></button>
 				</form>";

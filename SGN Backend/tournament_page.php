@@ -12,12 +12,10 @@
 	}
 	
 	if(isset($_GET["page_id"])) {
-		echo "GET USED! <br><br><br><br>";
 		$_SESSION["page_id"] = $_GET["page_id"];
 	}
 	
 	if(isset($_POST["page_id"])) {
-		echo "POST USED! <br><br><br><br>";
 		$_SESSION["page_id"] = $_POST["page_id"];
 	}
 	$_SESSION["page_type"] = 4 // tournament type of page;
