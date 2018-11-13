@@ -347,7 +347,7 @@
 					
 					
 					// Print child
-					echo "<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $child_tuple["username"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $child_tuple["post_date"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $child_tuple["post_time"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;". $child_tuple["post_text"] . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"  . $vote_total . " <br> <br>";
+					echo "<br> <br> " . $child_tuple["username"] . "<br>" . $child_tuple["post_date"] . "<br>" . $child_tuple["post_time"] . "<br>". $child_tuple["post_text"] . "<br>"  . $vote_total . " <br> <br>";
 					$fetch_upvote_query = "SELECT value 
 										FROM sgn_database.post_votes
 										WHERE voter_id = " . $_SESSION["current_user_id"] . " AND voted_id = " . $child_tuple["post_id"] . " AND value = 1;";
