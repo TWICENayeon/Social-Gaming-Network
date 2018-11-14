@@ -63,9 +63,8 @@ $(document).ready(function(){
   function addMousemove (d) {
     console.log("movable")
     document.addEventListener("mousemove", widthDriver)
-
   }
-
+  // document.addEventListener("mouseup", removeMove);
   function widthDriver(e) {
       document.addEventListener("mouseup", removeMove);
       var width = e.screenX;
@@ -81,22 +80,22 @@ $(document).ready(function(){
       }
       if (width < 8) {
           width = 8;
-      }
-      document.getElementById("resizer").addEventListener("click", popChat);
-      function popChat(e) {
-        console.log("clickable")
-          if (document.getElementById("rightCont").style.display == "none") {
-            document.getElementById("rightCont").style.width = "261px";
-            document.getElementById("rightCont").style.display = "block"; } 
-            document.getElementById("resizer").addEventListener("mousedown", addMousemove) 
-      }
-
+      }      
       document.getElementById("myTabContent").style.width = (width + 6) + "px";
       document.getElementById("rightCont").style.width = (document.getElementById("mainCont").clientWidth - width - 6) + "px";
   }
   function removeMove(e) {
       document.removeEventListener("mousemove", widthDriver);
       document.removeEventListener("mouseup", removeMove);
+  }
+  document.getElementById("resizer").addEventListener("click", popChat);
+  // document.getElementById("resizer").addEventListener("mousedown", addMousemove)
+  function popChat(e) {
+    console.log("clickable")
+      if (document.getElementById("rightCont").style.display == "none") {
+        document.getElementById("rightCont").style.width = "261px";
+        document.getElementById("rightCont").style.display = "block"; } 
+        document.getElementById("resizer").addEventListener("mousedown", addMousemove) 
   }
   
   // $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -124,6 +123,9 @@ $(document).ready(function(){
 //       if (activeTab) {
 //             $('ul.tabs li:has(a[href="' + activeTab + '"])').click(); // And simulate clicking it
 //       }
+  function thumbsUpFunc() {
+    document.getElementById("thumbsUpIcon").style.color = "#1E90FF";
+  }
   setTimeout(function(){ 
     $(".loader").delay(150).fadeOut("slow");
   // $(".loader").delay().fadeOut("slow");
