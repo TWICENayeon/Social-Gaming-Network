@@ -63,6 +63,27 @@ body {
 	background-size: cover;
 	
 }
+/*.imageIconCont {
+	text-align: right;
+}*/
+.imageIcon {
+	margin: auto;
+	margin-top: 10em;
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	font-size: 1rem;
+	border: 1px solid grey;
+	border-radius: 20px;
+	background: grey;
+}
+#cameraIcon {
+	margin: auto;
+    margin-top: 6px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 6px;
+}
 #profileLi {
 	padding: 0;
 	margin-right: 2em;
@@ -232,7 +253,8 @@ body {
 .fa-plus-square {
 	font-size: 5rem;
 }
-#createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal {
+#createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal, #eventModal, #futureEventModal,
+#eventPostsModal {
 	color: black;
 
 } 
@@ -275,6 +297,11 @@ body {
 }
 .eventTitle {
 	font-size: 2rem;
+}
+#eventButton {
+	width: 20%;
+	margin: auto;
+	text-align: center;
 }
 .futureEventTitle {
 	font-size: 5rem;
@@ -349,6 +376,15 @@ body {
 	flex-grow: 1;
 	flex-direction: row;
 }
+#esportsNewsCont {
+	display: flex;
+	border: 3px solid black;
+	border-radius: 20px;
+	width: 800px;
+	margin: auto;
+	margin-bottom: 100px;
+	flex-direction: column;
+}
 .modal-content.modal-1200 {
 	width: 1200px;
 }
@@ -375,4 +411,91 @@ body {
 /* Handle on hover */
 #myTabContent::-webkit-scrollbar-thumb:hover {
     background: #555; 
+}
+.modalEventCont {
+	display: flex;
+	flex-direction: column;
+}
+#eventPosts {
+	width: 20%;
+	margin: auto;
+	text-align: center;
+}
+.eventPostProfileImage, .commentProfileImage {
+	height: 60px;
+	width: 60px;
+	border: 1px solid black;
+	border-radius: 40px;
+	margin-left: 2em;
+	margin-top: 1.5em;
+	margin-right: 1em;
+	background-image: url("../img/yoshi-prof.png");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: gray;
+}
+.eventPostCont, .commentCont {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+	border-radius: 20px;
+	margin-bottom: 1em;
+}
+.eventPostGap {
+	flex-grow: 1;
+}
+.eventPostVoteButtons, .commentPostVoteButtons {
+	display: flex;
+	margin: auto;
+	text-align: right;
+	margin-right: 0.5em;
+}
+#commentsIcon::hover {
+	color: orange;
+}
+.eventPostUpvote, .eventPostDownvote, .commentPostUpvote, .commentPostDownvote {
+	/*margin-right: 0.5em;*/
+	/*text-align: right;*/
+	font-size: 2rem;
+}
+.eventPostUpvote {
+	margin-right: 10px;
+}
+.eventPostDownvote {
+	margin-right: 10px;
+}
+#handUp {
+	margin-left: 10px;
+}
+#handDown {
+	margin-left: 10px;
+}
+#eventReplyButton {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+.commentText {
+	
+}
+.nav-item.searchTab form.searchBar {
+	display: flex;
+	flex-direction: row;
+	padding-right: 2px; 
+}
+.nav-item.searchTab form.searchBar button {
+	margin-left: 5px;
+	background: black;
+	color: white;
+	border: 1px white;
+    border-left: none;
+    font-size: 1.5rem;
+}
+.searchResults {
+	display: none;
+	visibility: hidden;
+}
+#profileName {
+	color: orange;
 }
