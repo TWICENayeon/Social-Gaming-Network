@@ -47,7 +47,7 @@ echo  "<br>";
 		ob_end_clean();
 	}
 
-	header("Location: http://localhost/sgn/user_page.php?page_id=" . $_SESSION["current_user_id"]);
+	header("Location: http://localhost/sgn/dash.php");
 }
 // If credentials are not valid
 // Redirect to the index page
