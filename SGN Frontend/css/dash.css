@@ -57,7 +57,7 @@ body {
 	/*background-color: black;*/
 	color: white;
 	font-size: 20px;
-	background-image: url('../img/Overwatch-Banner.jpg');
+	background-image: url('../img/banner1.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -254,7 +254,7 @@ body {
 	font-size: 5rem;
 }
 #createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal, #eventModal, #futureEventModal,
-#eventPostsModal {
+#eventPostsModal, #uploadBannerModal {
 	color: black;
 
 } 
@@ -343,12 +343,18 @@ body {
 	width: 1.5em;;
 }
 #resizer {
+	margin-top: 15.5em;
 	height: 2em;
 	width: 2em;
 	user-select: none;
 }
 #resizerIcon {
 	font-size: 2em;
+    border: 2px solid grey;
+    border-radius: 3px;
+    background: grey;
+    padding-left: 4px;
+    padding-bottom: 4px;
 }
 .streamCont {
 	height: 480px;
@@ -451,7 +457,10 @@ body {
 	text-align: right;
 	margin-right: 0.5em;
 }
-#commentsIcon::hover {
+#thumbsUpIcon:hover {
+	color: #1E90FF;
+}
+#commentsIcon:hover {
 	color: orange;
 }
 .eventPostUpvote, .eventPostDownvote, .commentPostUpvote, .commentPostDownvote {
