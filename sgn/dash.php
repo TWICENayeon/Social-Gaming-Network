@@ -172,8 +172,6 @@ $(document).ready(function(){
 				</div>
 				<div class="tabWelcome">Dashboard</div>
 
-				<!-- Dialog for No Posts to show -->
-				<div class="noPostsDialog"><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>
 				
 				<!-- Posts are loaded into this div -->
 				<div id="posts"> </div>
@@ -358,8 +356,8 @@ $(document).ready(function(){
 			  			</div>
 		  			</div>
 		  		</div>
-		  		<div class="futureEventTitle">Past Events</div>
-		  		<div class="futureEventCont">
+		  		<div class="pastEventTitle">Past Events</div>
+		  		<div class="pastEventCont">
 		  			<div class="templateEvent">
 		  				<div class="eventHeaderCont">		  					
 			  				<div class="eventTitle">Kyle's D&D Meetup</div>

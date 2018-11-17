@@ -232,7 +232,7 @@ body {
 .fa-plus-square {
 	font-size: 5rem;
 }
-#createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal {
+#createPostModal, #commentsModal, #eventPostCont, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal {
 	color: black;
 
 } 
@@ -276,7 +276,7 @@ body {
 .eventTitle {
 	font-size: 2rem;
 }
-.futureEventTitle {
+.pastEventTitle {
 	font-size: 5rem;
 }
 .esportsCont {

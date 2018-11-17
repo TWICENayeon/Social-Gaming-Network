@@ -18,7 +18,8 @@
 	if(isset($_POST["page_id"])) {
 		$_SESSION["page_id"] = $_POST["page_id"];
 	}
-	$_SESSION["page_type"] = 4 // tournament type of page;
+	$_SESSION["page_type"] = 4; // tournament type of page;
+	$_SESSION["page_id"] = '5';
 ?>
 <html>
 
