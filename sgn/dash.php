@@ -29,6 +29,39 @@ function fetchPosts() {
         xmlhttp.open("POST", "php/fetch_posts.php", true);
         xmlhttp.send();
 }
+
+function fetchEventList() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("events_list").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_events_list.php", true);
+        xmlhttp.send();
+}
+
+function fetchEventModals() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("events_modal").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_events_modals.php", true);
+        xmlhttp.send();
+}
+
+function fetchEventPosts() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("events_post").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_events_posts.php", true);
+        xmlhttp.send();
+}
 </script>
 
 <script>
@@ -45,13 +78,15 @@ function tabClick() {
 		fetchPosts();
 	}
 	if($link.attr("id") == "esports-tab") {
-		alert("esports");
 	}
 	if($link.attr("id") == "groups-tab") {
 		alert("groups");
 	}
 	if($link.attr("id") == "events-tab") {
 		alert("events");
+		fetchEventList();
+		fetchEventModals();
+		fetchEventPosts();
 	}
 }
 
@@ -338,191 +373,13 @@ $(document).ready(function(){
 		  	</div>
 			<!-- Events Tab -->
 		  	<div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
-		  		<div class="tabWelcome">Events</div>
-		  		<div class="eventCont">
-		  			<div class="templateEvent">
-		  				<div class="eventHeaderCont">		  					
-			  				<div class="eventTitle">Kyle's D&D Meetup</div>
-			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
-			  			</div>
-			  			<div class="eventDateTimePrivCont">
-			  				<div class="eventDate">November 3, 2018</div>
-		  					<div class="eventTime">6:00 PM</div>		  				
-		  					<div class="eventPrivacy">Public</div>
-			  			</div>
-			  			<div class="eventViewPostsButtons">
-			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#futureEventModal">View</button>
-			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
-			  			</div>
-		  			</div>
-		  		</div>
-		  		<div class="pastEventTitle">Past Events</div>
-		  		<div class="pastEventCont">
-		  			<div class="templateEvent">
-		  				<div class="eventHeaderCont">		  					
-			  				<div class="eventTitle">Kyle's D&D Meetup</div>
-			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
-			  			</div>
-			  			<div class="eventDateTimePrivCont">
-			  				<div class="eventDate">November 3, 2018</div>
-		  					<div class="eventTime">6:00 PM</div>		  				
-		  					<div class="eventPrivacy">Public</div>
-			  			</div>
-			  			<div class="eventViewPostsButtons">
-			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#futureEventModal">View</button>
-			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
-			  			</div>
-		  			</div>
-		  		</div>
-		  		<div class="eventsModals">
-		  			<!-- Event Modal -->
-		  			<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        <div class="modalEventInfoCont">
-					        	<!-- should disappear if the event hasnt started -->
-					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
-					        	<h1 id="modalEventDescTitle">Description</h1>					        	
-					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
-					        	<h1 id="modalEventDateTime">Date/Time</h1>
-					        	<div class="eventDate">November 3, 2018</div>
-		  						<div class="eventTime">6:00 PM</div>
-					        </div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
-					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button>
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-					<div class="modal fade" id="futureEventModal" tabindex="-1" role="dialog" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        <div class="modalEventInfoCont">
-					        	<!-- should disappear if the event hasnt started -->
-					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
-					        	<h1 id="modalEventDescTitle">Description</h1>					        	
-					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
-					        	<h1 id="modalEventDateTime">Date/Time</h1>
-					        	<div class="eventDate">November 3, 2018</div>
-		  						<div class="eventTime">6:00 PM</div>		  						
-					        </div>
-					      </div>
-					      <div class="modal-footer">					      	
-					        <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
-					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button>
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>  
-		  		</div>
-		  		<!-- Event Posts Modals -->
-		  		<div class="eventPostsModals">
-					<div class="modal fade" id="eventPostsModal" tabindex="-1" role="dialog" aria-hidden="true">
-					  <div class="modal-dialog modal-lg" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title">Event Posts</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        <div class="modalEventInfoCont">
-					        	<!-- should disappear if there are no posts -->
-					        	<div class="modalEventStartedWarning">No posts to show</div>
-					        	<div class="eventPostCont">
-					        		<div class="eventPostProfileImage"></div>
-					        		<div class="eventPostGap"></div>
-					        		<div class="eventPostName">Yoshi</div>
-					        		<div class="eventPostDate">10/10/18</div>
-					        		<div class="eventPostTime">4:20 PM</div>
-					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-					        		<div class="eventPostVoteButtons">					        			
-					        			<div class="eventPostUpvote">10M<i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
-					        			<div class="eventPostDownvote">15K<i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
-					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
-					        		</div>
-					        	</div>
-					        	<div class="eventPostCont">
-					        		<div class="eventPostProfileImage"></div>
-					        		<div class="eventPostGap"></div>
-					        		<div class="eventPostName">Yoshi</div>
-					        		<div class="eventPostDate">10/10/18</div>
-					        		<div class="eventPostTime">4:20 PM</div>
-					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-					        		<div class="eventPostVoteButtons">					        			
-					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
-					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
-					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
-					        		</div>
-					        	</div>
-					        	<div class="eventPostCont">
-					        		<div class="eventPostProfileImage"></div>
-					        		<div class="eventPostGap"></div>
-					        		<div class="eventPostName">Yoshi</div>
-					        		<div class="eventPostDate">10/10/18</div>
-					        		<div class="eventPostTime">4:20 PM</div>
-					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-					        		<div class="eventPostVoteButtons">					        			
-					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
-					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
-					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
-					        		</div>
-					        	</div>
-					        	<div class="eventPostCont">
-					        		<div class="eventPostProfileImage"></div>
-					        		<div class="eventPostGap"></div>
-					        		<div class="eventPostName">Yoshi</div>
-					        		<div class="eventPostDate">10/10/18</div>
-					        		<div class="eventPostTime">4:20 PM</div>
-					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-					        		<div class="eventPostVoteButtons">					        			
-					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
-					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
-					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
-					        		</div>
-					        	</div>
-					        	<div class="eventPostCont">
-					        		<div class="eventPostProfileImage"></div>
-					        		<div class="eventPostGap"></div>
-					        		<div class="eventPostName">Yoshi</div>
-					        		<div class="eventPostDate">10/10/18</div>
-					        		<div class="eventPostTime">4:20 PM</div>
-					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-					        		<div class="eventPostVoteButtons">					        			
-					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
-					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
-					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
-					        		</div>
-					        	</div>					        	
-					        </div>
-					      </div>
-					      <div class="modal-footer">					      						        
-					        <!-- <button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button> -->
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>		  			
-		  		</div>		  		
+				<!-- The div in which events list is loaded -->
+				<div id="events_list"> </div>
+		  		
+				<div id="events_modal"> </div>
+				
+		  		<div id="events_post"> </div>
+		  				  		
 		  	 </div>
 		</div>
 		<!-- <div class="afterHidden"></div> -->
