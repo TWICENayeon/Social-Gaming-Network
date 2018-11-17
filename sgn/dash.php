@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link href="css/dash.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
 	<link href="jqueryUI/jquery-ui.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 	<script src="js/popper.min.js"></script>
@@ -14,13 +15,34 @@
 	<script src="jqueryUI/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>	
 	<script src="js/dash.js"></script>
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-	<title>Social Gaming Network</title>
+	<title>Social Gaming Network - Dashboard</title>
 	
 </head>
 <body>
 	<div class="loader"></div>
-	<div class="sgnBanner"><!-- FILLER BANNER (Add Pic) --></div>
+	<div class="sgnBanner"><!-- FILLER BANNER (Add Pic) -->
+		<div class="imageIcon" data-toggle="modal" data-target="#uploadBannerModal"><i class="fa fa-camera" id="cameraIcon" aria-hidden="true"></i></div>
+		<!-- Upload Banner Modal -->
+		<div class="modal fade" id="uploadBannerModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Upload Banner Image</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Select an image to upload for your custom banner: <input type="file" name="bannerFile"></p>		        
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
 	<div class="sgnTabs">				
 					<ul class="nav nav-tabs mr-auto flex-col flex-sm-row" id="dashTabs" role="tablist">
 					  <li class="nav-item main-tabs">
@@ -38,24 +60,31 @@
 					  <!-- <li class="nav-item">
 					    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Search</a>
 					  </li> -->
-					  <li class="nav-item">
-					  	<form>
+					  <li class="nav-item searchTab">
+					  	<form class="searchBar">
 		      				<input type="text" class="form-control" placeholder="Search.." name="search">
-		      					<!-- <button type="submit">Submit</button> -->
+		      				<button type="submit"><i class="fa fa-search"></i></button>    				
+		      				<!-- <button type="submit">Submit</button> -->
+
 		   				 </form>
 					  <!-- <li class="nav-item">
 					    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Tournaments</a>
 					  </li>-->
 					  </li>
 					  <li class="flex-sm-fill"></li>					 
-					  <li class="nav-item dropdown" id="profileLi" data-toggle="dropdown">
+					  <li class="nav-item dropdown" id="profileLi" data-toggle="dropdown">					  	
 					  	<a class="nav-link" id="profile-tab" data-toggle="dropdown-toggle"><img src="img/Profile-icon-9.png"></a>
 					  	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+					  	  <a class="dropdown-item" id="profileName">TWICE_Nayeon</a>
 				          <a class="dropdown-item" href="#">Profile</a>
 				          <a class="dropdown-item" href="#">Account</a>
-				          <a class="dropdown-item" href="../index.html">Logout</a>
-				        </div>
-					  </li> 				 
+				          <!-- <div class="dropdown-item"><a id="logoutDD" href="index.html">Logout</a></div> -->
+				          <a class="dropdown-item" id="logoutDD" href="index.html">Logout</a>
+				        </div>				        
+					  </li>
+					  <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+					  	<a class="dropdown" id="logoutDD" href="index.html">Logout</a>
+					  </div>  -->				 
 					</ul>															
 			</div>
 	<div class="contentCont" id="mainCont">
@@ -76,7 +105,7 @@
 				        </button>
 				      </div>
 				      <div class="modal-body">
-				        <textarea class="postTextBox" placeholder="Write what's going on:" rows="6" cols="60"></textarea>
+				        <textarea class="postTextBox" placeholder="What's currently going on:" rows="6" cols="60"></textarea>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -87,29 +116,44 @@
 				</div>
 				<div class="tabWelcome">Dashboard</div>
 
+				<!-- Dialog for No Posts to show -->
+				<div class="noPostsDialog"><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>
+
 				<div class="template-post">					
 					<div class="image-buttons-container">						
 						<div class="post-profile-image"></div>						
 						<div class="post-profile-gap"></div>
 						<div class="post-like-button">													
-							<i class="far fa-thumbs-up"></i>							
+							<i class="far fa-thumbs-up" id="thumbsUpIcon"></i>							
 							2.5M
 						</div>						
 						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
-							<i class="far fa-comments"></i>
+							<i class="far fa-comments" id="commentsIcon"></i>
 							33
 						</div>
 						<!-- Comments Modal -->
 						<div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						  <div class="modal-dialog" role="document">
+						  <div class="modal-dialog modal-lg" role="document">
 						    <div class="modal-content">
 						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+						        <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">&times;</span>
 						        </button>
 						      </div>
 						      <div class="modal-body">
+						      	<div class="commentCont">
+					        		<div class="commentProfileImage"></div>
+					        		<div class="commentPostGap"></div>
+					        		<div class="commentPostName">Yoshi</div>
+					        		<div class="commentPostDate">10/10/18</div>
+					        		<div class="commentPostTime">4:20 PM</div>
+					        		<div class="commentText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="commentPostVoteButtons">
+					        			<div class="commentPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
+					        			<div class="commentPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
+					        		</div>
+					        	</div>
 						        <textarea class="postTextBox" placeholder="Write what's going on:" rows="6" cols="60"></textarea>
 						      </div>
 						      <div class="modal-footer">
@@ -134,11 +178,11 @@
 						<div class="post-profile-image"></div>						
 						<div class="post-profile-gap"></div>
 						<div class="post-like-button">													
-							<i class="far fa-thumbs-up"></i>							
+							<i class="far fa-thumbs-up" id="thumbsUpIcon" onclick="thumbsUpFunc()"></i>							
 							1
 						</div>						
-						<div class="post-comment-button">							
-							<i class="far fa-comments"></i>
+						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
+							<i class="far fa-comments" id="commentsIcon"></i>
 							2
 						</div>
 					</div>						
@@ -150,6 +194,11 @@
 						</div>
 					</div>					
 				</div>
+				<!-- Search Results hidden by default unless searched -->
+				<div class="searchResults">
+					<h1 class="searchTitle">Search Results for: </h1><h2 class="searchQuery">Something typed in search bar</h2>
+					<div class="searchResultsBox"></div>
+				</div>
 			</div>	
 			<!-- Esports Tab -->
 		  	<div class="tab-pane fade" id="esports" role="tabpanel" aria-labelledby="esports-tab">
@@ -160,11 +209,12 @@
 			  			<div class="esportsTitle">List of Esports Games</div>
 			  			<div class="esportsList">
 			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal"><img class="leagueIcon" src="img/lol-icon.png"></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal"><img class="csgoIcon" src="img/csgo-icon.png"></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal"><img class="owIcon" src="img/ow-icon.png"></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal"><img class="hotsIcon" src="img/hots-icon.png"></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal"><img class="sc2Icon" src="img/sc2-icon.png"><br></a>
-			  			</div>			  			
+			  			</div>
+			  			<!-- Esports Modals -->			  			
 			  			<div class="esportsModals">
 			  				<!-- League Modal -->
 							<div class="modal fade" id="leagueStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog modal-lg" role="d">
+							  <div class="modal-dialog modal-lg" role="document">
 							    <div class="modal-content modal-1200">
 							      <div class="modal-header">
 							        <h5 class="modal-title" id="exampleModalLabel">League of Legends Stream</h5>
@@ -189,8 +239,8 @@
 							</div>
 							<!-- CS Modal -->
 							<div class="modal fade" id="csgoStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
 							      <div class="modal-header">
 							        <h5 class="modal-title" id="exampleModalLabel">Counter-Strike: Global Offensive Stream</h5>
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -198,7 +248,12 @@
 							        </button>
 							      </div>
 							      <div class="modal-body" id="esportModalBody">
-							        ...
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -209,8 +264,8 @@
 							</div>
 							<!-- OW Modal -->
 							<div class="modal fade" id="owStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
 							      <div class="modal-header">
 							        <h5 class="modal-title" id="exampleModalLabel">Overwatch Stream</h5>
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -218,7 +273,12 @@
 							        </button>
 							      </div>
 							      <div class="modal-body" id="esportModalBody">
-							        ...
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -229,8 +289,8 @@
 							</div>
 							<!-- HOTS Modal -->
 							<div class="modal fade" id="hotsStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
 							      <div class="modal-header">
 							        <h5 class="modal-title" id="exampleModalLabel">Heroes of the Storm Stream</h5>
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -238,7 +298,12 @@
 							        </button>
 							      </div>
 							      <div class="modal-body" id="esportModalBody">
-							        ...
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -249,8 +314,8 @@
 							</div>
 							<!-- SC2 Modal -->
 							<div class="modal fade" id="sc2StreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
 							      <div class="modal-header">
 							        <h5 class="modal-title" id="exampleModalLabel">Starcraft II Stream</h5>
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -258,7 +323,12 @@
 							        </button>
 							      </div>
 							      <div class="modal-body" id="esportModalBody">
-							        ...
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -291,22 +361,189 @@
 		  			<div class="templateEvent">
 		  				<div class="eventHeaderCont">		  					
 			  				<div class="eventTitle">Kyle's D&D Meetup</div>
-			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>
+			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
 			  			</div>
 			  			<div class="eventDateTimePrivCont">
 			  				<div class="eventDate">November 3, 2018</div>
 		  					<div class="eventTime">6:00 PM</div>		  				
 		  					<div class="eventPrivacy">Public</div>
-			  			</div>		  				
+			  			</div>
+			  			<div class="eventViewPostsButtons">
+			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#futureEventModal">View</button>
+			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
+			  			</div>
 		  			</div>
 		  		</div>
-		  		<div class="futureEventTitle">Future Events</div>
+		  		<div class="futureEventTitle">Past Events</div>
 		  		<div class="futureEventCont">
-		  			
+		  			<div class="templateEvent">
+		  				<div class="eventHeaderCont">		  					
+			  				<div class="eventTitle">Kyle's D&D Meetup</div>
+			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
+			  			</div>
+			  			<div class="eventDateTimePrivCont">
+			  				<div class="eventDate">November 3, 2018</div>
+		  					<div class="eventTime">6:00 PM</div>		  				
+		  					<div class="eventPrivacy">Public</div>
+			  			</div>
+			  			<div class="eventViewPostsButtons">
+			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#futureEventModal">View</button>
+			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
+			  			</div>
+		  			</div>
 		  		</div>
+		  		<div class="eventsModals">
+		  			<!-- Event Modal -->
+		  			<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div class="modalEventInfoCont">
+					        	<!-- should disappear if the event hasnt started -->
+					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
+					        	<h1 id="modalEventDescTitle">Description</h1>					        	
+					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
+					        	<h1 id="modalEventDateTime">Date/Time</h1>
+					        	<div class="eventDate">November 3, 2018</div>
+		  						<div class="eventTime">6:00 PM</div>
+					        </div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
+					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<div class="modal fade" id="futureEventModal" tabindex="-1" role="dialog" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div class="modalEventInfoCont">
+					        	<!-- should disappear if the event hasnt started -->
+					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
+					        	<h1 id="modalEventDescTitle">Description</h1>					        	
+					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
+					        	<h1 id="modalEventDateTime">Date/Time</h1>
+					        	<div class="eventDate">November 3, 2018</div>
+		  						<div class="eventTime">6:00 PM</div>		  						
+					        </div>
+					      </div>
+					      <div class="modal-footer">					      	
+					        <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
+					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>  
+		  		</div>
+		  		<!-- Event Posts Modals -->
+		  		<div class="eventPostsModals">
+					<div class="modal fade" id="eventPostsModal" tabindex="-1" role="dialog" aria-hidden="true">
+					  <div class="modal-dialog modal-lg" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Event Posts</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div class="modalEventInfoCont">
+					        	<!-- should disappear if there are no posts -->
+					        	<div class="modalEventStartedWarning">No posts to show</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote">10M<i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote">15K<i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>					        	
+					        </div>
+					      </div>
+					      <div class="modal-footer">					      						        
+					        <!-- <button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button> -->
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>		  			
+		  		</div>		  		
 		  	 </div>
 		</div>
-		<div class="afterHidden"></div>
+		<!-- <div class="afterHidden"></div> -->
 		<div class="sgnChatCont">
 			<!-- <div class="afterHiddenSelector"></div> -->
 			<div id="resizer">
