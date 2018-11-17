@@ -35,8 +35,9 @@ $conn->close();
 if($result->num_rows == 1) {
 	$result_tuple = $result->fetch_assoc();
 	echo "Log in success <br>";
-	
-	$_SESSION["current_user_id"] = $result_tuple["user_id"];
+
+	$_SESSION["current_user_id"] = $result_tuple["user_id"];	
+	$_SESSION["page_id"] = $_SESSION["current_user_id"];
 	$_SESSION["current_username"] = $result_tuple["username"];
 echo  "<br>";	
 	echo $result->fetch_assoc()["username"];
