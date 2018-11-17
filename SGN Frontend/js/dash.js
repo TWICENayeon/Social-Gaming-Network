@@ -123,9 +123,14 @@ $(document).ready(function(){
 //       if (activeTab) {
 //             $('ul.tabs li:has(a[href="' + activeTab + '"])').click(); // And simulate clicking it
 //       }
+  document.getElementById("thumbsUpIcon").addEventListener("click", thumbsUpFunc);
   function thumbsUpFunc() {
     document.getElementById("thumbsUpIcon").style.color = "#1E90FF";
   }
+  // document.getElementById("logoutDD").addEventListener("click", logoutFunc);
+  // function logoutFunc {
+    
+  // }
   setTimeout(function(){ 
     $(".loader").delay(150).fadeOut("slow");
   // $(".loader").delay().fadeOut("slow");
