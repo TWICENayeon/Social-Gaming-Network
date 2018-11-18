@@ -57,10 +57,15 @@ body {
 	/*background-color: black;*/
 	color: white;
 	font-size: 20px;
-	background-image: url('../img/Overwatch-Banner.jpg');
+	/* background-image: url('../img/Overwatch-Banner.jpg'); */
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	
+}
+
+.sgnBanner img{
+	position: relative;
 	
 }
 #profileLi {

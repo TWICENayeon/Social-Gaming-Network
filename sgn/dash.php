@@ -88,14 +88,37 @@ function createPost() {
 	
 	
 }
+
+function fetchUserBannerImage() {
+	//alert((document.getElementsByClassName("sgnBanner"))[0].style.backgroundImage);var xmlhttp = new XMLHttpRequest();
+	
+		var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				alert(this.responseText);
+                (document.getElementsByClassName("sgnBanner"))[0].style.backgroundImage = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_user_banner.php", true);
+        xmlhttp.send();
+}
+
+function uploadUserBannerImage() {
+	$("#bannerForm").submit();
+	$("#bannerForm").reset();
+	fetchUserBannerImage();
+}
 </script>
 
 <script>
 
-function tabAlert() {
-	alert("Tab Alert!");
+function start() {
+	fetchPosts();
+	fetchEvents();
+	alert("Fetching Banner");
+	fetchUserBannerImage();
+	alert("Banner fetched");
 }
-
 
 // Bind, works better than trigger
 function tabClick() {
@@ -131,7 +154,7 @@ $(document).ready(function(){
 // });
 </script>
 
-<body onload="fetchPosts(); fetchEvents();">
+<body onload="start(); ">
 	<div class="loader"></div>
 	<div class="sgnBanner"><!-- FILLER BANNER (Add Pic) -->
 		<div class="imageIcon" data-toggle="modal" data-target="#uploadBannerModal"><i class="fa fa-camera" id="cameraIcon" aria-hidden="true"></i></div>
@@ -145,13 +168,16 @@ $(document).ready(function(){
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
+			  <form id="bannerForm" action="php/upload_user_banner.php" method="post" enctype="multipart/form-data">
 		      <div class="modal-body">
-		        <p style='color:black'>Select an image to upload for your custom banner: <input type="file" name="bannerFile"></p>		        
+		        <p style='color:black'>Select an image to upload for your custom banner: </p>		        
+				<input type="file" name="bannerImage" form="bannerForm" style='color:black'>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary">Save changes</button>
+		        <button type="button" class="btn btn-primary" onclick="uploadUserBannerImage()">Save changes</button>
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		      </div>
+			  </form>
 		    </div>
 		  </div>
 		</div>
