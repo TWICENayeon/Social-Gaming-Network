@@ -24,10 +24,9 @@ function fetchPosts() {
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("posts").innerHTML = this.responseText;
-				alert(this.responseText);
             }
         };
-        xmlhttp.open("POST", "php/fetch_posts.php", true);
+        xmlhttp.open("POST", "php/fetch_posts_user.php", true);
         xmlhttp.send();
 }
 
@@ -81,8 +80,8 @@ function createPost() {
 	
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			alert(this.responseText);
 			fetchPosts();
+			$(".postTextBox").val('');
 		}
 	};
 	xmlhttp.send(params);
@@ -141,13 +140,13 @@ $(document).ready(function(){
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title">Upload Banner Image</h5>
+		        <h5 class="modal-title"style='color:black'>Upload Banner Image</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        <p>Select an image to upload for your custom banner: <input type="file" name="bannerFile"></p>		        
+		        <p style='color:black'>Select an image to upload for your custom banner: <input type="file" name="bannerFile"></p>		        
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-primary">Save changes</button>

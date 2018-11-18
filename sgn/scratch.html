@@ -1,87 +1,21 @@
-<div class='modal fade' id='eventPostsModal' tabindex='-1' role='dialog' aria-hidden='true'>
-  <div class='modal-dialog modal-lg' role='document'>
-	<div class='modal-content'>
-	  <div class='modal-header'>
-		<h5 class='modal-title'>Event Posts</h5>
-		<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-		  <span aria-hidden='true'>&times;</span>
-		</button>
-	  </div>
-	  <div class='modal-body'>
-		<div class='modalEventInfoCont'>
-			<!-- should disappear if there are no posts -->
-			<div class='modalEventStartedWarning'>No posts to show</div>
-			<div class='eventPostCont'>
-				<div class='eventPostProfileImage'></div>
-				<div class='eventPostGap'></div>
-				<div class='eventPostName'>Yoshi</div>
-				<div class='eventPostDate'>10/10/18</div>
-				<div class='eventPostTime'>4:20 PM</div>
-				<div class='eventPostComment'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-				<div class='eventPostVoteButtons'>					        			
-					<div class='eventPostUpvote'>10M<i class='fa fa-hand-o-up' id='handUp' aria-hidden='true'></i></div>
-					<div class='eventPostDownvote'>15K<i class='fa fa-hand-o-down' id='handDown' aria-hidden='true'></i></div>
-					<button type='button' class='btn btn-primary' id='eventReplyButton'>Reply</button>
-				</div>
-			</div>
-			<div class='eventPostCont'>
-				<div class='eventPostProfileImage'></div>
-				<div class='eventPostGap'></div>
-				<div class='eventPostName'>Yoshi</div>
-				<div class='eventPostDate'>10/10/18</div>
-				<div class='eventPostTime'>4:20 PM</div>
-				<div class='eventPostComment'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-				<div class='eventPostVoteButtons'>					        			
-					<div class='eventPostUpvote'><i class='fa fa-hand-o-up' aria-hidden='true'></i></div>
-					<div class='eventPostDownvote'><i class='fa fa-hand-o-down' aria-hidden='true'></i></div>
-					<button type='button' class='btn btn-primary' id='eventReplyButton'>Reply</button>
-				</div>
-			</div>
-			<div class='eventPostCont'>
-				<div class='eventPostProfileImage'></div>
-				<div class='eventPostGap'></div>
-				<div class='eventPostName'>Yoshi</div>
-				<div class='eventPostDate'>10/10/18</div>
-				<div class='eventPostTime'>4:20 PM</div>
-				<div class='eventPostComment'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-				<div class='eventPostVoteButtons'>					        			
-					<div class='eventPostUpvote'><i class='fa fa-hand-o-up' aria-hidden='true'></i></div>
-					<div class='eventPostDownvote'><i class='fa fa-hand-o-down' aria-hidden='true'></i></div>
-					<button type='button' class='btn btn-primary' id='eventReplyButton'>Reply</button>
-				</div>
-			</div>
-			<div class='eventPostCont'>
-				<div class='eventPostProfileImage'></div>
-				<div class='eventPostGap'></div>
-				<div class='eventPostName'>Yoshi</div>
-				<div class='eventPostDate'>10/10/18</div>
-				<div class='eventPostTime'>4:20 PM</div>
-				<div class='eventPostComment'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-				<div class='eventPostVoteButtons'>					        			
-					<div class='eventPostUpvote'><i class='fa fa-hand-o-up' aria-hidden='true'></i></div>
-					<div class='eventPostDownvote'><i class='fa fa-hand-o-down' aria-hidden='true'></i></div>
-					<button type='button' class='btn btn-primary' id='eventReplyButton'>Reply</button>
-				</div>
-			</div>
-			<div class='eventPostCont'>
-				<div class='eventPostProfileImage'></div>
-				<div class='eventPostGap'></div>
-				<div class='eventPostName'>Yoshi</div>
-				<div class='eventPostDate'>10/10/18</div>
-				<div class='eventPostTime'>4:20 PM</div>
-				<div class='eventPostComment'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-				<div class='eventPostVoteButtons'>					        			
-					<div class='eventPostUpvote'><i class='fa fa-hand-o-up' aria-hidden='true'></i></div>
-					<div class='eventPostDownvote'><i class='fa fa-hand-o-down' aria-hidden='true'></i></div>
-					<button type='button' class='btn btn-primary' id='eventReplyButton'>Reply</button>
-				</div>
-			</div>					        	
+<div class="template-post">
+	<div class="image-buttons-container">
+		<div class="post-profile-image"></div>						
+		<div class="post-profile-gap"></div>
+		<div class="post-like-button">													
+			<i class="far fa-thumbs-up" id="thumbsUpIcon" onclick="thumbsUpFunc()"></i>							
+			1
+		</div>						
+		<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
+			<i class="far fa-comments" id="commentsIcon"></i>
+			2
 		</div>
-	  </div>
-	  <div class='modal-footer'>					      						        
-		<!-- <button type='button' class='btn btn-primary' id='eventReplyButton'>Reply</button> -->
-		<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-	  </div>
-	</div>
-  </div>
+	</div>						
+	<div class="post-text-container">
+		<div class="post-date-time">
+			<span class="profile-name">Rathalos09</span>
+			Today - 10:15 PM </div>
+		<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, 
+		</div>
+	</div>					
 </div>

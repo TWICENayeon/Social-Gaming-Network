@@ -134,7 +134,6 @@ if(!isset($_SESSION["current_user_id"])) {
 							" . $tuple["post_date"] . " - " . $tuple["post_time"] . "</div>
 						<div class='post-text'>". $tuple["post_text"] . " 
 						</div>
-						<div class='post-picture'></div>
 					</div>					
 				</div>";
 				
