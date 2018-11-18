@@ -24,10 +24,17 @@ function fetchPosts() {
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("posts").innerHTML = this.responseText;
+				alert(this.responseText);
             }
         };
         xmlhttp.open("POST", "php/fetch_posts.php", true);
         xmlhttp.send();
+}
+
+function fetchEvents() {
+		fetchEventList();
+		fetchEventModals();
+		fetchEventPosts();
 }
 
 function fetchEventList() {
@@ -51,7 +58,7 @@ function fetchEventModals() {
         xmlhttp.open("POST", "php/fetch_events_modals.php", true);
         xmlhttp.send();
 }
-
+	
 function fetchEventPosts() {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -61,6 +68,26 @@ function fetchEventPosts() {
         };
         xmlhttp.open("POST", "php/fetch_events_posts.php", true);
         xmlhttp.send();
+}
+
+function createPost() {
+	var textarea_text = $(".postTextBox").val();
+	var params = 'post_text=' + textarea_text;
+	var xmlhttp = new XMLHttpRequest();
+	
+	xmlhttp.open("POST", "php/new_user_post.php", true);
+	
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			alert(this.responseText);
+			fetchPosts();
+		}
+	};
+	xmlhttp.send(params);
+	
+	
 }
 </script>
 
@@ -80,13 +107,9 @@ function tabClick() {
 	if($link.attr("id") == "esports-tab") {
 	}
 	if($link.attr("id") == "groups-tab") {
-		alert("groups");
 	}
 	if($link.attr("id") == "events-tab") {
-		alert("events");
-		fetchEventList();
-		fetchEventModals();
-		fetchEventPosts();
+		fetchEvents();
 	}
 }
 
@@ -109,7 +132,7 @@ $(document).ready(function(){
 // });
 </script>
 
-<body onload=fetchPosts()>
+<body onload="fetchPosts(); fetchEvents();">
 	<div class="loader"></div>
 	<div class="sgnBanner"><!-- FILLER BANNER (Add Pic) -->
 		<div class="imageIcon" data-toggle="modal" data-target="#uploadBannerModal"><i class="fa fa-camera" id="cameraIcon" aria-hidden="true"></i></div>
@@ -200,7 +223,7 @@ $(document).ready(function(){
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Post!</button>
+				        <button type="button" class="btn btn-primary" onclick="createPost()">Post!</button>
 				      </div>
 				    </div>
 				  </div>
@@ -212,10 +235,10 @@ $(document).ready(function(){
 				<div id="posts"> </div>
 
 				<!-- Search Results hidden by default unless searched -->
-				<div class="searchResults">
+				<!-- <div class="searchResults">
 					<h1 class="searchTitle">Search Results for: </h1><h2 class="searchQuery">Something typed in search bar</h2>
 					<div class="searchResultsBox"></div>
-				</div>
+				</div> -->
 			</div>	
 			<!-- Esports Tab -->
 		  	<div class="tab-pane fade" id="esports" role="tabpanel" aria-labelledby="esports-tab">

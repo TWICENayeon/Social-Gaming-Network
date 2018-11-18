@@ -143,6 +143,8 @@ if(!isset($_SESSION["current_user_id"])) {
 			}
 		}
 		else {
+			echo $_SESSION["page_id"] . "<br><br><br>";
+			echo $search_user_wall_posts;
 			echo "<!-- Dialog for No Posts to show -->
 				<div class='noPostsDialog'><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>";
 		}

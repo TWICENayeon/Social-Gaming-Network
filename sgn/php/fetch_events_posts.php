@@ -138,7 +138,7 @@ if(!isset($_SESSION["current_user_id"])) {
 								ORDER BY date_time DESC
 								LIMIT 5;";
 								
-		echo $search_past_user_events;
+		// echo $search_past_user_events;
 								
 		$result = $conn->query($search_past_user_events);
 		
