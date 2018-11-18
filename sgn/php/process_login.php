@@ -62,7 +62,7 @@ else {
 		ob_end_clean();
 	}
 
-	header("Location: http://localhost/sgn/index.php");
+	header("Location: http://localhost/sgn/index.html");
 }
 
 ?>

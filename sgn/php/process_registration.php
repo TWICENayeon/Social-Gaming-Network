@@ -4,6 +4,11 @@
 <html>
 
 <?php
+if(empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["email"]) || empty($_POST["first_name"]) || empty($_POST["last_name"])) {
+	header("Location: http://localhost/sgn/index.html");
+}
+
+echo $_POST["password"];
 // Allows access to the session array
 session_start();
 
@@ -54,7 +59,7 @@ if(ob_get_length()) {
 	ob_end_clean();
 }
 
-header("Location: http://localhost/sgn/index.php");
+header("Location: http://localhost/sgn/index.html");
 
 ?>
 
