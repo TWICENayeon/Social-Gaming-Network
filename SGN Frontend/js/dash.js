@@ -58,7 +58,7 @@ $(document).ready(function(){
  //  			buttonPos.css("left", chatContPos.left - 100);			
 	// 	}
  //  });
-  document.getElementById("resizer").addEventListener("mousedown", addMousemove)
+  document.getElementById("resizer").addEventListener("mousedown", addMousemove);
 
   function addMousemove (d) {
     console.log("movable")
@@ -95,7 +95,7 @@ $(document).ready(function(){
       if (document.getElementById("rightCont").style.display == "none") {
         document.getElementById("rightCont").style.width = "261px";
         document.getElementById("rightCont").style.display = "block"; } 
-        document.getElementById("resizer").addEventListener("mousedown", addMousemove) 
+        document.getElementById("resizer").addEventListener("mousedown", addMousemove); 
   }
   
   // $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -125,12 +125,37 @@ $(document).ready(function(){
 //       }
   document.getElementById("thumbsUpIcon").addEventListener("click", thumbsUpFunc);
   function thumbsUpFunc() {
-    document.getElementById("thumbsUpIcon").style.color = "#1E90FF";
+    document.getElementById("thumbsUpIcon").style.color = "#1E90FF";    
+  }
+  document.getElementById("handUp").addEventListener("click", voteUpFunc);
+  function voteUpFunc() {
+    document.getElementById("handUp").style.color = "#1E90FF";
+  }
+  document.getElementById("handDown").addEventListener("click", voteDownFunc);
+  function voteDownFunc() {
+    document.getElementById("handDown").style.color = "#1E90FF";
   }
   // document.getElementById("logoutDD").addEventListener("click", logoutFunc);
   // function logoutFunc {
-    
+
   // }
+  // Search Bar Functionality
+  $("#searchSubmitBtn").click(function() {
+    var searchContent = $("#searchContent");    
+    var contentBox = $("#myTabContent");    
+    // contentBox.html(' ');
+    alert();    
+    contentBox.appendTo(searchContent);
+    // contentBox.show();
+    return false;    
+
+  });
+  // searchContent = $("#searchContent"); 
+  // var contentBox = $("#myTabContent");
+  // contentBox.html('');
+  // contentBox.appendTo(searchContent);
+
+
   setTimeout(function(){ 
     $(".loader").delay(150).fadeOut("slow");
   // $(".loader").delay().fadeOut("slow");
