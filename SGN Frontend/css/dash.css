@@ -57,7 +57,7 @@ body {
 	/*background-color: black;*/
 	color: white;
 	font-size: 20px;
-	background-image: url('../img/banner1.jpg');
+	background-image: url('../img/14.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -254,7 +254,7 @@ body {
 	font-size: 5rem;
 }
 #createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal, #eventModal, #futureEventModal,
-#eventPostsModal, #uploadBannerModal {
+#eventPostsModal, #uploadBannerModal, #profileModal, #tournamentModal, #dashProfileModal, #settingsModal {
 	color: black;
 
 } 
@@ -404,7 +404,8 @@ body {
 
 /* Track */
 #myTabContent::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    /*background: #f1f1f1;*/ 
+    background: #202020;
     border-radius: 5px;
 }
 
@@ -427,7 +428,7 @@ body {
 	margin: auto;
 	text-align: center;
 }
-.eventPostProfileImage, .commentProfileImage {
+.eventPostProfileImage, .commentProfileImage, .profileModalImage {
 	height: 60px;
 	width: 60px;
 	border: 1px solid black;
@@ -441,6 +442,11 @@ body {
 	background-repeat: no-repeat;
 	background-color: gray;
 }
+.profileModalImage {
+	margin: auto;
+	text-align: center;
+}
+
 .eventPostCont, .commentCont {
 	display: flex;
 	flex-direction: column;
@@ -467,6 +473,15 @@ body {
 	/*margin-right: 0.5em;*/
 	/*text-align: right;*/
 	font-size: 2rem;
+}
+.commentPostUpvote {
+	margin-right: 20px;
+}
+.commentPostDownvote {
+	margin-right: 20px;
+}
+#handUp:hover, #handDown:hover {
+	color: #1E90FF;
 }
 .eventPostUpvote {
 	margin-right: 10px;
@@ -507,4 +522,54 @@ body {
 }
 #profileName {
 	color: orange;
+}
+.participantsCont {
+	
+}
+.contenderImage {
+	margin: auto;	
+	height: 60px;
+	width: 60px;
+	border: 1px solid black;
+	border-radius: 40px;
+	margin-left: 1em;
+	margin-top: 1.25em;
+	margin-right: 1em;
+	margin-bottom: 1.25em;
+	background-image: url("../img/Profile-icon-9.png");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: black;
+}
+.contenderCont {
+	display: inline-flex;
+	flex-direction: row;
+	margin: auto;
+	margin-right: 10px;
+	text-align: center;
+	border: 1px solid black;
+	border-radius: 15px;
+	margin-bottom: 10px;
+}
+.contenderNum {
+	font-size: 2rem;
+	margin: auto;
+	margin-left: 3px;
+}
+.contenderName {
+	text-align: center;
+	margin: auto;
+	margin-right: 10px;
+}
+#notifs-tab {
+	color: grey;
+}
+.tab-icons {
+	display: flex;
+	flex-direction: row;
+
+}
+.emailForm {
+	text-align: center;
 }
