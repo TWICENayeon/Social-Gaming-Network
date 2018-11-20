@@ -1,0 +1,772 @@
+html {
+
+}
+body {
+	display: flex;
+	flex-direction: column;
+	color: white;
+	background-color: #202020;
+	width: 100vw;
+	height: 100vh;
+	font-family: 'Kanit', sans-serif;
+}
+.loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background-color: #202020;	
+	background-image: url("../img/lg.dual-ring-loader.gif");
+	background-position: center;
+	/*background-size: 20% 20%;*/
+	background-repeat: no-repeat;
+}
+.nav-tabs {
+	border-bottom: #202020;
+}
+.nav-item {
+	padding-right: 10px;
+}
+.nav-item .nav-link {
+	border: none;
+}
+.nav-item .nav-link:hover {
+	border: none;
+	color: white;
+}
+.nav-item .nav-link.active {
+	background-color: initial;
+	color: orange;
+}
+.dropdown-menu {
+	background-color: #181818;
+}
+.dropdown-menu .dropdown-item {
+	background-color: #181818;
+	color: #007bff;
+}
+/*.nav-item .nav-link .nav-link:hover {
+	border: none;
+}*/
+.sgnBanner {
+	width: 100%;
+	height: 200px;
+	flex-shrink: 0;
+	/*background-color: black;*/
+	color: white;
+	font-size: 20px;
+	background-image: url('../img/banner1.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	
+}
+/*.imageIconCont {
+	text-align: right;
+}*/
+.imageIcon {
+	margin: auto;
+	margin-top: 10em;
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	font-size: 1rem;
+	border: 1px solid grey;
+	border-radius: 20px;
+	background: grey;
+}
+#cameraIcon {
+	margin: auto;
+    margin-top: 6px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 6px;
+}
+#profileLi {
+	padding: 0;
+	margin-right: 2em;
+}
+#profile-tab {
+	/*background-image: : url("../img/Profile-icon-9.");*/
+	/*background-size: 200px 200px;*/	
+	font-size: 1em;
+	z-index: -1;
+	padding: 0;
+}
+#profile-tab::after {
+	display: none;
+}
+#profile-tab img {
+	height: 38px;
+	width: 38px;	
+}
+.sgnChatCont {
+	flex-shrink: 0;
+	border: 1px black solid;
+	left: 0 !important;
+	max-width: 35em;
+}
+.sgnChatBox {
+	display: inline-block;
+	/*border: 1px black;*/
+	/*padding: 10px;*/
+	/*margin: 10px;*/
+	width: 35em;
+	z-index: auto;
+	overflow: auto;	
+}
+.tabs-content {
+	height: 100%;
+}
+#myTabContent {
+	flex-grow: 1;
+	text-align: center;
+	/*display: inline-block;
+	height: 100%;*/
+}
+/*.row .col-8 .sgnTabs {
+	width:100vw;
+}*/
+#dashTabs {
+	width: 100%;
+	background-color: black;
+}
+.main-tabs {
+	padding-right: 50px;
+}
+.sgnTabs .contentCont {
+	font-color: white;
+}
+.contentCont {	
+	position: relative;
+	display: flex;
+	flex-grow: 1;	
+	overflow: auto;	
+}
+#myTabContent {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	/*height: 100%;*/
+}
+#wrapper {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+	width: 250px;
+    border: 1px solid #ACD8F0;
+}
+#friendPanel {
+	
+}	
+#chatbox {
+    text-align: left;
+    margin: 0 auto;
+    margin-bottom: 0px;
+    padding: 0px;
+    background: #fff;
+    height: 220px;
+    width: 250px;
+    border: 1px solid #ACD8F0;
+    overflow: scroll; 
+}
+#usermsg {
+    width: 190px;
+    border: 1px solid #ACD8F0; 
+} 
+#submit { 
+	width: 60px; 
+}
+.template-post {
+
+	/*limit height of post*/
+	display: flex;
+	width: 700px;
+	text-align: center;
+	margin: auto;
+	margin-bottom: 100px;
+	/*margin-left: 30px;*/
+	border: 3px solid black;
+	border-radius: 20px;
+}
+.post-profile-image {	
+	height: 150px;
+	width: 150px;
+	border: 2px solid black;
+	border-radius: 75px;
+	margin-left: 2em;
+	margin-top: 1.5em;
+	margin-right: 1em;
+	background-image: url("../img/yoshi-prof.png");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: gray;
+}
+.post-text-container {
+	/*border: 1px solid black;	*/
+	width: 500px;
+	text-align: left;
+}
+.tabWelcome {
+	font-size: 5rem;
+	/*margin-left: 30px;*/
+}
+.image-buttons-container {
+	display: flex;
+	flex-direction: column;
+}
+.profile-name {
+	font-size: 3rem;
+	text-align: left;
+	margin-right: 1rem;
+}
+.post-profile-gap {
+	flex-grow: 1;
+}
+.post-like-button {
+	margin-left: 0.5em;
+	text-align: left;	
+	font-size: 2rem;
+}
+.post-comment-button {
+	margin-left: 0.5em;
+	text-align: left;
+	font-size: 2rem;
+}
+.post-text {
+	
+}
+.createPostButtonCont {
+	/*float: right;
+	margin-right: 30px;*/
+	text-align: right;
+	/*position: relative;*/ 	
+  	position: fixed;
+	bottom: 1em;
+	/*right: 1em;*/
+	/*height: 200px;
+	width: 200px;*/
+	/*border: 2px solid black;*/
+
+}
+.fa-plus-square {
+	font-size: 5rem;
+}
+#createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal, #eventModal, #futureEventModal,
+#eventPostsModal, #uploadBannerModal {
+	color: black;
+
+} 
+.modal-dialog {
+	width: 100%;
+}
+.postTextBox {
+	width: 100%;
+}
+.post-picture {
+	border: 2px solid black;
+	border-radius: 10px;
+	height: 400px;
+	width: 400px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-image: url("../img/yoshi.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+.templateEvent {
+	display: flex;
+	flex-direction: column;
+	border: 3px solid black;
+	border-radius: 20px;
+	width: 800px;
+	margin: auto;
+	margin-bottom: 100px;
+}
+.eventHeaderCont {
+	margin: auto;
+	text-align: center;
+}
+.eventDateTimePrivCont {
+	margin: auto;
+	text-align: center;
+}
+.eventTitle {
+	font-size: 2rem;
+}
+#eventButton {
+	width: 20%;
+	margin: auto;
+	text-align: center;
+}
+.futureEventTitle {
+	font-size: 5rem;
+}
+.esportsCont {
+	display: flex;
+	border: 3px solid black;
+	border-radius: 20px;
+	width: 800px;
+	margin: auto;
+	margin-bottom: 100px;
+	flex-direction: column;
+}
+.esportsTitle {
+	font-size: 3.5rem;
+}
+.esportsList {
+	font-size: 1.5rem;
+}
+.leagueIcon {
+	/*background-image: url("../img/league-icon.jpg");*/
+	height: 2.5em;
+	width: 2.5em;
+}
+.csgoIcon {
+	height: 2em;
+	width: 2em;
+}
+.owIcon {
+	height: 1.5em;
+	width: 1.5em;
+}
+.hotsIcon {
+	height: 1.5em;
+	width: 1.5em;;
+}
+.sc2Icon {
+	height: 1.5em;
+	width: 1.5em;;
+}
+#resizer {
+	margin-top: 15.5em;
+	height: 2em;
+	width: 2em;
+	user-select: none;
+}
+#resizerIcon {
+	font-size: 2em;
+    border: 2px solid grey;
+    border-radius: 3px;
+    background: grey;
+    padding-left: 4px;
+    padding-bottom: 4px;
+}
+.streamCont {
+	height: 480px;
+	width: 640px;
+	flex-grow: 1;
+	text-align: left;
+}
+.streamChatCont {
+	height: 480px;
+	width: 400px;	
+	text-align: right;
+}
+.streamVideo {
+	border: 2px solid black;
+	flex-grow: 1;
+	height: 480px;	
+}
+.streamChat {
+	border: 2px solid blue;
+	height: 480px;
+	width: 400px;
+}
+#esportModalBody {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: row;
+}
+#esportsNewsCont {
+	display: flex;
+	border: 3px solid black;
+	border-radius: 20px;
+	width: 800px;
+	margin: auto;
+	margin-bottom: 100px;
+	flex-direction: column;
+}
+.modal-content.modal-1200 {
+	width: 1200px;
+}
+.modal-dialog.modal-lg {
+	max-width: 1200px;
+}
+/* Width */
+#myTabContent::-webkit-scrollbar {
+    width: 10px;    
+}
+
+/* Track */
+#myTabContent::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 5px;
+}
+
+/* Handle */
+#myTabContent::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px; 
+}
+
+/* Handle on hover */
+#myTabContent::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+.modalEventCont {
+	display: flex;
+	flex-direction: column;
+}
+#eventPosts {
+	width: 20%;
+	margin: auto;
+	text-align: center;
+}
+.eventPostProfileImage, .commentProfileImage {
+	height: 60px;
+	width: 60px;
+	border: 1px solid black;
+	border-radius: 40px;
+	margin-left: 2em;
+	margin-top: 1.5em;
+	margin-right: 1em;
+	background-image: url("../img/yoshi-prof.png");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: gray;
+}
+.eventPostCont, .commentCont {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+	border-radius: 20px;
+	margin-bottom: 1em;
+}
+.eventPostGap {
+	flex-grow: 1;
+}
+.eventPostVoteButtons, .commentPostVoteButtons {
+	display: flex;
+	margin: auto;
+	text-align: right;
+	margin-right: 0.5em;
+}
+#thumbsUpIcon:hover {
+	color: #1E90FF;
+}
+#commentsIcon:hover {
+	color: orange;
+}
+.eventPostUpvote, .eventPostDownvote, .commentPostUpvote, .commentPostDownvote {
+	/*margin-right: 0.5em;*/
+	/*text-align: right;*/
+	font-size: 2rem;
+}
+.eventPostUpvote {
+	margin-right: 10px;
+}
+.eventPostDownvote {
+	margin-right: 10px;
+}
+#handUp {
+	margin-left: 10px;
+}
+#handDown {
+	margin-left: 10px;
+}
+#eventReplyButton {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+.commentText {
+	
+}
+.nav-item.searchTab form.searchBar {
+	display: flex;
+	flex-direction: row;
+	padding-right: 2px; 
+}
+.nav-item.searchTab form.searchBar button {
+	margin-left: 5px;
+	background: black;
+	color: white;
+	border: 1px white;
+    border-left: none;
+    font-size: 1.5rem;
+}
+.searchResults {
+	display: none;
+	visibility: hidden;
+}
+#profileName {
+	color: orange;
+}
+/*------------------------------------------------------------------------------GROUPS CSS STARTS HERE------------------------------------------------------------------------------*/
+#yourGroups {
+	position: absolute;
+	top: 130px;
+	left: 50px;
+	padding: 5px;
+	border: 3px solid black;
+	border-radius: 20px;
+}
+#recommendedGroups {
+	position: absolute; 
+	top: 420px;
+	left: 50px;
+	padding: 5px;
+	border: 3px solid black;
+	border-radius: 20px;
+}
+#scrolly {
+	width: 800px;
+	height: 200px;
+	overflow: auto;
+	overflow-y: hidden;
+	margin: 0 auto;
+	white-space: nowrap
+}
+#yourGroups h2 {
+	color: white;
+}
+#recommendedGroups h2 {
+	color: white;
+}
+#yourGroups div img {
+	width: 120px;
+	height: 120px;
+	margin: 40px 20px;
+	display: inline;
+}
+#recommendedGroups div img {
+	width: 120px;
+	height: 120px;
+	margin: 40px 20px;
+	display: inline;
+}
+#groups button {
+	position: absolute;
+	top: 720px;
+	left: 390px;
+	height: 40px;
+    width: 120px;
+	background-color: #4CAF50; /* Green */
+	border-radius: 10px;
+	border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	margin-bottom: 10px;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+	text-align: center;
+    padding-top: 100px; /* Location of the box */
+	padding-bottom: 100px; /* Location of the box */
+	padding-left: 500px; /* Location of the box */
+	padding-right: 500px; /* Location of the box */
+    margin: auto;
+    width: 95%; /* Full width */
+    height: 92%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal-content {
+    background-color: #fefefe;
+	color: black;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#currentGroupPage {
+	position: absolute;
+	top: 830px;
+	left: 50px;
+	width: 815px;
+	border: none;
+	display: none;
+	flex-direction: column;
+}
+#groupWall {
+	positon: absolute;
+	left: 10px;
+	top: 0px;
+	height: 700px;
+	width: 420px;
+}
+#name {
+	position: absolute;
+	top: 10px;
+	left: 100px;
+	width: 360px;
+	text-align: center;
+	padding: 5px;
+}
+#desc {
+	position: absolute;
+	top: 80px;
+	left: 0px;
+	width: 500px;
+	height: 250px;
+	padding: 10px;
+	overflow: auto;
+	border: 3px solid black;
+	border-radius: 20px;
+	padding: 5px;
+	text-align: left;
+}
+#posts {
+	position: absolute;
+	top: 400px;
+	left: 0px;
+	padding: 10px;
+	width: 500px;
+	height: 400px;
+	overflow: auto;
+	list-style-type: none;
+	border: 3px solid black;
+	border-radius: 20px;
+	text-align: left;
+}
+.post {
+	border: 2px solid black;
+	border-radius: 20px;
+	padding: 10px;
+	text-align: left;
+}
+#memberList {
+	position: absolute;
+	right: 0px;
+	top: 10px;
+	height: 800px;
+	width: 190px;
+	text-align: left;
+	border: 3px solid black;
+	border-radius: 20px;
+	padding: 5px;
+}
+#memberList button {
+	position: absolute;
+	top: 50px;
+	left: 33px;
+	height: 40px;
+    width: 120px;
+	background-color: #4CAF50; /* Green */
+	border-radius: 10px;
+	border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	margin-bottom: 10px;
+}
+#groupMembers {
+	position: absolute;
+	height: 675px;
+	width: 180px;
+	overflow: auto;
+	list-style-type: none;
+	padding: 5px;
+}
+#recommendedGroupPage {
+	position: absolute;
+	top: 830px;
+	left: 50px;
+	width: 815px;
+	border: none;
+	display: none;
+	flex-direction: column;
+}
+#groupWall2 {
+	position: absolute;
+	left: 10px;
+	top: 0px;
+	height: 400px;
+	width: 420px;
+}
+#name2 {
+	position: absolute;
+	top: 10px;
+	left: 100px;
+	width: 360px;
+	text-align: center;
+	padding: 5px;
+}
+#desc2 {
+	position: absolute;
+	top: 80px;
+	left: 0px;
+	width: 500px;
+	height: 250px;
+	padding: 10px;
+	overflow: auto;
+	border: 3px solid black;
+	border-radius: 20px;
+	padding: 5px;
+	text-align: left;
+}
+#recommendedGroupPage button {
+	position: absolute;
+	top: 350px;
+	left: 200px;
+	height: 40px;
+    width: 100px;
+	background-color: #4CAF50; /* Green */
+	border: none;
+	border-radius: 10px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	margin-bottom: 10px;
+}
+#memberList2 {
+	position: absolute;
+	right: 0px;
+	top: 10px;
+	height: 370px;
+	width: 190px;
+	text-align: left;
+	border: 3px solid black;
+	border-radius: 20px;
+	padding: 5px;
+}
+#groupMembers2 {
+	position: absolute;
+	height: 300px;
+	width: 180px;
+	overflow: auto;
+	list-style-type: none;
+	padding: 5px;
+}
+/*-------------------------------------------------------------------------------GROUPS CSS ENDS HERE-------------------------------------------------------------------------------*/
