@@ -169,20 +169,7 @@ if(!isset($_SESSION["current_user_id"])) {
 								</button>
 							  </div>
 							  <div class='modal-body'>
-								<div class='modalEventInfoCont'>
-									<div class='eventPostCont'>
-										<div class='eventPostProfileImage'></div>
-										<div class='eventPostGap'></div>
-										<div class='eventPostName' style='color:black'>" . $tuple["event_name"] . "</div>
-										<div class='eventPostDate' style='color:black'>" . $tuple["event_start_date"] . "</div>
-										<div class='eventPostTime' style='color:black'>" . $tuple["event_start_time"] . "</div>
-										<div class='eventPostComment' style='color:black'>" . $tuple["event_description"] . "</div>
-										<div class='eventPostVoteButtons'>					        			
-											<div class='eventPostUpvote' style='color:black'>10M<i class='fa fa-hand-o-up' id='handUp' aria-hidden='true'></i></div>
-											<div class='eventPostDownvote' style='color:black'>15K<i class='fa fa-hand-o-down' id='handDown' aria-hidden='true'></i></div>
-											<button type='button' class='btn btn-primary' id='eventReplyButton'>Post</button>
-										</div>
-									</div>";
+								<div class='modalEventInfoCont'>";
 									
 				$search_event_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time
 									FROM sgn_database.posts JOIN sgn_database.users

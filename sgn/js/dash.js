@@ -58,14 +58,13 @@ $(document).ready(function(){
  //  			buttonPos.css("left", chatContPos.left - 100);			
 	// 	}
  //  });
-  document.getElementById("resizer").addEventListener("mousedown", addMousemove)
+  document.getElementById("resizer").addEventListener("mousedown", addMousemove);
 
   function addMousemove (d) {
     console.log("movable")
     document.addEventListener("mousemove", widthDriver)
-
   }
-
+  // document.addEventListener("mouseup", removeMove);
   function widthDriver(e) {
       document.addEventListener("mouseup", removeMove);
       var width = e.screenX;
@@ -81,22 +80,22 @@ $(document).ready(function(){
       }
       if (width < 8) {
           width = 8;
-      }
-      document.getElementById("resizer").addEventListener("click", popChat);
-      function popChat(e) {
-        console.log("clickable")
-          if (document.getElementById("rightCont").style.display == "none") {
-            document.getElementById("rightCont").style.width = "261px";
-            document.getElementById("rightCont").style.display = "block"; } 
-            document.getElementById("resizer").addEventListener("mousedown", addMousemove) 
-      }
-
+      }      
       document.getElementById("myTabContent").style.width = (width + 6) + "px";
       document.getElementById("rightCont").style.width = (document.getElementById("mainCont").clientWidth - width - 6) + "px";
   }
   function removeMove(e) {
       document.removeEventListener("mousemove", widthDriver);
       document.removeEventListener("mouseup", removeMove);
+  }
+  document.getElementById("resizer").addEventListener("click", popChat);
+  // document.getElementById("resizer").addEventListener("mousedown", addMousemove)
+  function popChat(e) {
+    console.log("clickable")
+      if (document.getElementById("rightCont").style.display == "none") {
+        document.getElementById("rightCont").style.width = "261px";
+        document.getElementById("rightCont").style.display = "block"; } 
+        document.getElementById("resizer").addEventListener("mousedown", addMousemove); 
   }
   
   // $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -124,6 +123,39 @@ $(document).ready(function(){
 //       if (activeTab) {
 //             $('ul.tabs li:has(a[href="' + activeTab + '"])').click(); // And simulate clicking it
 //       }
+  document.getElementById("thumbsUpIcon").addEventListener("click", thumbsUpFunc);
+  function thumbsUpFunc() {
+    document.getElementById("thumbsUpIcon").style.color = "#1E90FF";    
+  }
+  document.getElementById("handUp").addEventListener("click", voteUpFunc);
+  function voteUpFunc() {
+    document.getElementById("handUp").style.color = "#1E90FF";
+  }
+  document.getElementById("handDown").addEventListener("click", voteDownFunc);
+  function voteDownFunc() {
+    document.getElementById("handDown").style.color = "#1E90FF";
+  }
+  // document.getElementById("logoutDD").addEventListener("click", logoutFunc);
+  // function logoutFunc {
+
+  // }
+  // Search Bar Functionality
+  $("#searchSubmitBtn").click(function() {
+    var searchContent = $("#searchContent");    
+    var contentBox = $("#myTabContent");    
+    // contentBox.html(' ');
+    alert();    
+    contentBox.appendTo(searchContent);
+    // contentBox.show();
+    return false;    
+
+  });
+  // searchContent = $("#searchContent"); 
+  // var contentBox = $("#myTabContent");
+  // contentBox.html('');
+  // contentBox.appendTo(searchContent);
+
+
   setTimeout(function(){ 
     $(".loader").delay(150).fadeOut("slow");
   // $(".loader").delay().fadeOut("slow");

@@ -462,6 +462,7 @@ body {
 	margin: auto;
 	text-align: right;
 	margin-right: 0.5em;
+	color:black;
 }
 #thumbsUpIcon:hover {
 	color: #1E90FF;
@@ -473,6 +474,7 @@ body {
 	/*margin-right: 0.5em;*/
 	/*text-align: right;*/
 	font-size: 2rem;
+	color:black;
 }
 .commentPostUpvote {
 	margin-right: 20px;

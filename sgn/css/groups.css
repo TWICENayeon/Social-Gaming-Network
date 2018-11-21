@@ -1,0 +1,333 @@
+html {
+
+}
+body {
+	display: flex;
+	flex-direction: column;
+	color: white;
+	background-color: #202020;	
+	width: 100vw;
+	height: 100vh;
+	font-family: 'Kanit', sans-serif;
+}
+.nav-tabs {
+	border-bottom: #202020;
+}
+.nav-item {
+	padding-right: 10px;
+}
+.nav-item .nav-link {
+	border: none;
+}
+.nav-item .nav-link:hover {
+	border: none;
+	color: white;
+}
+.nav-item .nav-link.active {
+	background-color: initial;
+	color: orange;
+}
+.dropdown-menu {
+	background-color: #181818;
+}
+.dropdown-menu .dropdown-item {
+	background-color: #181818;
+	color: #007bff;
+}
+/*.nav-item .nav-link .nav-link:hover {
+	border: none;
+}*/
+.sgnBanner {
+	width: 100%;
+	height: 200px;
+	flex-shrink: 0;
+	/*background-color: black;*/
+	color: white;
+	font-size: 20px;
+	background-image: url('../img/Overwatch-Banner.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;	
+}
+#profileLi {
+	padding: 0;
+	margin-right: 2em;
+}
+#profile-tab {
+	/*background-image: : url("../img/Profile-icon-9.");*/
+	/*background-size: 200px 200px;*/	
+	font-size: 1em;
+	z-index: -1;
+	padding: 0;
+}
+#profile-tab::after {
+	display: none;
+}
+#profile-tab img {
+	height: 38px;
+	width: 38px;	
+}
+.tabs-content {
+	height: 100%;
+}
+#myTabContent {
+	flex-grow: 1;
+	text-align: center;
+	/*display: inline-block;
+	height: 100%;*/
+}
+/*.row .col-8 .sgnTabs {
+	width:100vw;
+}*/
+#dashTabs {
+	width: 100%;
+	background-color: black;
+}
+.main-tabs {
+	padding-right: 50px;
+}
+.sgnTabs .contentCont {
+	font-color: white;
+}
+.contentCont {	
+	position: relative;
+	display: flex;
+	flex-grow: 1;	
+	overflow: auto;
+	padding: 10px;
+}
+#myTabContent {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	/*height: 100%;*/
+}
+#yourGroups {
+	position: absolute;
+	top: 10px;
+	left: 50px;
+	padding: 5px;
+	border: 3px solid white;
+}
+#recommendedGroups {
+	position: absolute; 
+	top: 300px;
+	left: 50px;
+	padding: 5px;
+	border: 3px solid white;
+}
+#scrolly {
+	width: 800px;
+	height: 200px;
+	overflow: auto;
+	overflow-y: hidden;
+	margin: 0 auto;
+	white-space: nowrap
+}
+#yourGroups > h2 {
+	color: white;
+}
+#recommendedGroups > h2 {
+	color: white;
+}
+#yourGroups > div > img {
+	width: 120px;
+	height: 120px;
+	margin: 40px 20px;
+	display: inline;
+}
+#recommendedGroups > div > img {
+	width: 120px;
+	height: 120px;
+	margin: 40px 20px;
+	display: inline;
+}
+.contentCont > button {
+	position: absolute;
+	top: 600px;
+	left: 390px;
+	height: 40px;
+    width: 120px;
+	background-color: #4CAF50; /* Green */
+	border-radius: 10px;
+	border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	margin-bottom: 10px;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+	text-align: center;
+    padding-top: 100px; /* Location of the box */
+	padding-bottom: 100px; /* Location of the box */
+	padding-left: 500px; /* Location of the box */
+	padding-right: 500px; /* Location of the box */
+    margin: auto;
+    width: 95%; /* Full width */
+    height: 92%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal-content {
+    background-color: #fefefe;
+	color: black;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#currentGroupPage {
+	position: absolute;
+	top: 710px;
+	left: 50px;
+	width: 815px;
+	border: none;
+	display: none;
+	flex-direction: column;
+}
+#groupWall {
+	positon: absolute;
+	left: 10px;
+	top: 0px;
+	height: 700px;
+	width: 420px;
+}
+#name {
+	position: absolute;
+	top: 10px;
+	left: 100px;
+	width: 360px;
+	text-align: center;
+	padding: 5px;
+}
+#desc {
+	position: absolute;
+	top: 80px;
+	left: 0px;
+	width: 500px;
+	height: 250px;
+	padding: 10px;
+	overflow: auto;
+	border: 3px solid white;
+	padding: 5px;
+}
+#posts {
+	position: absolute;
+	top: 400px;
+	left: 0px;
+	padding: 10px;
+	width: 500px;
+	height: 400px;
+	overflow: auto;
+	list-style-type: none;
+	border: 3px solid white;
+}
+.post {
+	border: 1px solid white;
+	padding: 10px;
+}
+#memberList {
+	position: absolute;
+	right: 0px;
+	top: 10px;
+	height: 800px;
+	width: 190px;
+	text-align: left;
+	border: 3px solid white;
+	padding: 5px;
+}
+#groupMembers {
+	position: absolute;
+	height: 675px;
+	width: 180px;
+	overflow: auto;
+	list-style-type: none;
+	padding: 5px;
+}
+#recommendedGroupPage {
+	position: absolute;
+	top: 710px;
+	left: 50px;
+	width: 815px;
+	border: none;
+	display: none;
+	flex-direction: column;
+}
+#groupWall2 {
+	positon: absolute;
+	left: 10px;
+	top: 0px;
+	height: 400px;
+	width: 420px;
+}
+#name2 {
+	position: absolute;
+	top: 10px;
+	left: 100px;
+	width: 360px;
+	text-align: center;
+	padding: 5px;
+}
+#desc2 {
+	position: absolute;
+	top: 80px;
+	left: 0px;
+	width: 500px;
+	height: 250px;
+	padding: 10px;
+	overflow: auto;
+	border: 3px solid white;
+	padding: 5px;
+}
+#recommendedGroupPage button {
+	position: absolute;
+	top: 350px;
+	left: 200px;
+	height: 40px;
+    width: 100px;
+	background-color: #4CAF50; /* Green */
+	border: none;
+	border-radius: 10px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	margin-bottom: 10px;
+}
+#memberList2 {
+	position: absolute;
+	right: 0px;
+	top: 10px;
+	height: 370px;
+	width: 190px;
+	text-align: left;
+	border: 3px solid white;
+	padding: 5px;
+}
+#groupMembers2 {
+	position: absolute;
+	height: 300px;
+	width: 180px;
+	overflow: auto;
+	list-style-type: none;
+	padding: 5px;
+}
