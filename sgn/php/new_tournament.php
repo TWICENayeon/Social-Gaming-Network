@@ -10,7 +10,10 @@
 		header("Location: http://localhost/sgn/index.php");
 		exit();
 	}
-	
+	echo "Tournament name: " . $_POST["tournament_name"] . "<br><br>";
+	echo "Tournament name: " . $_POST["event_id"] . "<br><br>";
+	echo "Tournament name: " . $_POST["tournament_date"] . "<br><br>";
+	echo "Tournament name: " . $_POST["tournament_time"] . "<br><br>";
 	
 	// Check if the entire form is filled
 	if(!empty($_POST["tournament_name"])) {
@@ -27,7 +30,7 @@
 
 		
 		$insert_new_tournament_query = "INSERT INTO sgn_database.tournaments (host_event_id, tournament_name, tournament_date, tournament_time)
-								    VALUES (" . $_GET["event_id"] . ", '" . $_POST["tournament_name"] . "', '" . $_POST["tournament_date"] . "', '" . $_POST["tournament_time"] ."');";
+								    VALUES (" . $conn->real_escape_string($_POST["event_id"]) . ", '" . $conn->real_escape_string($_POST["tournament_name"]) . "', '" . $conn->real_escape_string($_POST["tournament_date"]) . "', '" . $conn->real_escape_string($_POST["tournament_time"]) ."');";
 									
 		echo $insert_new_tournament_query;
 		$result = $conn->query($insert_new_tournament_query);

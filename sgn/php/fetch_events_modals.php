@@ -46,8 +46,6 @@ if(!isset($_SESSION["current_user_id"])) {
 		// echo $search_future_user_events;
 		
 		
-		$future_counter = 0;
-		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
 				// echo "<br> <br><a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
@@ -58,7 +56,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				  // "<br></button>
 				// </form>";
 	
-				echo "<div class='modal fade' id='futureEventModal_" . (string)$future_counter . "' tabindex='-1' role='dialog' aria-hidden='true'>
+				echo "<div class='modal fade' id='futureEventModal_"  . $tuple["event_id"] .   "' tabindex='-1' role='dialog' aria-hidden='true'>
 					  <div class='modal-dialog' role='document'>
 					    <div class='modal-content'>
 					      <div class='modal-header'>
@@ -79,7 +77,6 @@ if(!isset($_SESSION["current_user_id"])) {
 					        </div>
 					      </div>
 					      <div class='modal-footer'>
-					        <button type='button' class='btn btn-primary' id='eventSignUpButton'>Sign Up</button>
 					        <button type='button' class='btn btn-primary' id='eventLeaveButton'>Leave</button>
 					        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 					      </div>
@@ -87,7 +84,6 @@ if(!isset($_SESSION["current_user_id"])) {
 					  </div>
 					</div>";
 					
-				++$future_counter;
 			}
 		}
 		?>
@@ -107,7 +103,6 @@ if(!isset($_SESSION["current_user_id"])) {
 		// echo $search_past_user_events;
 		
 		
-		$past_counter = 0;
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
@@ -119,7 +114,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				  // "<br></button>
 				// </form>";
 				
-				echo "<div class='modal fade' id='pastEventModal_" . (string)$past_counter . "' tabindex='-1' role='dialog' aria-hidden='true'>
+				echo "<div class='modal fade' id='pastEventModal_"  . $tuple["event_id"] .   "' tabindex='-1' role='dialog' aria-hidden='true'>
 					  <div class='modal-dialog' role='document'>
 					    <div class='modal-content'>
 					      <div class='modal-header'>
@@ -140,16 +135,11 @@ if(!isset($_SESSION["current_user_id"])) {
 					        </div>
 					      </div>
 					      <div class='modal-footer'>
-					        <button type='button' class='btn btn-primary' id='eventSignUpButton'>Sign Up</button>
-					        <button type='button' class='btn btn-primary' id='eventLeaveButton'>Leave</button>
 					        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 					      </div>
 					    </div>
 					  </div>
 					</div>";
-					
-				
-				++$past_counter;
 			}
 		}
 		

@@ -57,7 +57,7 @@ body {
 	/*background-color: black;*/
 	color: white;
 	font-size: 20px;
-	background-image: url('../img/14.jpg');
+	background-image: url('../img/banner2.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -254,9 +254,9 @@ body {
 	font-size: 5rem;
 }
 #createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal, #eventModal, #futureEventModal,
-#eventPostsModal, #uploadBannerModal, #profileModal, #tournamentModal, #dashProfileModal, #settingsModal {
+#eventPostsModal, #uploadBannerModal, #profileModal, #tournamentModal, #dashProfileModal, #settingsModal, #notifsModal, #createTournamentModal {
 	color: black;
-
+	text-align: center;
 } 
 .modal-dialog {
 	width: 100%;
@@ -572,4 +572,54 @@ body {
 }
 .emailForm {
 	text-align: center;
+}
+.notifCont {
+	border: 1px solid black;
+	border-radius: 10px;
+	margin-bottom: 15px;
+}
+.streamBox {
+	height: 552px;
+	width: 1166px;
+	border: 1px solid black;
+	margin-bottom: 20px;
+}
+.streamLinkCont {
+	margin-bottom: 10px;
+}
+.tournamentSignUpStartButtons {
+	margin-bottom: 10px;
+}
+.personSeedNum {
+	margin-bottom: 10px;
+}
+.createTournamentTitle, .createTournamentDate, .createTournamentTime {
+	margin-bottom: 10px;
+}
+
+.tournamentTitle, .tournamentDate, .tournamentTime, .contenderNum, .contenderName, .contenderImage, .matchCompleteDialog, .winnerDialog,
+ .tournamentWinner, .roundNum, .tournamentStartDialog, .personSeed, .currentParticipantsTitle, .participantsTitle, .personSeedNum, .streamLink {
+	color: black;
+}
+
+.matchContBox {
+	border: 1px solid black;
+	border-radius: 10px;
+	margin: auto;
+	width: 75%;
+	margin-bottom: 20px;
+}
+#paulImage {
+	background-image: url("../img/paul.png");
+}
+#sjImage {
+	background-image: url("../img/sj.png");
+	background-size: cover;
+}
+#saifImage {
+	background-image: url("../img/saif.png");
+}
+#allyImage {
+	background-image: url("../img/ally.png");
+	background-size: cover;
 }

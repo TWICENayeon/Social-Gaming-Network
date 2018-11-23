@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link href="css/dash.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
+	<link href="jqueryUI/jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+	<script src="js/popper.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="jqueryUI/jquery-ui.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>	
+	<script src="js/dash.js"></script>
+	<title>Social Gaming Network - Dashboard</title>
+	
+</head>
+<body>
+	<div class="loader"></div>
+	<div class="sgnBanner"><!-- FILLER BANNER (Add Pic) -->
+		<div class="imageIcon" data-toggle="modal" data-target="#uploadBannerModal"><i class="fa fa-camera" id="cameraIcon" aria-hidden="true"></i></div>
+		<!-- Upload Banner Modal -->
+		<div class="modal fade" id="uploadBannerModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Upload Banner Image</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Select an image to upload for your custom banner: <input type="file" name="bannerFile"></p>		        
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+	<div class="sgnTabs">				
+					<ul class="nav nav-tabs mr-auto flex-col flex-sm-row" id="dashTabs" role="tablist">
+					  <li class="nav-item main-tabs">
+					    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">SGN</a>
+					  </li>
+					  <li class="nav-item main-tabs">
+					    <a class="nav-link" id="esports-tab" data-toggle="tab" href="#esports" role="tab" aria-controls="esports" aria-selected="false">Esports</a>
+					  </li>
+					  <li class="nav-item main-tabs">
+					    <a class="nav-link" id="groups-tab" data-toggle="tab" href="#groups" role="tab" aria-controls="groups" aria-selected="false">Groups</a>
+					  </li>
+					  <li class="nav-item main-tabs">
+					    <a class="nav-link" id="events-tab" data-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false">Events</a>
+					  </li>
+					  <!-- <li class="nav-item">
+					    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Search</a>
+					  </li> -->
+					  <li class="nav-item searchTab">
+					  	<form class="searchBar">
+		      				<input type="text" class="form-control" placeholder="Search.." name="search" data-toggle="modal" data-target="searchModal">
+		      				<button id="searchSubmitBtn" type="submit" data-toggle="modal" data-target="searchModal"><i class="fa fa-search"></i></button>    				
+		      				<!-- <button type="submit">Submit</button> -->
+
+		   				 </form>
+					  <!-- <li class="nav-item">
+					    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Tournaments</a>
+					  </li>-->
+					  </li>
+					  <li class="flex-sm-fill"></li>
+					  <li class="nav-item main-tabs tab-icons">
+					    <a class="nav-link" id="notifs-tab" data-toggle="modal" data-target="#notifsModal" href="#notifs" role="tab" aria-controls="notifs" aria-selected="false"><i class="fas fa-bullhorn"></i> 4</a>
+					    <a class="nav-link" id="settings-tab" data-toggle="modal" data-target="#settingsModal" href="#settings" role="tab" aria-controls="settings" aria-selected="false"><i class="fas fa-cog"></i></a>
+					  </li>
+					  <!-- <li class="nav-item main-tabs">
+					    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="notifs" aria-selected="false"><i class="fas fa-bullhorn"></i> 4</a>
+					  </li> -->					 
+					  <li class="nav-item dropdown" id="profileLi" data-toggle="dropdown">					  	
+					  	<a class="nav-link" id="profile-tab" data-toggle="dropdown-toggle"><img src="img/Profile-icon-9.png"></a>
+					  	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+					  	  <a class="dropdown-item" id="profileName">TWICE_Nayeon</a>
+				          <a class="dropdown-item" data-toggle="modal" data-target="#profileModal">Profile</a>
+				          <a class="dropdown-item" href="#">Account</a>
+				          <!-- <div class="dropdown-item"><a id="logoutDD" href="index.html">Logout</a></div> -->
+				          <a class="dropdown-item" id="logoutDD" href="index.html">Logout</a>
+				        </div>				        
+					  </li>
+					  <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+					  	<a class="dropdown" id="logoutDD" href="index.html">Logout</a>
+					  </div>  -->				 
+					</ul>
+					<!-- Dropdown Profile Modal -->
+					<div class="modal fade" id="profileModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Profile</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <p>Modal body text goes here.</p>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary">Save changes</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<!-- Search Modal -->
+					<!-- <div class="modal fade" id="searchModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog modal-lg" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Profile</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <p>Modal body text goes here.</p>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary">Save changes</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div> -->
+					<!-- Settings Modal -->
+					<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Settings</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div class="updateUserInfoCont">
+					        	<div class="emailForm">New Email: <form><input type="text"></form></div>
+					        	<div class="emailForm">New Username: <form><input type="text"></form></div>
+					        	<div class="emailForm">New Password: <form><input type="text"></form></div>
+					        	<div class="emailForm">New First Name: <form><input type="text"></form></div>
+					        	<div class="emailForm">New Last Name: <form><input type="text"></form></div>
+					        </div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary">Save changes</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<!-- Notifications Modal -->
+					<div class="modal fade" id="notifsModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Your Notifications</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					      	<div class="noNotifsDialog">No new notifications!</div>
+					      	<div class="notifCont">
+					      		<div class="notifDateTime">
+					      			<div class="notifDate">12/7/18</div>
+					      			<div class="notifTime">9:00 PM</div>
+					      		</div>
+					      		<!-- <div class="notifGroupName">From Group: Kevin's FE Fiends</div> -->
+					      		<div class="notifGroupRequestText">Your request to post articles has been approved!</div>
+					      		<button type="button" id="acceptButton" class="btn btn-primary">Accept</button>
+					      		<button type="button" id="declineButton" class="btn btn-primary">Decline</button>
+					      	</div>
+					        <div class="notifCont">
+					      		<div class="notifDateTime">
+					      			<div class="notifDate">12/7/18</div>
+					      			<div class="notifTime">9:00 PM</div>
+					      		</div>
+					      		<div class="notifGroupName">From Group: Kevin's FE Fiends</div>
+					      		<div class="notifGroupRequestText">Come join our movement to make Felicia great again!</div>
+					      		<button type="button" id="acceptButton" class="btn btn-primary">Accept</button>
+					      		<button type="button" id="declineButton" class="btn btn-primary">Decline</button>
+					      	</div>
+					      </div>
+					      <div class="modal-footer">
+					        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>					
+
+			</div>
+	<div class="contentCont" id="mainCont">
+		<div class="tab-content" id="myTabContent">
+			<!-- Dashboard Tab -->
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+				<div class="createPostButtonCont" id="postButtonCont">
+					<i class="far fa-plus-square" data-toggle="modal" data-target="#createPostModal"></i>
+				</div>				
+				<!-- Create Post Modal -->
+				<div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <textarea class="postTextBox" placeholder="What's currently going on:" rows="6" cols="60"></textarea>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Post!</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<div class="tabWelcome">Dashboard</div>
+
+				<!-- Dialog for No Posts to show -->
+				<div class="noPostsDialog"><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>
+
+				<!-- <div class="template-post">					
+					<div class="image-buttons-container">						
+						<div class="post-profile-image" data-toggle="modal" data-target="#dashProfileModal"></div>						
+						<div class="post-profile-gap"></div>
+						<div class="post-like-button">													
+							<i class="far fa-thumbs-up" id="thumbsUpIcon"></i>							
+							2.5M
+						</div>						
+						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
+							<i class="far fa-comments" id="commentsIcon"></i>
+							33
+						</div> -->
+						<!-- User/Profile Modal -->
+						<!-- <div class="modal fade" id="dashProfileModal" tabindex="-1" role="dialog">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="profileModalUname">Profile</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						        <h2 class="profileTitle">Raios</h2>
+						        <div class="profileModalImage"></div>
+						        <div class="profileUserName">Name: Justin Ha</div>
+						        <div class="profileEmail">Email: justinsucks@yahoo.com</div>
+						        <div class="uploadImageSection">Change profile picture: <input type="file" name="bannerFile"></div>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-primary">Save changes</button>
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>
+						  </div>
+						</div> -->
+						<!-- Comments Modal -->
+						<!-- <div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	<div class="commentCont">
+					        		<div class="commentProfileImage"></div>
+					        		<div class="commentPostGap"></div>
+					        		<div class="commentPostName">Yoshi</div>
+					        		<div class="commentPostDate">10/10/18</div>
+					        		<div class="commentPostTime">4:20 PM</div>
+					        		<div class="commentText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="commentPostVoteButtons">
+					        			<div class="commentPostUpvote">10 <i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+					        			<div class="commentPostDownvote">2 <i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+					        		</div>
+					        	</div>
+						        <textarea class="postTextBox" placeholder="Write what's going on:" rows="6" cols="60"></textarea>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						        <button type="button" class="btn btn-primary">Post!</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</div>						
+					<div class="post-text-container">						
+						<div class="post-date-time">
+							<span class="profile-name">Yoshi</span>
+							Today - 9:17 PM </div>
+						<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. 
+						</div>
+						<div class="post-picture"></div>
+					</div>					
+				</div> -->
+<!-- 				<div class="template-post">
+					<div class="image-buttons-container">
+						<div class="post-profile-image"></div>						
+						<div class="post-profile-gap"></div>
+						<div class="post-like-button">													
+							<i class="far fa-thumbs-up" id="thumbsUpIcon" onclick="thumbsUpFunc()"></i>							
+							1
+						</div>						
+						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
+							<i class="far fa-comments" id="commentsIcon"></i>
+							2
+						</div>
+					</div>						
+					<div class="post-text-container">
+						<div class="post-date-time">
+							<span class="profile-name">Rathalos09</span>
+							Today - 10:15 PM </div>
+						<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, 
+						</div>
+					</div>					
+				</div> -->
+				<!-- Search Results hidden by default unless searched -->
+				<div class="searchResults" id="searchContent">
+					<h1 class="searchTitle">Search Results for: </h1><h2 class="searchQuery">Something typed in search bar</h2>
+					<div class="searchResultsBox"></div>
+				</div>
+			</div>	
+			<!-- Esports Tab -->
+		  	<div class="tab-pane fade" id="esports" role="tabpanel" aria-labelledby="esports-tab">
+		  		<div class="tabWelcome">Esports</div>
+		  		<!-- Esports Viewing Container -->
+		  		<div class="esportsCont">
+			  		<div class="esportsTemplate">
+			  			<div class="esportsTitle">List of Esports Games</div>
+			  			<div class="esportsList">
+			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal"><img class="leagueIcon" src="img/lol-icon.png"></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal"><img class="csgoIcon" src="img/csgo-icon.png"></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal"><img class="owIcon" src="img/ow-icon.png"></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal"><img class="hotsIcon" src="img/hots-icon.png"></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal"><img class="sc2Icon" src="img/sc2-icon.png"><br></a>
+			  			</div>
+			  			<!-- Esports Modals -->			  			
+			  			<div class="esportsModals">
+			  				<!-- League Modal -->
+							<div class="modal fade" id="leagueStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">League of Legends Stream</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" id="esportModalBody">
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							<!-- CS Modal -->
+							<div class="modal fade" id="csgoStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Counter-Strike: Global Offensive Stream</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" id="esportModalBody">
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							<!-- OW Modal -->
+							<div class="modal fade" id="owStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Overwatch Stream</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" id="esportModalBody">
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							<!-- HOTS Modal -->
+							<div class="modal fade" id="hotsStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Heroes of the Storm Stream</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" id="esportModalBody">
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							<!-- SC2 Modal -->
+							<div class="modal fade" id="sc2StreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content modal-1200">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Starcraft II Stream</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body" id="esportModalBody">
+							        <div class="streamCont">
+							        	<div class="streamVideo"></div>
+							        </div>
+							        <div class="streamChatCont">
+							        	<div class="streamChat"></div>
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+							      </div>
+							    </div>
+							  </div>
+							</div>							
+						</div>
+			  		</div>
+
+			  	</div>
+			  	<!-- Esports News Container -->
+			  	<div class="esportsNewsCont">
+			  		<div class="esportsTitle">Esports News</div>
+			  		<div class="esportsNewsTemplatePost">
+			  			
+			  		</div>
+			  	</div>		  		
+		  	</div>
+		  	<!-- Groups Tab -->
+		  	<div class="tab-pane fade" id="groups" role="tabpanel" aria-labelledby="groups-tab">
+		  		<div class="tabWelcome">Groups</div>
+		  		List of groups and maybe other content
+		  	</div>
+			<!-- Events Tab -->
+		  	<div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+		  		<div class="tabWelcome">Events</div>
+		  		<div class="eventCont">
+		  			<div class="templateEvent">
+		  				<div class="eventHeaderCont">		  					
+			  				<div class="eventTitle">Kyle's D&D Meetup</div>
+			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
+			  			</div>
+			  			<div class="eventDateTimePrivCont">
+			  				<div class="eventDate">November 3, 2018</div>
+		  					<div class="eventTime">6:00 PM</div>		  				
+		  					<div class="eventPrivacy">Public</div>
+			  			</div>
+			  			<div class="eventViewPostsButtons">
+			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#eventModal">View</button>
+			  				<button type="button" class="btn btn-primary" id="createTournamentButton" data-toggle="modal" data-target="#createTournamentModal">Create Tournament</button>
+			  				<button type="button" class="btn btn-primary" id="tournamentButton" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
+			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
+			  			</div>
+		  			</div>
+		  		</div>
+		  		<div class="futureEventTitle">Past Events</div>
+		  		<div class="futureEventCont">
+		  			<div class="templateEvent">
+		  				<div class="eventHeaderCont">		  					
+			  				<div class="eventTitle">Kyle's D&D Meetup</div>
+			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
+			  			</div>
+			  			<div class="eventDateTimePrivCont">
+			  				<div class="eventDate">November 3, 2018</div>
+		  					<div class="eventTime">6:00 PM</div>		  				
+		  					<div class="eventPrivacy">Public</div>
+			  			</div>
+			  			<div class="eventViewPostsButtons">
+			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#futureEventModal">View/Edit</button>
+			  				<button type="button" class="btn btn-primary" id="tournamentButton" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
+			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
+			  			</div>
+		  			</div>
+		  		</div>
+		  		<div class="eventsModals">
+		  			<!-- Event Modal -->
+		  			<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div class="modalEventInfoCont">
+					        	<!-- should disappear if the event hasnt started -->
+					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
+					        	<h1 id="modalEventDescTitle">Description</h1>					        	
+					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
+					        	<h1 id="modalEventDateTime">Date/Time</h1>
+					        	<div class="eventDate">November 3, 2018</div>
+		  						<div class="eventTime">6:00 PM</div>
+					        </div>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="button" class="btn btn-primary" id="eventSignUpButton">Hello</button>					      	
+					        <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
+					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button>					        
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<div class="modal fade" id="futureEventModal" tabindex="-1" role="dialog" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div class="modalEventInfoCont">
+					        	<!-- should disappear if the event hasnt started -->
+					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
+					        	<h1 id="modalEventDescTitle">Description</h1>					        	
+					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
+					        	<h1 id="modalEventDateTime">Date/Time</h1>
+					        	<div class="eventDate">November 3, 2018</div>
+		  						<div class="eventTime">6:00 PM</div>		  						
+					        </div>
+					      </div>
+					      <div class="modal-footer">					      	
+					        <!-- <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
+					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button> -->
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>  
+		  		</div>
+		  		<!-- Create Tournament Modal-->
+		  		<!-- Tournament Modals -->
+		  		<div class="tournamentModals">
+					<div class="createTournamentModal">
+						<div class="modal fade" id="createTournamentModal" tabindex="-1" role="dialog">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<h5 class="modal-title">Create Tournament</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  <div class="modal-body">
+									<form class="createTournamentForm">						        
+										<div class="createTournamentTitle">Tournament Title: <input type="text"></div>
+										<div class="createTournamentDate">Tournament Date (mm/dd/yy): <input type="text"></div>
+										<div class="createTournamentTime">Tournament Time: <input type="text"></div>
+									</form>
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-primary">Create</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								  </div>
+								</div>					  	
+							</div>						
+						</div>
+					</div>
+					<div class="modal fade" id="tournamentModal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title">Tournament Name</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						        <h1 class="tournamentTitle">Kyle's D&D Meetup</h1>
+						        <h2 class="tournamentDate">12/07/18</h2>
+						        <h2 class="tournamentTime">6:00 PM</h2>
+						        <div class="participantsCont">
+						        	<div class="participantsTitle">Number of Participants: <div class="numberParticipants">5</div></div>
+						        	<div class="currentParticipantsTitle">Current Participants: </div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">1</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Yoshi</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">2</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Yoshi's alter ego</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">3</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Cock Munch</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">4</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Big Dick Energy</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">5</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Paul's Fantasy</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">6</div>
+						        		<div class="contenderImage" id="sjImage"></div>
+						        		<div class="contenderName">SJ</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">7</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Dog Shit</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">8</div>
+						        		<div class="contenderImage" id="paulImage"></div>
+						        		<div class="contenderName">PaulDSSB</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">9</div>
+						        		<div class="contenderImage" id="allyImage"></div>
+						        		<div class="contenderName">Crimson64</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">10</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">ExpandDong</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">11</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">BlazeChar</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">12</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Kobold.Kim</div>
+						        	</div>
+						        	<div class="contenderCont">
+						        		<div class="contenderNum">13</div>
+						        		<div class="contenderImage"></div>
+						        		<div class="contenderName">Trash</div>
+						        	</div>
+						        	<div class="seedingFormCont">
+						        		<form class="seedingForm">
+						        			<div class="personSeed">Select person to change their seeding: 
+						        				<select name="peopleNames">
+						        					<option> </option>
+						        					<option>Yoshi</option>
+						        					<option>Yoshi's alter ego</option>
+						        					<option>Cock Munch</option>
+						        					<option>Big Dick Energy</option>
+						        					<option>Paul's Fantasy</option>
+						        					<option>SJ</option>
+						        					<option>Dog Shit</option>
+						        					<option>PaulDSSB</option>
+						        					<option>Cockhead92</option>
+						        					<option>ExpandDong</option>
+						        					<option>BlazeChar</option>
+						        					<option>Kobold.Kim</option>
+						        					<option>Trash</option>
+						        				</select>
+						        			</div>
+						        			<br>
+						        			<div class="personSeedNum">Enter number to change their seeding: 
+						        				<input type="text">
+						        			</div>
+						        		</form>
+						        	</div>
+						        	<div class="tournamentSignUpStartButtons">
+						        		<button type="btn btn-primary" class="tournamentSignUpButton">Sign Up</button>
+						        		<button type="btn btn-primary" class="tournamentStartButton">Start Tournament</button>
+						       		</div>
+						        	<form class="streamLinkCont">
+						        		<div class="streamLink">Stream for Tournament (Link here) &rarr; <input type="text"></div>
+						        	</form>
+						        	<div class="streamBox"></div>
+						        	<div class="tournamentStartDialog">Note: Tournament has begun!</div>
+						        	<div class="matchProgression">
+						        		<div class="matchCont">
+							        		<div class="roundNum">Round 1</div>
+							        		<div class="matchContBox">
+							        			<div class="matchTitle">Match 1</div>
+							        			<div class="matchParticipants">
+							        				<div class="contenderCont">
+										        		<div class="contenderNum">8</div>
+										        		<div class="contenderImage" id="paulImage"></div>
+										        		<div class="contenderName">PaulDSSB</div>
+										        	</div> v.s.						        			 
+							        			 	<div class="contenderCont">
+										        		<div class="contenderNum">10</div>
+										        		<div class="contenderImage" id="saifImage"></div>
+										        		<div class="contenderName">ExpandDong</div>
+										        	</div>
+										        	<br>
+										        	<div class="pickMatchWinner"><h3>Choose the match winner:</h3></div>
+										        	<div class="matchWinnerPicker">
+										        		<form>
+										        			<select name="pickerBox">
+										        				<option> </option>
+										        				<option>PaulDSSB</option>
+										        				<option>ExpandDong</option>
+										        			</select>
+										        		</form>
+										        	</div> 
+										        	<div class="matchCompleteDialog"><h2>Match Complete<h2></div>
+										        	<div class="winnerDialog">Winner of Match 1:</div>
+										        	<div class="contenderCont">
+										        		<div class="contenderNum">8</div>
+										        		<div class="contenderImage" id="paulImage"></div>
+										        		<div class="contenderName">PaulDSSB</div>
+										        	</div>
+							        			</div>
+							        		</div>
+							        	</div>
+							        	<div class="matchCont">
+							        		<div class="roundNum">Round 2</div>
+							        		<div class="matchContBox">
+							        			<div class="matchTitle">Match 2</div>
+							        			<div class="matchParticipants">
+							        				<div class="contenderCont">
+										        		<div class="contenderNum">8</div>
+										        		<div class="contenderImage" id="paulImage"></div>
+										        		<div class="contenderName">PaulDSSB</div>
+										        	</div> v.s.						        			 
+							        			 	<div class="contenderCont">
+										        		<div class="contenderNum">6</div>
+										        		<div class="contenderImage" id="sjImage"></div>
+										        		<div class="contenderName">SJ</div>
+										        	</div>
+										        	<br>
+										        	<div class="pickMatchWinner"><h3>Choose the match winner:</h3></div>
+										        	<div class="matchWinnerPicker">
+										        		<form>
+										        			<select name="pickerBox">
+										        				<option> </option>
+										        				<option>PaulDSSB</option>
+										        				<option>SJ</option>
+										        			</select>
+										        		</form>
+										        	</div>
+										        	<div class="matchCompleteDialog"><h2>Match Complete<h2></div>
+										        	<div class="winnerDialog">Winner of Match 2:</div>
+										        	<div class="contenderCont">
+										        		<div class="contenderNum">8</div>
+										        		<div class="contenderImage" id="paulImage"></div>
+										        		<div class="contenderName">PaulDSSB</div>
+										        	</div>
+							        			</div>
+							        		</div>
+							        	</div>
+							        	<div class="matchCont">
+							        		<div class="roundNum">Round 3</div>
+							        		<div class="matchContBox">
+							        			<div class="matchTitle">Match 3</div>
+							        			<div class="matchParticipants">
+							        				<div class="contenderCont">
+										        		<div class="contenderNum">8</div>
+										        		<div class="contenderImage" id="paulImage"></div>
+										        		<div class="contenderName">PaulDSSB</div>
+										        	</div> v.s.						        			 
+							        			 	<div class="contenderCont">
+										        		<div class="contenderNum">9</div>
+										        		<div class="contenderImage" id="allyImage"></div>
+										        		<div class="contenderName">Crimson64</div>
+										        	</div>
+										        	<br>
+										        	<div class="pickMatchWinner"><h3>Choose the match winner:</h3></div>
+										        	<div class="matchWinnerPicker">
+										        		<form>
+										        			<select name="pickerBox">
+										        				<option> </option>
+										        				<option>PaulDSSB</option>
+										        				<option>Crimson64</option>
+										        			</select>
+										        		</form>
+										        	</div>
+										        	<div class="matchCompleteDialog"><h2>Match Complete<h2></div>
+										        	<div class="winnerDialog">Winner of Match 3:</div>
+										        	<div class="contenderCont">
+										        		<div class="contenderNum">9</div>
+										        		<div class="contenderImage" id="allyImage"></div>
+										        		<div class="contenderName">Crimson64</div>
+										        	</div>
+							        			</div>
+							        		</div>
+							        	</div>
+							        	<div class="tournamentWinner">Tournament Winner: 
+							        		<div class="contenderCont">
+								        		<div class="contenderNum">9</div>
+								        		<div class="contenderImage" id="allyImage"></div>
+								        		<div class="contenderName">Crimson64</div>
+								        	</div>
+								        </div>
+						        	</div>
+						        </div>					        
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-primary">Save changes</button>
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>					  	
+						</div>						
+		  			</div>
+		  		</div>
+		  		<!-- Event Posts Modals -->
+		  		<div class="eventPostsModals">
+					<div class="modal fade" id="eventPostsModal" tabindex="-1" role="dialog" aria-hidden="true">
+					  <div class="modal-dialog modal-lg" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Event Posts</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div class="modalEventInfoCont">
+					        	<!-- should disappear if there are no posts -->
+					        	<div class="modalEventStartedWarning">No posts to show</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote">10M<i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote">15K<i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>
+					        	<div class="eventPostCont">
+					        		<div class="eventPostProfileImage"></div>
+					        		<div class="eventPostGap"></div>
+					        		<div class="eventPostName">Yoshi</div>
+					        		<div class="eventPostDate">10/10/18</div>
+					        		<div class="eventPostTime">4:20 PM</div>
+					        		<div class="eventPostComment">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+					        		<div class="eventPostVoteButtons">					        			
+					        			<div class="eventPostUpvote"><i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+					        			<div class="eventPostDownvote"><i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+					        			<button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button>
+					        		</div>
+					        	</div>					        	
+					        </div>
+					      </div>
+					      <div class="modal-footer">					      						        
+					        <!-- <button type="button" class="btn btn-primary" id="eventReplyButton">Reply</button> -->
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>		  			
+		  		</div>		  		
+		  	 </div>
+		</div>
+		<!-- <div class="afterHidden"></div> -->
+		<div class="sgnChatCont">
+			<!-- <div class="afterHiddenSelector"></div> -->
+			<div id="resizer">
+                <div id="resizerIcon">|||</div>
+            </div>
+
+			<div class="sgnChatBox" id="rightCont">
+				<div id="wrapper">
+					<div id="friendPanel">
+					
+					</div>
+					<div id="chatbox"></div>
+					<form name="message" action="">
+						<input name="usermsg" type="text" id="usermsg" size="63"/>
+						<input name="submitmsg" type="submit" id="submitmsg" value="Send"/>
+					</form>
+				</div>
+				<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+				<script type="text/javascript">
+				//jQuery Document
+				//$(document).ready(function()
+				//{
+			    //
+				//});
+				</script> -->
+			</div>
+		</div>	
+	</div>			
+	<!-- <div class="tabsContent"></div> -->
+	<!-- <div class="sgnChatCont">
+		<div class="sgnChatBox"></div>
+	</div> -->
+
+</body>
+</html>

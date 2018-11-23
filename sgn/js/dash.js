@@ -123,9 +123,12 @@ $(document).ready(function(){
 //       if (activeTab) {
 //             $('ul.tabs li:has(a[href="' + activeTab + '"])').click(); // And simulate clicking it
 //       }
-  document.getElementById("thumbsUpIcon").addEventListener("click", thumbsUpFunc);
-  function thumbsUpFunc() {
-    document.getElementById("thumbsUpIcon").style.color = "#1E90FF";    
+
+  if (document.getElementById("thumbsUpIcon") != null) {
+    document.getElementById("thumbsUpIcon").addEventListener("click", thumbsUpFunc);
+    function thumbsUpFunc() {
+      document.getElementById("thumbsUpIcon").style.color = "#1E90FF";    
+    }
   }
   document.getElementById("handUp").addEventListener("click", voteUpFunc);
   function voteUpFunc() {

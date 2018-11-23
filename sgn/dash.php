@@ -15,6 +15,7 @@
 	<script src="jqueryUI/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>	
 	<script src="js/dash.js"></script>
+	<script src='https://embed.twitch.tv/embed/v1.js'></script>
 	<title>Social Gaming Network - Dashboard</title>
 	
 </head>
@@ -32,9 +33,10 @@ function fetchPosts() {
 }
 
 function fetchEvents() {
-		fetchEventList();
-		fetchEventModals();
-		fetchEventPosts();
+	fetchEventList();
+	fetchEventModals();
+	fetchEventPosts();
+	fetchTournamentsModal();
 }
 
 function fetchEventList() {
@@ -73,6 +75,8 @@ function fetchEventPosts() {
         xmlhttp.send();
 }
 
+
+// user post and user replies 
 function createPost(parent_post_id) {
 	var textarea_text = "";
 	if(parent_post_id == "0") {
@@ -82,7 +86,6 @@ function createPost(parent_post_id) {
 		var replyTextBox = "#replyTextBox_" + parent_post_id;
 		// .innerHTML = this.responseText;
 		textarea_text = $(replyTextBox).val();
-		alert(textarea_text);
 	}
 	var params = 'post_text=' + textarea_text;
 	
@@ -102,7 +105,6 @@ function createPost(parent_post_id) {
 				$(".postTextBox").val('');
 			}
 			else {
-				alert(this.responseText);
 				fetchReplies(parent_post_id);
 				fetchNumReplies(parent_post_id);
 			}
@@ -132,6 +134,8 @@ function fetchReplies(post_id) {
 			// alert(this.responseText);
 			try {
 				document.getElementById(replyModalID).innerHTML = this.responseText;
+				// alert(replyModalID);
+				// alert(document.getElementById(replyModalID).innerHTML);
 			}
 			catch(err) {
 				alert(err.message);
@@ -229,7 +233,7 @@ function likeAction(element, post_id) {
 function updateInformationUser() {
 	//alert((document.getElementsByClassName("sgnBanner"))[0].style.backgroundImage);var xmlhttp = new XMLHttpRequest();
 	
-	alert("Start update information user");
+	// alert("Start update information user");
 	//var textarea_text = $(".postTextBox").val();
 	var params = '';
 	var first_set = false;
@@ -305,6 +309,105 @@ function fetchCurrentUsername() {
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xmlhttp.send();
 }
+
+
+function fetchTournamentsModal() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("tournaments_modal").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_tournament_modals.php", true);
+		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send();
+}
+
+
+function fetchTournamentInfo(tournament_id) {
+	var xmlhttp = new XMLHttpRequest();
+	var param = "tournament_id=" + tournament_id;
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("tournamentModal_" + tournament_id).innerHTML = this.responseText;
+		}
+	};
+	xmlhttp.open("POST", "php/fetch_tournament_info.php", true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(param);
+}
+
+
+function createTournament(event_id) {
+	var createTournamentTitleField = "#createTournamentTitle_" + event_id;
+	var title_text = $(createTournamentTitleField).val();
+	
+	var createTournamentDateField = "#createTournamentDate_" + event_id;
+	var date_text = $(createTournamentDateField).val();
+	
+	var createTournamentTimeField = "#createTournamentTime_" + event_id;
+	var time_text = $(createTournamentTimeField).val();
+	
+	var params = "event_id=" + event_id + "&tournament_name=" + title_text + "&tournament_date=" + date_text + "&tournament_time=" + time_text;
+	// alert(params);
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			// alert(this.responseText);
+			try {
+				// alert(this.responseText);
+				fetchEvents();
+				fetchTournamentsModal();
+			}
+			catch(err) {
+				alert(err.message);
+			}
+			// alert("Printing span innerHTML");
+			// alert(document.getElementById(numRepliesSpan).innerHTML);
+		}
+	};
+	xmlhttp.open("POST", "php/new_tournament.php", true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(params);
+}
+
+
+function updateTournamentAttendance(tournament_id, action, event_id) {
+	var xmlhttp = new XMLHttpRequest();
+	var params = "tournament_id=" + tournament_id + "&actionType=" + action;
+	xmlhttp.onreadystatechange=function() {
+	if (this.readyState==4 && this.status==200) {
+		// alert(this.responseText);
+	  fetchTournamentInfo(tournament_id);
+	  // alert("Set show before");
+	  var tournamentModalID = "tournamentModal_" + event_id;
+	  // alert(tournamentModalID);
+	  document.getElementById("tournamentModal_" + event_id).className = "modal fade show";
+	  // alert(document.getElementById("tournamentModal_" + event_id).className);
+	  // alert("Set show after");
+	  // alert(document.getElementById("tournamentModal_" + event_id).className);
+	}
+  };
+	xmlhttp.open("POST","php/tournament_update_attendance.php",true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(params);
+}
+
+function addTournamentStream(tournament_id) {
+	var streamName = $("#streamNameForm_" + tournament_id).val();
+	var xmlhttp = new XMLHttpRequest();
+	var params = "stream_name=" + streamName + "&tournament_id=" + tournament_id;
+	xmlhttp.onreadystatechange=function() {
+	if (this.readyState==4 && this.status==200) {
+		// alert(this.responseText);
+		// alert(this.responseText);
+	  fetchTournamentInfo(tournament_id);
+	}
+  };
+	xmlhttp.open("POST","php/tournament_update_stream.php",true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(params);
+}
 </script>
 
 <script>
@@ -312,7 +415,8 @@ function fetchCurrentUsername() {
 function start() {
 	// alert("Starting");
 	fetchPosts();
-	// fetchEvents();
+	// alert("Events");
+	fetchEvents();
 	// alert("Banner");
 	fetchUserBannerImage();
 	fetchNotificationNumber();
@@ -322,9 +426,11 @@ function start() {
 }
 
 // Bind, works better than trigger
+// Does not work
 function tabClick() {
 	var $link = $(this);
 	if($link.attr("id") == "home-tab") {
+		alert("Boom, home");
 		fetchPosts();
 	}
 	if($link.attr("id") == "esports-tab") {
@@ -525,6 +631,11 @@ function tabClick() {
 				  </div>
 				</div>
 				<div class="tabWelcome">Dashboard</div>
+				
+				
+				<br>
+				<br>
+				<br>
 				<!-- Fetch posts start -->
 				<div id="posts"> </div>
 				<!-- Fetch posts end -->
@@ -533,107 +644,7 @@ function tabClick() {
 				
 				
 
-				<div class="template-post">					
-					<div class="image-buttons-container">						
-						<div class='post-profile-image' data-toggle='modal' data-target='#dashProfileModal'></div>						
-						<div class="post-profile-gap"></div>
-						<div class="post-like-button">													
-							<i class="far fa-thumbs-up" id="thumbsUpIcon"></i>							
-							2.5M
-						</div>						
-						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
-							<i class="far fa-comments" id="commentsIcon"></i>
-							33
-						</div>
-						<!-- User/Profile Modal -->
-						
-						<!-- Comments Modal -->
-						<div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						  <div class="modal-dialog modal-lg" role="document">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						          <span aria-hidden="true">&times;</span>
-						        </button>
-						      </div>
-						      <div class="modal-body">
-						      	<div class="commentCont">
-					        		<div class="commentProfileImage"></div>
-					        		<div class="commentPostGap"></div>
-					        		<div class="commentPostName">Yoshi</div>
-					        		<div class="commentPostDate">10/10/18</div>
-					        		<div class="commentPostTime">4:20 PM</div>
-					        		<div class="commentText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
-					        		<div class="commentPostVoteButtons">
-					        			<div class="commentPostUpvote">10 <i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
-					        			<div class="commentPostDownvote">2 <i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
-					        		</div>
-					        	</div>
-						        <textarea class="postTextBox" placeholder="Write what's going on:" rows="6" cols="60"></textarea>
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						        <button type="button" class="btn btn-primary">Post!</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-					</div>						
-					<div class="post-text-container">						
-						<div class="post-date-time">
-							<span class="profile-name">Yoshi</span>
-							Today - 9:17 PM </div>
-						<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. 
-						</div>
-						<div class="post-picture"></div>
-					</div>					
-				</div>
 				
-				<div class="modal fade" id="dashProfileModal" tabindex="-1" role="dialog">
-						  <div class="modal-dialog" role="document">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="profileModalUname">Profile</h5>
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						          <span aria-hidden="true">&times;</span>
-						        </button>
-						      </div>
-						      <div class="modal-body">
-						        <h2 class="profileTitle">Raios</h2>
-						        <div class="profileModalImage"></div>
-						        <div class="profileUserName">Name: Justin Ha</div>
-						        <div class="profileEmail">Email: justinsucks@yahoo.com</div>
-						        <div class="uploadImageSection">Change profile picture: <input type="file" name="bannerFile"></div>
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-primary">Save changes</button>
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-<!-- 				<div class="template-post">
-					<div class="image-buttons-container">
-						<div class="post-profile-image"></div>						
-						<div class="post-profile-gap"></div>
-						<div class="post-like-button">													
-							<i class="far fa-thumbs-up" id="thumbsUpIcon" onclick="thumbsUpFunc()"></i>							
-							1
-						</div>						
-						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
-							<i class="far fa-comments" id="commentsIcon"></i>
-							2
-						</div>
-					</div>						
-					<div class="post-text-container">
-						<div class="post-date-time">
-							<span class="profile-name">Rathalos09</span>
-							Today - 10:15 PM </div>
-						<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, 
-						</div>
-					</div>					
-				</div> -->
 				<!-- Search Results hidden by default unless searched -->
 				<div class="searchResults" id="searchContent">
 					<h1 class="searchTitle">Search Results for: </h1><h2 class="searchQuery">Something typed in search bar</h2>
@@ -798,6 +809,8 @@ function tabClick() {
 			
 		  	<div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
 		  		<div class="tabWelcome">Events</div>
+
+				
 				<!-- Fetch Events Start -->
 				<!-- The div in which events list is loaded -->
 				<div id="events_list"> </div>
@@ -805,6 +818,12 @@ function tabClick() {
 				<div id="events_modal"> </div>
 				
 				<div id="events_post"> </div>
+				<div class='streamBox'><div id='twitch-embed'></div></div>
+ 
+
+    <script src='https://embed.twitch.tv/embed/v1.js'></script>
+
+				<div id="tournaments_modal"> </div>
 			<!-- Fetch Events End -->
 		  		<div class="eventCont">
 		  			<div class="templateEvent">
