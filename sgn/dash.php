@@ -482,6 +482,20 @@ function submitWinner(tournament_id, round, relative_match_num) {
 	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xmlhttp.send(params);
 }
+
+
+function fetchSearchResults() {
+	var xmlhttp = new XMLHttpRequest();
+	var param = "search_term=" + $("#search-input").val();
+	xmlhttp.onreadystatechange=function() {
+	if (this.readyState==4 && this.status==200) {
+		document.getElementById("searchModalBody").innerHTML = this.responseText;
+	}
+  };
+	xmlhttp.open("GET","php/search_results.php?" + param,true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send();
+}
 </script>
 
 <script>
@@ -572,8 +586,8 @@ function tabClick() {
 					  </li> -->
 					  <li class="nav-item searchTab">
 					  	<form class="searchBar">
-		      				<input type="text" class="form-control" placeholder="Search.." name="search" data-toggle="modal" data-target="searchModal">
-		      				<button id="searchSubmitBtn" type="submit" data-toggle="modal" data-target="searchModal"><i class="fa fa-search"></i></button>    				
+		      				<input type="text" class="form-control" id="search-input" placeholder="Search.." name="search">
+		      				<button id="searchSubmitBtn" type="button" data-toggle="modal" onclick='fetchSearchResults()' data-target="#searchModal"><i class="fa fa-search"></i></button>    				
 		      				<!-- <button type="submit">Submit</button> -->
 
 		   				 </form>
@@ -626,25 +640,67 @@ function tabClick() {
 					  </div>
 					</div>
 					<!-- Search Modal -->
-					<!-- <div class="modal fade" id="searchModal" tabindex="-1" role="dialog">
-					  <div class="modal-dialog modal-lg" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title">Profile</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
+					<!-- Search Modal -->
+					<div class='modal fade' id='searchModal' tabindex='-1' role='dialog'>
+					  <div class='modal-dialog modal-lg' role='document'>
+					    <div class='modal-content'>
+					      <div class='modal-header'>
+					        <h5 class='modal-title'>Search Results</h5>
+					        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+					          <span aria-hidden='true'>&times;</span>
 					        </button>
 					      </div>
-					      <div class="modal-body">
-					        <p>Modal body text goes here.</p>
+					      <div class='modal-body' id='searchModalBody'>
+					        <div class='keywordSearchDialog'><h1>Search Results for : </h1><div class='searchKeywords'><h2>Kyle</h2></div></div>
+					        <div class='noMatchDialog'>Nothing here, search for something else!</div>					        
+					        <div class='searchResultsCont'>
+					        	<div class='userSearchResults'>
+					        		<h2 style='color:black'>Users</h2>
+					        		<div class='usersSearchCont'>
+						        		<div class='userSearchBoxCont'>						        		
+							        		<div class='contenderImage'></div>
+							        		<div class='contenderName'>BlazeChar</div>
+							        	</div>
+							        	<div class='userSearchBoxCont'>						        		
+							        		<div class='contenderImage'></div>
+							        		<div class='contenderName'>BlazeChar</div>
+							        	</div>
+							        </div>
+						        </div>
+						        <div class='groupSearchResults'>
+						        	<h2 style='color:black'>Groups</h2>
+						        	<div class='groupsSearchCont'>
+						        		<div class='groupSearchBoxCont'>
+						        			<div class='contenderImage'></div>						        									        		
+							        		<div class='contenderName'>BlazeChar's Zard Lords</div>
+							        	</div>
+							        	<div class='groupSearchBoxCont'>
+						        			<div class='contenderImage'></div>						        									        		
+							        		<div class='contenderName'>BlazeChar's Zard Lords</div>
+							        	</div>
+						        	</div>
+						        </div>
+						        <div class='eventSearchResults'>
+						        	<h2 style='color:black'>Events</h2>
+						        	<div class='eventsSearchCont'>
+						        		<div class='eventSearchBoxCont'>
+						        			<div class='contenderImage'></div>						        									        		
+							        		<div class='contenderName'>Kyle's D&D Meetup</div>
+							        	</div>
+							        	<div class='eventSearchBoxCont'>
+						        			<div class='contenderImage'></div>						        									        		
+							        		<div class='contenderName'>Kyle's D&D Meetup</div>
+							        	</div>
+						        	</div>
+						        </div>
+					        </div>
 					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-primary">Save changes</button>
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      <div class='modal-footer'>
+					        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 					      </div>
 					    </div>
 					  </div>
-					</div> -->
+					</div>
 					<!-- Settings Modal -->
 					<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog">
 					  <div class="modal-dialog" role="document">

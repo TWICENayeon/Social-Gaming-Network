@@ -143,16 +143,16 @@ $(document).ready(function(){
 
   // }
   // Search Bar Functionality
-  $("#searchSubmitBtn").click(function() {
-    var searchContent = $("#searchContent");    
-    var contentBox = $("#myTabContent");    
-    // contentBox.html(' ');
-    alert();    
-    contentBox.appendTo(searchContent);
-    // contentBox.show();
-    return false;    
+  // $("#searchSubmitBtn").click(function() {
+    // var searchContent = $("#searchContent");    
+    // var contentBox = $("#myTabContent");    
+    // // contentBox.html(' ');
+    // alert();    
+    // contentBox.appendTo(searchContent);
+    // // contentBox.show();
+    // return false;    
 
-  });
+  // });
   // searchContent = $("#searchContent"); 
   // var contentBox = $("#myTabContent");
   // contentBox.html('');

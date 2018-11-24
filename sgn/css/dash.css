@@ -446,10 +446,13 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-color: gray;
+	background-size: cover;
+	
 }
 .profileModalImage {
 	margin: auto;
 	text-align: center;
+	background-size: cover;
 }
 
 .eventPostCont, .commentCont {
@@ -627,4 +630,11 @@ body {
 #allyImage {
 	background-image: url("../img/ally.png");
 	background-size: cover;
+}
+.post-profile-image, .contenderImage, .commentProfileImage {
+	background-size: cover;
+}
+
+.modal-title, .keywordSearchDialog, .noMatchDialog {
+	color: black
 }
