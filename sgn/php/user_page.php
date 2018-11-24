@@ -176,13 +176,13 @@
 									WHERE ((friend_id_1 = " . $_SESSION["current_user_id"] . " AND friend_id_2 = " . $_SESSION["page_id"] . ") OR 
 									(friend_id_2 = " . $_SESSION["current_user_id"] . " AND friend_id_1 = " . $_SESSION["page_id"] . "));";
 			
-				$result = $conn->query($refriend_query);
-				
-				if($result === false) {
-					echo $refriend_query;
-					echo("Failed to update friendship active status to false");
-					exit();
-				}
+					$result = $conn->query($refriend_query);
+					
+					if($result === false) {
+						echo $refriend_query;
+						echo("Failed to update friendship active status to false");
+						exit();
+					}
 				}
 			}
 			else if(!empty($_POST["unfriend"])) {

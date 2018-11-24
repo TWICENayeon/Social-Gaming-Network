@@ -298,6 +298,36 @@ function fetchNotificationNumber() {
   xmlhttp.send();
 }
 
+function fetchNotificationModal() {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+	if (this.readyState==4 && this.status==200) {
+	  document.getElementById("notifsModalContent").innerHTML=this.responseText;
+	}
+  };
+  xmlhttp.open("POST","php/my_notifications.php",true);
+  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlhttp.send();
+}
+
+function resolveNotif(notification_id, action) {
+	// action == 1 is accept
+	// action == 0 is decline 
+	alert(notification_id);
+	alert(action);
+	params = "notification_id=" + notification_id + "&action=" + action;
+	alert(params);
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+		if (this.readyState==4 && this.status==200) {
+			fetchNotificationModal();
+		}
+    };
+    xmlhttp.open("POST","php/process_notification.php",true);
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlhttp.send(params);
+}
+
 function fetchCurrentUsername() {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
@@ -329,7 +359,7 @@ function fetchTournamentInfo(tournament_id) {
 	var param = "tournament_id=" + tournament_id;
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("tournamentModal_" + tournament_id).innerHTML = this.responseText;
+			document.getElementById("notifsModal").innerHTML = this.responseText;
 		}
 	};
 	xmlhttp.open("POST", "php/fetch_tournament_info.php", true);
@@ -464,8 +494,10 @@ function start() {
 	// alert("Banner");
 	fetchUserBannerImage();
 	fetchNotificationNumber();
+	fetchNotificationModal();
 	fetchCurrentUsername();
 	setInterval(fetchNotificationNumber, 1500);
+	setInterval(fetchNotificationModal, 1500);
 	// alert("Done");
 }
 
@@ -552,7 +584,7 @@ function tabClick() {
 					  <li class="flex-sm-fill"></li>
 					  <li class="nav-item main-tabs tab-icons">
 						<!-- notification number update start -->
-					    <a class="nav-link" id="notifs-tab" data-toggle="tab" href="#notifs" role="tab" aria-controls="notifs" aria-selected="false"><i class="fas fa-bullhorn"></i> <span id="notification_number">2</span></a>
+					    <a class="nav-link" id="notifs-tab" data-toggle="modal" data-target="#notifsModal" href="#notifs" role="tab" aria-controls="notifs" aria-selected="false"><i class="fas fa-bullhorn"></i> <span id="notification_number">2</span></a>
 						<!-- notification number update end -->
 					    <a class="nav-link" id="settings-tab" data-toggle="modal" data-target="#settingsModal" href="#settings" role="tab" aria-controls="settings" aria-selected="false"><i class="fas fa-cog"></i></a>
 					  </li>
@@ -642,7 +674,26 @@ function tabClick() {
 						</form>
 						<!-- update information user end -->
 					  </div>
-					</div>					
+					</div>	
+					<!-- Notifications Modal -->
+					<div class="modal fade" id="notifsModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Your Notifications</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body" id="notifsModalContent">
+						  </div>
+					      <div class="modal-footer">
+					        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 
 			</div>
 	<div class="contentCont" id="mainCont">

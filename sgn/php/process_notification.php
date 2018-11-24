@@ -26,8 +26,7 @@
 	$fetch_notification_data_query = "SELECT *
 										FROM sgn_database.notifications
 										WHERE notification_id = " . $_POST["notification_id"] . ";";
-
-	echo $fetch_notification_data_query . "<br>";									
+								
 	// echo $_POST["notification_id"];
 	$notification_data_result = $conn->query($fetch_notification_data_query);
 	
@@ -35,35 +34,94 @@
 		$notification_data_tuple = $notification_data_result->fetch_assoc();
 		// If notification is for an esport chat
 		
-		if(isset($_POST["accept"])) {
-			// If notification is for an esport chat, is 1
+		if($_POST["action"] == "1") {
+			// If notification is for a group invite, is 1
 			if($notification_data_tuple["notification_type"]) {
-				$new_esport_chat_member_query = "INSERT INTO sgn_database.chat_group_members 
-											VALUES (" . $notification_data_tuple["invitation_to_id"] . ", " . $_SESSION["current_user_id"] . ")";
-											
-					
-				if($debug) {
-					echo "<br>New Esport Chat query: " . $new_esport_chat_member_query;
-				}
-				else {
-					if(!$conn->query($new_esport_chat_member_query)) {
-						echo $conn->error;
-					}
-				}
-					
-			}
-			// If notification is for a group, is 0
-			else {
+				
 				$new_group_member_query = "INSERT INTO sgn_database.memberships 
 											VALUES (" . $_SESSION["current_user_id"] . ", " . $notification_data_tuple["invitation_to_id"] . ", 0, CURRENT_DATE(), CURRENT_TIME());";
 											
 					
-				if($debug) {
-					echo "<br>New Group member: " . $new_group_member_query;
+				$conn->query($new_group_member_query);
+			}
+			// If notification is for a friend invite, is 0
+			else {
+				$search_friend =  "SELECT friendship_id, active
+									FROM sgn_database.friendships
+									WHERE ((friend_id_1 = " . $_SESSION["current_user_id"] . " AND friend_id_2 = " . $notification_data_tuple["invitation_to_id"] . ") OR 
+									(friend_id_2 = " . $_SESSION["current_user_id"] . " AND friend_id_1 = " . $notification_data_tuple["invitation_to_id"] . "));";
+				
+				$result = $conn->query($search_friend);
+				
+				if($result->num_rows == 0) {
+					
+					// Add new chat group for the new friendship pair
+					
+					$new_friend_chat_query =  "INSERT INTO sgn_database.chat_groups (esport_id) 
+											  VALUES (0);";										// 0 means it is a friend chat 
+				
+					$result = $conn->query($new_friend_chat_query);
+					
+					if($result === false) {
+						echo("Failed to insert new friendship chat pair");
+						exit();
+					}
+					
+					$chat_id = $conn->insert_id;
+					
+					// Make current user as a member to new chat group
+					
+					$new_chat_member_one = "INSERT INTO sgn_database.chat_group_members 
+											VALUES (" . $chat_id . ", " . $_SESSION["current_user_id"] . ")";
+											
+					
+				
+					$result = $conn->query($new_chat_member_one);
+					
+					if($result === false) {
+						echo("Failed to insert new chat friend 1");
+						exit();
+					}
+					
+					
+					// Make new friend as a member to new chat group
+					
+					$new_chat_member_two = "INSERT INTO sgn_database.chat_group_members 
+											VALUES (" . $chat_id . ", " . $notification_data_tuple["invitation_to_id"] . ")";
+											
+					
+				
+					$result = $conn->query($new_chat_member_two);
+					
+					if($result === false) {
+						echo("Failed to insert new chat friend 2");
+						exit();
+					}
+					
+					// add frienship
+					$new_friendship_query =  "INSERT INTO sgn_database.friendships (friend_id_1, friend_id_2, friendship_start_date, chat_id, active)
+											  VALUES (" . $_SESSION["current_user_id"] . ", " . $notification_data_tuple["invitation_to_id"] . ", CURRENT_DATE(), " . $chat_id . ", 1);";
+				
+					$result = $conn->query($new_friendship_query);
+					
+					if($result === false) {
+						echo $new_friendship_query;
+						echo("<br> <br> <br> Failed to insert new friendship!!");
+						exit();
+					}
 				}
 				else {
-					if(!$conn->query($new_group_member_query)) {
-						echo $conn->error;
+					$refriend_query =  "UPDATE sgn_database.friendships
+									SET active = true
+									WHERE ((friend_id_1 = " . $_SESSION["current_user_id"] . " AND friend_id_2 = " . $notification_data_tuple["invitation_to_id"] . ") OR 
+									(friend_id_2 = " . $_SESSION["current_user_id"] . " AND friend_id_1 = " . $notification_data_tuple["invitation_to_id"] . "));";
+			
+					$result = $conn->query($refriend_query);
+					
+					if($result === false) {
+						echo $refriend_query;
+						echo("Failed to update friendship active status to false");
+						exit();
 					}
 				}
 			}
@@ -74,13 +132,10 @@
 							SET resolved_status = 1
 							WHERE notification_id = " . $_POST["notification_id"] . ";";
 		
-		if($debug) {
-			echo "<br>update decline query: " . $update_resolved_query;
-		}
-		else {
-			if(!$conn->query($update_resolved_query)) {
-				echo $conn->error;
-			}
+		
+		
+		if(!$conn->query($update_resolved_query)) {
+			echo $conn->error;
 		}
 	}
 	else {
@@ -89,10 +144,10 @@
 		exit();
 	}
 
-	if(ob_get_length()) {
-		ob_end_clean();
-	}
+	// if(ob_get_length()) {
+		// ob_end_clean();
+	// }
 
-	header("Location: http://localhost/sgn/my_notifications.php");
+	// header("Location: http://localhost/sgn/my_notifications.php");
 
 ?>

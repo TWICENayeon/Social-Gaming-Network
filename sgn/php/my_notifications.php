@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <?php
 // Allows access to the session array
 session_start();
@@ -11,7 +10,6 @@ if(!isset($_SESSION["current_user_id"])) {
 	exit();
 }
 ?>
-
 <?php 
 
 	$conn = new mysqli("localhost", "root", "");
@@ -25,7 +23,6 @@ if(!isset($_SESSION["current_user_id"])) {
 	$conn->select_db("sgn_database");
 
 ?>
-
 <?php
 	// // Resolve notification
 			// if(!empty($_GET["notification_id"])) {
@@ -39,12 +36,7 @@ if(!isset($_SESSION["current_user_id"])) {
 			// }
 
  ?>
-
 <html>
-
-
-
-
 <?php
 // Get number of unresolved notifications
 	$fetch_num_unresolved_notifications_query = "SELECT COUNT(resolved_status) AS num_unresolved
@@ -57,74 +49,72 @@ if(!isset($_SESSION["current_user_id"])) {
 
 
 
-?>
-	
-
-<!-- Banner Start -->
-<a href="http://localhost/sgn/user_page.php?page_id=<?php echo $_SESSION["current_user_id"]; ?>"> SGN </a> <br>
-<form action="search_results.php" method="get">
-	<input type="text" name = "search_term" placeholder="Search. . ." >
-	<input type="submit" value="Search">
-</form>
-<br>
-<a href="http://localhost/sgn/my_groups.php"> My Groups </a> <br>
-<a href="http://localhost/sgn/my_events.php"> My Events </a> <br>
-<a href="http://localhost/sgn/my_friends.php"> My Friends </a> <br>
-<a href="http://localhost/sgn/my_notifications.php"> Notifications </a> <?php if(intval($num_unresolved_string) > 0) {echo "[" . $num_unresolved_string . "]";}?> <br>
-<a href="http://localhost/sgn/esports.php"> Esports </a> <br>
-<a href="http://localhost/sgn/settings.php"> User settings </a> <br>
-<br>
-<br>
-
-<a href="http://localhost/sgn/process_logout.php"> Logout </a> <br> <br> <br>
-	
-	<!-- Banner End-->
-	
-
-<!-- Print out all of the current user's groups -->
-<?php echo "<u> " . $_SESSION["current_username"]?>'s Notifications </u> 
-
-
- <?php
+?><?php
 		
 		$search_user_notifications =  "SELECT *
 									FROM sgn_database.notifications
 									WHERE recipient_id = " . $_SESSION["current_user_id"] . "
 									ORDER BY notification_id DESC;";
 		
-		$result = $conn->query($search_user_notifications);
+		$user_notifications_result = $conn->query($search_user_notifications);
+		
+		$num_new_notifs_query = "SELECT COUNT(notification_id) AS num
+									FROM sgn_database.notifications
+									WHERE recipient_id = " . $_SESSION["current_user_id"] . " AND resolved_status = 0
+									ORDER BY notification_id DESC;";
+									
+		$num_new_notifs_value = (($conn->query($num_new_notifs_query))->fetch_assoc())["num"];
 		
 		
+		if($num_new_notifs_value == "0") {
+			echo "
+					      	<div class='noNotifsDialog'>No new notifications!</div>";
+		}
 		
-		
-		if($result->num_rows > 0) {
-			while($tuple = $result->fetch_assoc()) {
-				echo "<br><br>";
-				if($tuple["resolved_status"] == 1) {
-						$isResolved = true;
-						echo "<p style='color:#C6C6C6'>";
+		while($notif_tuple = $user_notifications_result->fetch_assoc()) {
+			$is_resolved = $notif_tuple["resolved_status"] == "1";
+			echo "
+				<div class='notifCont'>
+					<div class='notifDateTime'>
+						<div class='notifDate' " . ($is_resolved ? " style='color:#C6C6C6' " : "") . ">" . $notif_tuple["date_created"] . "</div>
+						<div class='notifTime' " . ($is_resolved ? " style='color:#C6C6C6' " : "") . ">" . $notif_tuple["time_created"] . "</div>
+					</div>
+					<div class='notifGroupRequestText' " . ($is_resolved ? " style='color:#C6C6C6' " : "") . ">" . $notif_tuple["message"] . "</div>";
+			if(!$is_resolved) {
+				if($notif_tuple["notification_type"] == "2") {
+					echo "<button type='button' id='acceptButton' class='btn btn-primary' onclick='resolveNotif(" . $notif_tuple["notification_id"] . ", 1)'>OK</button>";
 				}
 				else {
-					echo "<p>";
+					echo "<button type='button' id='acceptButton' class='btn btn-primary' onclick='resolveNotif(" . $notif_tuple["notification_id"] . ", 1)'>Accept</button>";
+					echo "<button type='button' id='declineButton' class='btn btn-primary' onclick='resolveNotif(" . $notif_tuple["notification_id"] . ", 0)'>Decline</button>";
 				}
-				echo stripslashes($tuple["message"]) . " <br>" . $tuple["date_created"] . " " . $tuple["time_created"] . " </p>";
-				if(!$tuple["resolved_status"] && intval($tuple["notification_type"]) < 2 ) {
-					echo "<form action='process_notification.php' method='post'>
-							<input type='hidden' name='notification_id' value = " . $tuple["notification_id"] . ">
-							<input type='submit' name = 'accept' value='Accept'>
-							<input type='submit' name='decline' value='Decline'>
-						</form>";
-				}
-				else if(!$tuple["resolved_status"] && intval($tuple["notification_type"]) == 2 ) {
-					echo "<form action='process_notification.php' method='post'>
-							<input type='hidden' name='notification_id' value = " . $tuple["notification_id"] . ">
-							<input type='submit' name = 'ok' value='OK'>
-						</form>";
-				}
-			}
+			};
+				echo "</div>";
+			// echo "<br><br>";
+			// if($tuple["resolved_status"] == 1) {
+					// $isResolved = true;
+					// echo "<p style='color:#C6C6C6'>";
+			// }
+			// else {
+				// echo "<p>";
+			// }
+			// echo stripslashes($tuple["message"]) . " <br>" . $tuple["date_created"] . " " . $tuple["time_created"] . " </p>";
+			// if(!$tuple["resolved_status"] && intval($tuple["notification_type"]) < 2 ) {
+				// echo "<form action='process_notification.php' method='post'>
+						// <input type='hidden' name='notification_id' value = " . $tuple["notification_id"] . ">
+						// <input type='submit' name = 'accept' value='Accept'>
+						// <input type='submit' name='decline' value='Decline'>
+					// </form>";
+			// }
+			// else if(!$tuple["resolved_status"] && intval($tuple["notification_type"]) == 2 ) {
+				// echo "<form action='process_notification.php' method='post'>
+						// <input type='hidden' name='notification_id' value = " . $tuple["notification_id"] . ">
+						// <input type='submit' name = 'ok' value='OK'>
+					// </form>";
+			// }
 		}
+		
 		
 		$conn->close();
 ?>
-
 </html>
