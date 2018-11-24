@@ -1,54 +1,117 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link href="css/dash.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
-	<link href="jqueryUI/jquery-ui.min.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
-	<script src="js/popper.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="jqueryUI/jquery-ui.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>	
-	<script src="js/dash.js"></script>
-	<title>Social Gaming Network - Dashboard</title>
-	
-</head> 
-<?php 
-echo "
-<div class='streamBox'><div id='twitch-embed'></div></div>
- 
-
-    <script src='https://embed.twitch.tv/embed/v1.js'></script>
-
-    <script type='text/javascript'>
-      new Twitch.Embed('twitch-embed', {
-        width: 1166,
-        height: 552,
-		layout: 'video',
-        channel: 'TWICE_ny'
-      });
-    </script>
-	<br>
-	<br>
-	<br>";
-	
-	?>
-	
-	<div class='streamBox'><div id='twitch-embed'></div></div>
- 
-
-    <script src='https://embed.twitch.tv/embed/v1.js'></script>
-
-    <script type='text/javascript'>
-      new Twitch.Embed('twitch-embed', {
-        width: 1166,
-        height: 552,
-		layout: 'video',
-        channel: 'TWICE_ny'
-      });
-    </script>
+<div class='matchProgression'>
+						        		<div class='matchCont'>
+							        		<div class='roundNum'>Round 1</div>
+							        		<div class='matchContBox'>
+							        			<div class='matchTitle'>Match 1</div>
+							        			<div class='matchParticipants'>
+							        				<div class='contenderCont'>
+										        		<div class='contenderNum'>8</div>
+										        		<div class='contenderImage' id='paulImage'></div>
+										        		<div class='contenderName'>PaulDSSB</div>
+										        	</div> v.s.						        			 
+							        			 	<div class='contenderCont'>
+										        		<div class='contenderNum'>10</div>
+										        		<div class='contenderImage' id='saifImage'></div>
+										        		<div class='contenderName'>ExpandDong</div>
+										        	</div>
+										        	<br>
+										        	<div class='pickMatchWinner'><h3>Choose the match winner:</h3></div>
+										        	<div class='matchWinnerPicker'>
+										        		<form>
+										        			<select name='pickerBox'>
+										        				<option> </option>
+										        				<option>PaulDSSB</option>
+										        				<option>ExpandDong</option>
+										        			</select>
+										        		</form>
+										        	</div> 
+										        	<div class='matchCompleteDialog'><h2>Match Complete<h2></div>
+										        	<div class='winnerDialog'>Winner of Match 1:</div>
+										        	<div class='contenderCont'>
+										        		<div class='contenderNum'>8</div>
+										        		<div class='contenderImage' id='paulImage'></div>
+										        		<div class='contenderName'>PaulDSSB</div>
+										        	</div>
+							        			</div>
+							        		</div>
+							        	</div>
+							        	<div class='matchCont'>
+							        		<div class='roundNum'>Round 2</div>
+							        		<div class='matchContBox'>
+							        			<div class='matchTitle'>Match 2</div>
+							        			<div class='matchParticipants'>
+							        				<div class='contenderCont'>
+										        		<div class='contenderNum'>8</div>
+										        		<div class='contenderImage' id='paulImage'></div>
+										        		<div class='contenderName'>PaulDSSB</div>
+										        	</div> v.s.						        			 
+							        			 	<div class='contenderCont'>
+										        		<div class='contenderNum'>6</div>
+										        		<div class='contenderImage' id='sjImage'></div>
+										        		<div class='contenderName'>SJ</div>
+										        	</div>
+										        	<br>
+										        	<div class='pickMatchWinner'><h3>Choose the match winner:</h3></div>
+										        	<div class='matchWinnerPicker'>
+										        		<form>
+										        			<select name='pickerBox'>
+										        				<option> </option>
+										        				<option>PaulDSSB</option>
+										        				<option>SJ</option>
+										        			</select>
+										        		</form>
+										        	</div>
+										        	<div class='matchCompleteDialog'><h2>Match Complete<h2></div>
+										        	<div class='winnerDialog'>Winner of Match 2:</div>
+										        	<div class='contenderCont'>
+										        		<div class='contenderNum'>8</div>
+										        		<div class='contenderImage' id='paulImage'></div>
+										        		<div class='contenderName'>PaulDSSB</div>
+										        	</div>
+							        			</div>
+							        		</div>
+							        	</div>
+							        	<div class='matchCont'>
+							        		<div class='roundNum'>Round 3</div>
+							        		<div class='matchContBox'>
+							        			<div class='matchTitle'>Match 3</div>
+							        			<div class='matchParticipants'>
+							        				<div class='contenderCont'>
+										        		<div class='contenderNum'>8</div>
+										        		<div class='contenderImage' id='paulImage'></div>
+										        		<div class='contenderName'>PaulDSSB</div>
+										        	</div> v.s.						        			 
+							        			 	<div class='contenderCont'>
+										        		<div class='contenderNum'>9</div>
+										        		<div class='contenderImage' id='allyImage'></div>
+										        		<div class='contenderName'>Crimson64</div>
+										        	</div>
+										        	<br>
+										        	<div class='pickMatchWinner'><h3>Choose the match winner:</h3></div>
+										        	<div class='matchWinnerPicker'>
+										        		<form>
+										        			<select name='pickerBox'>
+										        				<option> </option>
+										        				<option>PaulDSSB</option>
+										        				<option>Crimson64</option>
+										        			</select>
+										        		</form>
+										        	</div>
+										        	<div class='matchCompleteDialog'><h2>Match Complete<h2></div>
+										        	<div class='winnerDialog'>Winner of Match 3:</div>
+										        	<div class='contenderCont'>
+										        		<div class='contenderNum'>9</div>
+										        		<div class='contenderImage' id='allyImage'></div>
+										        		<div class='contenderName'>Crimson64</div>
+										        	</div>
+							        			</div>
+							        		</div>
+							        	</div>
+							        	<div class='tournamentWinner'>Tournament Winner: 
+							        		<div class='contenderCont'>
+								        		<div class='contenderNum'>9</div>
+								        		<div class='contenderImage' id='allyImage'></div>
+								        		<div class='contenderName'>Crimson64</div>
+								        	</div>
+								        </div>
+						        	</div>

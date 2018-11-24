@@ -258,6 +258,11 @@ body {
 	color: black;
 	text-align: center;
 } 
+
+.pickMatchWinner, .matchTitle {
+	color: black;
+}
+
 .modal-dialog {
 	width: 100%;
 }

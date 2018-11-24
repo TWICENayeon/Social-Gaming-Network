@@ -408,6 +408,50 @@ function addTournamentStream(tournament_id) {
 	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xmlhttp.send(params);
 }
+
+function changeTournamentOrdering(tournament_id) {
+	var user_id = $("#peopleNames_" + tournament_id).val();
+	var order = $("#newSeedInput_" + tournament_id).val();
+	var xmlhttp = new XMLHttpRequest();
+	var params = "user_id=" + user_id + "&order=" + order + "&tournament_id=" + tournament_id;
+	xmlhttp.onreadystatechange=function() {
+	if (this.readyState==4 && this.status==200) {
+		// alert(this.responseText);
+		// alert(this.responseText);
+	  fetchTournamentInfo(tournament_id);
+	}
+  };
+	xmlhttp.open("POST","php/update_tournament_ordering.php",true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(params);
+}
+
+function startTournament(tournament_id) {
+	var xmlhttp = new XMLHttpRequest();
+	var param = "tournament_id=" + tournament_id;
+	xmlhttp.onreadystatechange=function() {
+	if (this.readyState==4 && this.status==200) {
+		fetchTournamentInfo(tournament_id);
+	}
+  };
+	xmlhttp.open("POST","php/tournament_start.php",true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(param);
+}
+
+function submitWinner(tournament_id, round, relative_match_num) {
+	var winnerSelectorID = "#winnerSelector_" + tournament_id + "_" + round + "_" + relative_match_num;
+	var xmlhttp = new XMLHttpRequest();
+	var params = "tournament_id=" + tournament_id + "&old_round_num=" + round + "&old_match_num=" + relative_match_num + "&winner_id=" + $(winnerSelectorID).val();
+	xmlhttp.onreadystatechange=function() {
+	if (this.readyState==4 && this.status==200) {
+		fetchTournamentInfo(tournament_id);
+	}
+  };
+	xmlhttp.open("POST","php/update_tournament_score.php",true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(params);
+}
 </script>
 
 <script>

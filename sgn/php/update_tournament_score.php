@@ -17,7 +17,7 @@
 	<?php 
 		$debug = false;
 
-		//echo $_SESSION["page_id"] .  "<br><br><br><br><br><br>";
+		//echo $_POST["tournament_id"] .  "<br><br><br><br><br><br>";
 		// Connect to the database
 		$conn = new mysqli("localhost", "root", "");
 
@@ -52,21 +52,21 @@
 			$match_position = "participant_2_id";
 		}
 		
-		$update_finished_match_query = "UPDATE sgn_database.tournament_matches
-										SET finished = true
-										WHERE tournament_id = " . $_SESSION["page_id"] . " AND relative_match_id = " . $_POST["old_match_num"] . " AND round = " . $_POST["old_round_num"] . ";";
+		$update_winner_match_query = "UPDATE sgn_database.tournament_matches
+										SET winner = " . $_POST["winner_id"] . "
+										WHERE tournament_id = " . $_POST["tournament_id"] . " AND relative_match_id = " . $_POST["old_match_num"] . " AND round = " . $_POST["old_round_num"] . ";";
 										
 		if($debug) {	
-			echo "update finished match query: " . $update_finished_match_query . "<br><br><br><br>";
+			echo "update winner match query: " . $update_winner_match_query . "<br><br><br><br>";
 		}
 		else {
-			$result = $conn->query($update_finished_match_query);
+			$result = $conn->query($update_winner_match_query);
 		}
 		
 		
 		$search_match_exists_query = "SELECT match_id
 								FROM sgn_database.tournament_matches
-								WHERE tournament_id = " . $_SESSION["page_id"] . " AND relative_match_id = " . $new_match_num . " AND round = " . $new_round_num . ";";
+								WHERE tournament_id = " . $_POST["tournament_id"] . " AND relative_match_id = " . $new_match_num . " AND round = " . $new_round_num . ";";
 		
 		
 		$result = 0;		
@@ -87,7 +87,7 @@
 			
 			$num_participants_query = "SELECT count(participant_id) AS partCount
 									FROM sgn_database.tournament_participants
-									WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+									WHERE tournament_id = " . $_POST["tournament_id"] . ";";
 									
 			$result = $conn->query($num_participants_query);
 			
@@ -118,7 +118,7 @@
 			}
 			
 			$insert_new_match_query = "INSERT INTO sgn_database.tournament_matches (tournament_id, relative_match_id, round, " . $match_position . ")
-									VALUES ( " . $_SESSION["page_id"] . ", " . $new_match_num . ", " . $new_round_num . ", " . $_POST["winner_id"] . ");";
+									VALUES ( " . $_POST["tournament_id"] . ", " . $new_match_num . ", " . $new_round_num . ", " . $_POST["winner_id"] . ");";
 			
 			
 			if($debug) {							
@@ -145,18 +145,17 @@
 			
 		}
 		
-		if (!$debug) {
-			if(ob_get_length()) {
-				ob_end_clean();
-			}
+		// if (!$debug) {
+			// if(ob_get_length()) {
+				// ob_end_clean();
+			// }
 
-			// echo "Heading to tournament page";
-			header("Location: http://localhost/sgn/tournament_page.php?page_id=" . $_SESSION["page_id"]);
-		}
+			// // echo "Heading to tournament page";
+			// header("Location: http://localhost/sgn/tournament_page.php?page_id=" . $_POST["tournament_id"]);
+		// }
 	?>
 	<br>
 	<br>
 	<br>
-	Tournament Score Update page under construction
 
 </html>

@@ -17,7 +17,7 @@
 	<?php 
 		$execute_all_queries = true;
 
-		//echo $_SESSION["page_id"] .  "<br><br><br><br><br><br>";
+		//echo $_POST["tournament_id"] .  "<br><br><br><br><br><br>";
 		// Connect to the database
 		$conn = new mysqli("localhost", "root", "");
 
@@ -28,7 +28,7 @@
 		
 		$num_participant_count_query = "SELECT count(participant_id) AS COUNT
 										FROM sgn_database.tournament_participants
-										WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+										WHERE tournament_id = " . $_POST["tournament_id"] . ";";
 										
 		$result = $conn->query($num_participant_count_query);
 		
@@ -51,11 +51,11 @@
 		for($match_id = 1; $match_id <= ceil($participant_count/2); ++$match_id) {
 			$search_participants_query = "SELECT participant_id
 										 FROM sgn_database.tournament_participants
-										 WHERE tournament_id = " . $_SESSION["page_id"] . " AND ordering = " . $order_num . 
+										 WHERE tournament_id = " . $_POST["tournament_id"] . " AND ordering = " . $order_num . 
 										 " UNION 
 										 SELECT participant_id
 										 FROM sgn_database.tournament_participants
-										 WHERE tournament_id = " . $_SESSION["page_id"] . " AND ordering = " . (string) ($order_num + 1) . ";";
+										 WHERE tournament_id = " . $_POST["tournament_id"] . " AND ordering = " . (string) ($order_num + 1) . ";";
 										 
 
 			
@@ -81,24 +81,24 @@
 			
 			if (isset($participant_two)) {
 				$insert_match_query = "INSERT INTO sgn_database.tournament_matches (tournament_id, relative_match_id, round, participant_1_id, participant_2_id) 
-										VALUES (" . $_SESSION["page_id"] . ", " . $match_id . ", 1, " . $participant_one . ", " . $participant_two . " )";
+										VALUES (" . $_POST["tournament_id"] . ", " . $match_id . ", 1, " . $participant_one . ", " . $participant_two . " )";
 			}
 			else {
 				echo "participant_count: " . $participant_count . "<br><br><br>";
 				if (floor(log(($participant_count - 1), 2)) == log(($participant_count - 1), 2))  {
 					$insert_match_query = "INSERT INTO sgn_database.tournament_matches (tournament_id, relative_match_id, round, participant_2_id) 
-										VALUES (" . $_SESSION["page_id"] . ", 1, " . ceil(log($participant_count, 2)) . ", " . $participant_one . " )";
+										VALUES (" . $_POST["tournament_id"] . ", 1, " . ceil(log($participant_count, 2)) . ", " . $participant_one . " )";
 										
 					echo ceil(log($participant_count, 2));
 				}
 				else {
 					$insert_match_query = "INSERT INTO sgn_database.tournament_matches (tournament_id, relative_match_id, round, participant_2_id) 
-										VALUES (" . $_SESSION["page_id"] . ", " . $match_id . ", 2, " . $participant_one . " )";
+										VALUES (" . $_POST["tournament_id"] . ", " . $match_id . ", 2, " . $participant_one . " )";
 										
 										echo "Else case";
 				}
 				// $insert_match_query = "INSERT INTO sgn_database.tournament_matches (tournament_id, relative_match_id, round, participant_1_id) 
-										// VALUES (" . $_SESSION["page_id"] . ", " . $match_id . ", 1, " . $participant_one . " )";
+										// VALUES (" . $_POST["tournament_id"] . ", " . $match_id . ", 1, " . $participant_one . " )";
 										
 				
 			}
@@ -117,7 +117,7 @@
 				
 		$update_tournament_start_query = "UPDATE sgn_database.tournaments
 										  SET started = true
-										  WHERE tournament_id = " . $_SESSION["page_id"] . ";";
+										  WHERE tournament_id = " . $_POST["tournament_id"] . ";";
 									
 		if ($execute_all_queries) {							
 			$conn->query($update_tournament_start_query);
@@ -125,12 +125,12 @@
 		
 		echo $update_tournament_start_query;
 		
-		if(ob_get_length()) {
-			ob_end_clean();
-		}
+		// if(ob_get_length()) {
+			// ob_end_clean();
+		// }
 
-		header("Location: http://localhost/sgn/tournament_page.php?page_id=" . $_SESSION["page_id"]);
-	?>
+		// header("Location: http://localhost/sgn/tournament_page.php?page_id=" . $_POST["tournament_id"]);
+	// ?>
 	
 	Tournament Update page under construction
 
