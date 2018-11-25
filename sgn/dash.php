@@ -651,49 +651,6 @@ function tabClick() {
 					        </button>
 					      </div>
 					      <div class='modal-body' id='searchModalBody'>
-					        <div class='keywordSearchDialog'><h1>Search Results for : </h1><div class='searchKeywords'><h2>Kyle</h2></div></div>
-					        <div class='noMatchDialog'>Nothing here, search for something else!</div>					        
-					        <div class='searchResultsCont'>
-					        	<div class='userSearchResults'>
-					        		<h2 style='color:black'>Users</h2>
-					        		<div class='usersSearchCont'>
-						        		<div class='userSearchBoxCont'>						        		
-							        		<div class='contenderImage'></div>
-							        		<div class='contenderName'>BlazeChar</div>
-							        	</div>
-							        	<div class='userSearchBoxCont'>						        		
-							        		<div class='contenderImage'></div>
-							        		<div class='contenderName'>BlazeChar</div>
-							        	</div>
-							        </div>
-						        </div>
-						        <div class='groupSearchResults'>
-						        	<h2 style='color:black'>Groups</h2>
-						        	<div class='groupsSearchCont'>
-						        		<div class='groupSearchBoxCont'>
-						        			<div class='contenderImage'></div>						        									        		
-							        		<div class='contenderName'>BlazeChar's Zard Lords</div>
-							        	</div>
-							        	<div class='groupSearchBoxCont'>
-						        			<div class='contenderImage'></div>						        									        		
-							        		<div class='contenderName'>BlazeChar's Zard Lords</div>
-							        	</div>
-						        	</div>
-						        </div>
-						        <div class='eventSearchResults'>
-						        	<h2 style='color:black'>Events</h2>
-						        	<div class='eventsSearchCont'>
-						        		<div class='eventSearchBoxCont'>
-						        			<div class='contenderImage'></div>						        									        		
-							        		<div class='contenderName'>Kyle's D&D Meetup</div>
-							        	</div>
-							        	<div class='eventSearchBoxCont'>
-						        			<div class='contenderImage'></div>						        									        		
-							        		<div class='contenderName'>Kyle's D&D Meetup</div>
-							        	</div>
-						        	</div>
-						        </div>
-					        </div>
 					      </div>
 					      <div class='modal-footer'>
 					        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
@@ -791,11 +748,7 @@ function tabClick() {
 				<div id="posts"> </div>
 				<!-- Fetch posts end -->
 				<!-- Dialog for No Posts to show -->
-				
-				
-				
-
-				
+			
 				<!-- Search Results hidden by default unless searched -->
 				<div class="searchResults" id="searchContent">
 					<h1 class="searchTitle">Search Results for: </h1><h2 class="searchQuery">Something typed in search bar</h2>
@@ -969,10 +922,6 @@ function tabClick() {
 				<div id="events_modal"> </div>
 				
 				<div id="events_post"> </div>
-				<div class='streamBox'><div id='twitch-embed'></div></div>
- 
-
-    <script src='https://embed.twitch.tv/embed/v1.js'></script>
 
 				<div id="tournaments_modal"> </div>
 			<!-- Fetch Events End -->

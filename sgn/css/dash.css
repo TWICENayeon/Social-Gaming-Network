@@ -92,11 +92,11 @@ body {
 	/*background-image: : url("../img/Profile-icon-9.");*/
 	/*background-size: 200px 200px;*/	
 	font-size: 1em;
-	z-index: -1;
+	/*z-index: -1;*/
 	padding: 0;
 }
 #profile-tab::after {
-	display: none;
+	/*display: none;*/
 }
 #profile-tab img {
 	height: 38px;
@@ -120,7 +120,7 @@ body {
 .tabs-content {
 	height: 100%;
 }
-#myTabContent {
+#myTabContent, #myFriendContent {
 	flex-grow: 1;
 	text-align: center;
 	/*display: inline-block;
@@ -254,15 +254,10 @@ body {
 	font-size: 5rem;
 }
 #createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal, #eventModal, #futureEventModal,
-#eventPostsModal, #uploadBannerModal, #profileModal, #tournamentModal, #dashProfileModal, #settingsModal, #notifsModal, #createTournamentModal {
+#eventPostsModal, #uploadBannerModal, #profileModal, #tournamentModal, #dashProfileModal, #settingsModal, #notifsModal, #createTournamentModal, #searchModal, #searchProfileModal {
 	color: black;
 	text-align: center;
 } 
-
-.pickMatchWinner, .matchTitle {
-	color: black;
-}
-
 .modal-dialog {
 	width: 100%;
 }
@@ -446,13 +441,10 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-color: gray;
-	background-size: cover;
-	
 }
 .profileModalImage {
 	margin: auto;
 	text-align: center;
-	background-size: cover;
 }
 
 .eventPostCont, .commentCont {
@@ -550,7 +542,7 @@ body {
 	background-repeat: no-repeat;
 	background-color: black;
 }
-.contenderCont {
+.contenderCont, .userSearchBoxCont, .groupSearchBoxCont, .eventSearchBoxCont {
 	display: inline-flex;
 	flex-direction: row;
 	margin: auto;
@@ -605,9 +597,10 @@ body {
 	margin-bottom: 10px;
 }
 
-.tournamentTitle, .tournamentDate, .tournamentTime, .contenderNum, .contenderName, .contenderImage, .matchCompleteDialog, .winnerDialog,
- .tournamentWinner, .roundNum, .tournamentStartDialog, .personSeed, .currentParticipantsTitle, .participantsTitle, .personSeedNum, .streamLink {
+.tournamentTitle, .tournamentDate, .tournamentTime, .participantsTitle, .currentParticipantsTitle, .contenderNum, .contenderName,
+.tournamentStartDialog, .personSeed, .roundNum, .matchTitle, .matchCompleteDialog, .winnerDialog, .modal-title {
 	color: black;
+	
 }
 
 .matchContBox {
@@ -631,10 +624,27 @@ body {
 	background-image: url("../img/ally.png");
 	background-size: cover;
 }
-.post-profile-image, .contenderImage, .commentProfileImage {
-	background-size: cover;
+.userSearchResults, .groupSearchResults, .eventSearchResults {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.usersSearchCont, .groupsSearchCont, .eventsSearchCont {
+	border: 1px solid black;
+	border-radius: 10px;
+	/*display: flex;*/
+	flex-direction: column;
+	text-align: center;
+}
+.userSearchBoxCont, .groupSearchBoxCont, .eventSearchBoxCont {
+	margin-top: 10px;
+}
+#myFriendContent {
+	display: none;
+}
+.friendWallButton {
+
 }
 
-.modal-title, .keywordSearchDialog, .noMatchDialog {
-	color: black
+.post-profile-image, .contenderImage {
+	background-size: cover;
 }
