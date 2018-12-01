@@ -358,8 +358,8 @@ body {
 }
 .streamCont {
 	height: 480px;
-	width: 640px;
-	flex-grow: 1;
+	width: 760px;
+	flex-grow: 0;
 	text-align: left;
 }
 .streamChatCont {
@@ -369,7 +369,7 @@ body {
 }
 .streamVideo {
 	border: 2px solid black;
-	flex-grow: 1;
+	flex-grow: 0;
 	height: 480px;	
 }
 .streamChat {
@@ -377,9 +377,9 @@ body {
 	height: 480px;
 	width: 400px;
 }
-#esportModalBody {
+#esportModalBody1, #esportModalBody2, #esportModalBody3, #esportModalBody4, #esportModalBody5 {
 	display: flex;
-	flex-grow: 1;
+	flex-grow: 0;
 	flex-direction: row;
 }
 #esportsNewsCont {

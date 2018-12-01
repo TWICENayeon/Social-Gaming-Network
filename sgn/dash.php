@@ -15,8 +15,10 @@
 	<script src="jqueryUI/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>	
 	<script src="js/dash.js"></script>
-	<script src='https://embed.twitch.tv/embed/v1.js'></script>
-	<title>Social Gaming Network - Dashboard</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+    	<!-- Load the Twitch embed script -->
+    	<script src="https://embed.twitch.tv/embed/v1.js"></script>
+	<title>Social Gaming Network</title>
 	
 </head>
 <script>
@@ -29,6 +31,61 @@ function fetchPosts() {
         };
         xmlhttp.open("POST", "php/fetch_posts_user.php", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send();
+}
+
+function fetchEsportsLOL() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("esportModalBody1").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_esports_lol.php", true);
+        xmlhttp.send();
+}
+
+function fetchEsportsCS() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("esportModalBody2").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_esports_cs.php", true);
+        xmlhttp.send();
+}
+
+function fetchEsportsOW() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("esportModalBody3").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_esports_ow.php", true);
+        xmlhttp.send();
+}
+
+function fetchEsportsHOTS() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("esportModalBody4").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_esports_hots.php", true);
+        xmlhttp.send();
+}
+
+function fetchEsportsSC2() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("esportModalBody5").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "php/fetch_esports_sc2.php", true);
         xmlhttp.send();
 }
 
@@ -235,6 +292,7 @@ function updateInformationUser() {
 	
 	// alert("Start update information user");
 	//var textarea_text = $(".postTextBox").val();
+
 	var params = '';
 	var first_set = false;
 	if($("#new_email_text").val()) {
@@ -520,14 +578,13 @@ function start() {
 function tabClick() {
 	var $link = $(this);
 	if($link.attr("id") == "home-tab") {
-		alert("Boom, home");
 		fetchPosts();
 	}
 	if($link.attr("id") == "esports-tab") {
-		alert("Esport");
+		
 	}
 	if($link.attr("id") == "groups-tab") {
-		alert("group");
+		
 	}
 	if($link.attr("id") == "events-tab") {
 		fetchEvents();
@@ -763,7 +820,7 @@ function tabClick() {
 			  		<div class="esportsTemplate">
 			  			<div class="esportsTitle">List of Esports Games</div>
 			  			<div class="esportsList">
-			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal"><img class="leagueIcon" src="img/lol-icon.png"></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal"><img class="csgoIcon" src="img/csgo-icon.png"></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal"><img class="owIcon" src="img/ow-icon.png"></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal"><img class="hotsIcon" src="img/hots-icon.png"></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal"><img class="sc2Icon" src="img/sc2-icon.png"><br></a>
+			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal"><img class="leagueIcon" src="img/lol-icon.png" onClick=fetchEsportsLOL()></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal"><img class="csgoIcon" src="img/csgo-icon.png" onClick=fetchEsportsCS()></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal"><img class="owIcon" src="img/ow-icon.png" onClick=fetchEsportsOW()></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal"><img class="hotsIcon" src="img/hots-icon.png" onClick=fetchEsportsHOTS()></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal"><img class="sc2Icon" src="img/sc2-icon.png" onClick=fetchEsportsSC2()><br></a>
 			  			</div>
 			  			<!-- Esports Modals -->			  			
 			  			<div class="esportsModals">
@@ -777,13 +834,7 @@ function tabClick() {
 							          <span aria-hidden="true">&times;</span>
 							        </button>
 							      </div>
-							      <div class="modal-body" id="esportModalBody">
-							        <div class="streamCont">
-							        	<div class="streamVideo"></div>
-							        </div>
-							        <div class="streamChatCont">
-							        	<div class="streamChat"></div>
-							        </div>
+							      <div class="modal-body" id="esportModalBody1">
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -802,13 +853,10 @@ function tabClick() {
 							          <span aria-hidden="true">&times;</span>
 							        </button>
 							      </div>
-							      <div class="modal-body" id="esportModalBody">
-							        <div class="streamCont">
-							        	<div class="streamVideo"></div>
-							        </div>
-							        <div class="streamChatCont">
-							        	<div class="streamChat"></div>
-							        </div>
+							      <div class="modal-body" id="esportModalBody2">
+								
+
+
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -827,13 +875,11 @@ function tabClick() {
 							          <span aria-hidden="true">&times;</span>
 							        </button>
 							      </div>
-							      <div class="modal-body" id="esportModalBody">
-							        <div class="streamCont">
-							        	<div class="streamVideo"></div>
-							        </div>
-							        <div class="streamChatCont">
-							        	<div class="streamChat"></div>
-							        </div>
+							      <div class="modal-body" id="esportModalBody3">
+							        
+
+
+
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -852,13 +898,10 @@ function tabClick() {
 							          <span aria-hidden="true">&times;</span>
 							        </button>
 							      </div>
-							      <div class="modal-body" id="esportModalBody">
-							        <div class="streamCont">
-							        	<div class="streamVideo"></div>
-							        </div>
-							        <div class="streamChatCont">
-							        	<div class="streamChat"></div>
-							        </div>
+							      <div class="modal-body" id="esportModalBody4">
+							        
+
+
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -877,13 +920,10 @@ function tabClick() {
 							          <span aria-hidden="true">&times;</span>
 							        </button>
 							      </div>
-							      <div class="modal-body" id="esportModalBody">
-							        <div class="streamCont">
-							        	<div class="streamVideo"></div>
-							        </div>
-							        <div class="streamChatCont">
-							        	<div class="streamChat"></div>
-							        </div>
+							      <div class="modal-body" id="esportModalBody5">
+							        
+
+
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
