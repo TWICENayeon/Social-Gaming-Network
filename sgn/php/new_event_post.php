@@ -39,7 +39,7 @@
 		
 		// TODO: Escape single quotes and other sensitive characters
 		$insert_new_post = "INSERT INTO sgn_database.posts (parent_post_id, poster_id, wall_type, wall_owner_id, post_text, post_date, post_time, post_votes) 
-							VALUES (" . $parent_post_id_value . ", " . $_SESSION["current_user_id"] . ", 0, " . $_POST["wall_owner_id"] . ", '" . $post_text . "', CURRENT_DATE(), CURRENT_TIME(),0);";
+							VALUES (0, " . $_SESSION["current_user_id"] . ", 2, " .  $_POST["event_id"] . " , '" . $post_text . "', CURRENT_DATE(), CURRENT_TIME(),0);";
 
 		echo "<br><br>" . $post_text . "<br><br>";
 		echo $insert_new_post;

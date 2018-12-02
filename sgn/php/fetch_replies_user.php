@@ -64,7 +64,7 @@ if(!isset($_SESSION["current_user_id"])) {
 						<div class='commentPostTime' style='color:black'>" . $child_tuple["post_time"] . "</div>
 						<div class='commentText' style='color:black'>". $child_tuple["post_text"] . "</div>
 						<div class='commentPostVoteButtons'>
-							<div class='commentPostUpvote'style='color:black' onclick='likeAction(this, " . $child_tuple["post_id"] . ")'>
+							<div class='commentPostUpvote'style='color:black' onclick='likeAction(this, " . $child_tuple["post_id"] . ", 0)'>
 							<i class='fa fa-hand-o-up' aria-hidden='false'  " . ($liked_reply_value ? " style='color:blue' " : "") ."></i>			
 							<span id='vote_total'>" . $reply_vote_total . " </span>
 							</div>

@@ -43,7 +43,6 @@
 		else {
 			echo "Decrease Reply";
 		}
-		
 	}
 	else {
 		$remove_vote_query = "INSERT INTO post_votes

@@ -1,3 +1,16 @@
+<?php
+	// Gain access to session array
+	session_start();
+	
+	// Check if there is a user signed in_array
+	// If not, redirect to index page
+	if(!isset($_SESSION["current_user_id"])) {
+		header("Location: http://localhost/sgn/index.html");
+		exit();
+	}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,581 +28,224 @@
 	<script src="jqueryUI/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>	
 	<script src="js/dash.js"></script>
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-    	<!-- Load the Twitch embed script -->
-    	<script src="https://embed.twitch.tv/embed/v1.js"></script>
-	<title>Social Gaming Network</title>
+	<script src="js/post.js"></script>
+	<script src="js/event.js"></script>
+	<script src="js/tournament.js"></script>
+	<script src="js/group.js"></script>
+	<script src="js/user_page.js"></script>
+	<script src="js/esports.js"></script>
+	<script src='https://embed.twitch.tv/embed/v1.js'></script>
+	<title>Social Gaming Network - Dashboard</title>
 	
+
 </head>
 <script>
-function fetchPosts() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("posts").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_posts_user.php", true);
-		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-}
 
-function fetchEsportsLOL() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("esportModalBody1").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_esports_lol.php", true);
-        xmlhttp.send();
-}
-
-function fetchEsportsCS() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("esportModalBody2").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_esports_cs.php", true);
-        xmlhttp.send();
-}
-
-function fetchEsportsOW() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("esportModalBody3").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_esports_ow.php", true);
-        xmlhttp.send();
-}
-
-function fetchEsportsHOTS() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("esportModalBody4").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_esports_hots.php", true);
-        xmlhttp.send();
-}
-
-function fetchEsportsSC2() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("esportModalBody5").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_esports_sc2.php", true);
-        xmlhttp.send();
-}
-
-function fetchEvents() {
-	fetchEventList();
-	fetchEventModals();
-	fetchEventPosts();
-	fetchTournamentsModal();
-}
-
-function fetchEventList() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("events_list").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_events_list.php", true);
-		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-}
-
-function fetchEventModals() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("events_modal").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_events_modals.php", true);
-		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-}
-	
-function fetchEventPosts() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("events_post").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_events_posts.php", true);
-		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-}
+// Group Functions Start
 
 
-// user post and user replies 
-function createPost(parent_post_id) {
-	var textarea_text = "";
-	if(parent_post_id == "0") {
-		textarea_text = $(".postTextBox").val();
-	}
-	else {
-		var replyTextBox = "#replyTextBox_" + parent_post_id;
-		// .innerHTML = this.responseText;
-		textarea_text = $(replyTextBox).val();
-	}
-	var params = 'post_text=' + textarea_text;
-	
-	if(parent_post_id != "0") {
-		params += ('&parent_post_id=' + parent_post_id);
-	}
-	var xmlhttp = new XMLHttpRequest();
-	
-	xmlhttp.open("POST", "php/new_user_post.php", true);
-	
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			if(parent_post_id == "0") {
-				fetchPosts();
-				$(".postTextBox").val('');
-			}
-			else {
-				fetchReplies(parent_post_id);
-				fetchNumReplies(parent_post_id);
-			}
-		}
-	};
-	xmlhttp.send(params);
-	
-	
-}
-
-function createReply(post_id) {
-	fetchReplies(post_id);
-	fetchNumReplies(post_id);
-}
-
-
-
-function fetchReplies(post_id) {
-	// alert(post_id);
-	var replyModalID = "repliesModal_" + post_id;
-	var param = "parent_post_id=" + post_id;
-	// alert(replyModalID);
-	// alert(param);
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			// alert(this.responseText);
-			try {
-				document.getElementById(replyModalID).innerHTML = this.responseText;
-				// alert(replyModalID);
-				// alert(document.getElementById(replyModalID).innerHTML);
-			}
-			catch(err) {
-				alert(err.message);
-			}
-			// alert("Printing div innerHTML");
-			// alert(document.getElementById(replyModalID).innerHTML);
-		}
-	};
-	xmlhttp.open("POST", "php/fetch_replies_user.php", true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(param);
-}
-
-function fetchNumReplies(post_id) {
-	var numRepliesSpan = "num-replies-post_" + post_id;
-	var param = "post_id=" + post_id;
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			// alert(this.responseText);
-			try {
-				document.getElementById(numRepliesSpan).innerHTML = this.responseText;
-			}
-			catch(err) {
-				alert(err.message);
-			}
-			// alert("Printing span innerHTML");
-			// alert(document.getElementById(numRepliesSpan).innerHTML);
-		}
-	};
-	xmlhttp.open("POST", "php/fetch_num_replies.php", true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(param);
-}
-
-
-function fetchUserBannerImage() {
-	//alert((document.getElementsByClassName("sgnBanner"))[0].style.backgroundImage);var xmlhttp = new XMLHttpRequest();
-	
-		var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                (document.getElementsByClassName("sgnBanner"))[0].style.backgroundImage = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_user_banner.php", true);
-		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-}
-
-function uploadUserBannerImage() {
-	$("#bannerForm").submit();
-	$("#bannerForm").reset();
-	fetchUserBannerImage();
-}
-
-function likeAction(element, post_id) {
-	// alert("liked");
-	var current_count = parseInt(element.children[1].innerHTML);
-	// alert(current_count);
-	// alert("after");
-	// alert("Before");
-	// alert(element.children[1].id);
-	// alert(post_id);
-	// alert("After");
-	var xmlhttp = new XMLHttpRequest();
-	var params = "post_id=" + post_id;
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			// alert("Received");
-			// alert(this.responseText);
-			if(this.responseText == "Increase") {
-				// alert("Increase");
-				element.children[0].style.color = "blue";
-				element.children[1].innerHTML = ++current_count;
-			}
-			else if(this.responseText == "Decrease Post") {
-				// alert("Decrease");
-				element.children[0].style.color = "white";
-				element.children[1].innerHTML = --current_count;
-			}
-			else if(this.responseText == "Decrease Reply") {
-				// alert("Decrease");
-				element.children[0].style.color = "black";
-				element.children[1].innerHTML = --current_count;
-			}
-		}
-	};
-	xmlhttp.open("POST", "php/process_vote.php", true);
-	
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(params);
-}
-
-function updateInformationUser() {
-	//alert((document.getElementsByClassName("sgnBanner"))[0].style.backgroundImage);var xmlhttp = new XMLHttpRequest();
-	
-	// alert("Start update information user");
-	//var textarea_text = $(".postTextBox").val();
-
-	var params = '';
-	var first_set = false;
-	if($("#new_email_text").val()) {
-		params += ('new_email=' + $("#new_email_text").val());
-		first_set = true;
-	}
-	if($("#new_username_text").val()) {
-		if(first_set) {
-			params += '&';
-		}
-		params += ('new_username=' + $("#new_username_text").val());
-		first_set = true;
-	}
-	if($("#new_password_text").val()) {
-		if(first_set) {
-			params += '&';
-		}
-		params += ('new_password=' + $("#new_password_text").val());
-		first_set = true;
-	}
-	if($("#new_first_name_text").val()) {
-		if(first_set) {
-			params += '&';
-		}
-		params += ('new_first_name=' + $("#new_first_name_text").val());
-		first_set = true;
-	}
-	if($("#new_last_name_text").val()) {
-		if(first_set) {
-			params += '&';
-		}
-		params += ('new_last_name=' + $("#new_last_name_text").val());
-	}
-
-	var xmlhttp = new XMLHttpRequest();
-	
-	xmlhttp.open("POST", "php/update_information_user.php", true);
-	
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			start();
-			$("#updateUserForm").reset();
-			
-		}
-	};
-	xmlhttp.send(params);
-	
-}
-
-function fetchNotificationNumber() {
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-	  document.getElementById("notification_number").innerHTML=this.responseText;
-	}
-  };
-  xmlhttp.open("POST","php/fetch_num_notifications.php",true);
-  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlhttp.send();
-}
-
-function fetchNotificationModal() {
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-	  document.getElementById("notifsModalContent").innerHTML=this.responseText;
-	}
-  };
-  xmlhttp.open("POST","php/my_notifications.php",true);
-  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlhttp.send();
-}
-
-function resolveNotif(notification_id, action) {
-	// action == 1 is accept
-	// action == 0 is decline 
-	alert(notification_id);
-	alert(action);
-	params = "notification_id=" + notification_id + "&action=" + action;
-	alert(params);
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange=function() {
-		if (this.readyState==4 && this.status==200) {
-			fetchNotificationModal();
-		}
-    };
-    xmlhttp.open("POST","php/process_notification.php",true);
-    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xmlhttp.send(params);
-}
-
-function fetchCurrentUsername() {
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-	  document.getElementById("profileName").innerHTML=this.responseText;
-	}
-  };
-  xmlhttp.open("POST","php/fetch_current_username.php",true);
-  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlhttp.send();
-}
-
-
-function fetchTournamentsModal() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("tournaments_modal").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("POST", "php/fetch_tournament_modals.php", true);
-		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-}
-
-
-function fetchTournamentInfo(tournament_id) {
-	var xmlhttp = new XMLHttpRequest();
-	var param = "tournament_id=" + tournament_id;
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("notifsModal").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp.open("POST", "php/fetch_tournament_info.php", true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(param);
-}
-
-
-function createTournament(event_id) {
-	var createTournamentTitleField = "#createTournamentTitle_" + event_id;
-	var title_text = $(createTournamentTitleField).val();
-	
-	var createTournamentDateField = "#createTournamentDate_" + event_id;
-	var date_text = $(createTournamentDateField).val();
-	
-	var createTournamentTimeField = "#createTournamentTime_" + event_id;
-	var time_text = $(createTournamentTimeField).val();
-	
-	var params = "event_id=" + event_id + "&tournament_name=" + title_text + "&tournament_date=" + date_text + "&tournament_time=" + time_text;
-	// alert(params);
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			// alert(this.responseText);
-			try {
-				// alert(this.responseText);
-				fetchEvents();
-				fetchTournamentsModal();
-			}
-			catch(err) {
-				alert(err.message);
-			}
-			// alert("Printing span innerHTML");
-			// alert(document.getElementById(numRepliesSpan).innerHTML);
-		}
-	};
-	xmlhttp.open("POST", "php/new_tournament.php", true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(params);
-}
-
-
-function updateTournamentAttendance(tournament_id, action, event_id) {
-	var xmlhttp = new XMLHttpRequest();
-	var params = "tournament_id=" + tournament_id + "&actionType=" + action;
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-		// alert(this.responseText);
-	  fetchTournamentInfo(tournament_id);
-	  // alert("Set show before");
-	  var tournamentModalID = "tournamentModal_" + event_id;
-	  // alert(tournamentModalID);
-	  document.getElementById("tournamentModal_" + event_id).className = "modal fade show";
-	  // alert(document.getElementById("tournamentModal_" + event_id).className);
-	  // alert("Set show after");
-	  // alert(document.getElementById("tournamentModal_" + event_id).className);
-	}
-  };
-	xmlhttp.open("POST","php/tournament_update_attendance.php",true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(params);
-}
-
-function addTournamentStream(tournament_id) {
-	var streamName = $("#streamNameForm_" + tournament_id).val();
-	var xmlhttp = new XMLHttpRequest();
-	var params = "stream_name=" + streamName + "&tournament_id=" + tournament_id;
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-		// alert(this.responseText);
-		// alert(this.responseText);
-	  fetchTournamentInfo(tournament_id);
-	}
-  };
-	xmlhttp.open("POST","php/tournament_update_stream.php",true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(params);
-}
-
-function changeTournamentOrdering(tournament_id) {
-	var user_id = $("#peopleNames_" + tournament_id).val();
-	var order = $("#newSeedInput_" + tournament_id).val();
-	var xmlhttp = new XMLHttpRequest();
-	var params = "user_id=" + user_id + "&order=" + order + "&tournament_id=" + tournament_id;
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-		// alert(this.responseText);
-		// alert(this.responseText);
-	  fetchTournamentInfo(tournament_id);
-	}
-  };
-	xmlhttp.open("POST","php/update_tournament_ordering.php",true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(params);
-}
-
-function startTournament(tournament_id) {
-	var xmlhttp = new XMLHttpRequest();
-	var param = "tournament_id=" + tournament_id;
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-		fetchTournamentInfo(tournament_id);
-	}
-  };
-	xmlhttp.open("POST","php/tournament_start.php",true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(param);
-}
-
-function submitWinner(tournament_id, round, relative_match_num) {
-	var winnerSelectorID = "#winnerSelector_" + tournament_id + "_" + round + "_" + relative_match_num;
-	var xmlhttp = new XMLHttpRequest();
-	var params = "tournament_id=" + tournament_id + "&old_round_num=" + round + "&old_match_num=" + relative_match_num + "&winner_id=" + $(winnerSelectorID).val();
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-		fetchTournamentInfo(tournament_id);
-	}
-  };
-	xmlhttp.open("POST","php/update_tournament_score.php",true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send(params);
-}
-
-
-function fetchSearchResults() {
-	var xmlhttp = new XMLHttpRequest();
-	var param = "search_term=" + $("#search-input").val();
-	xmlhttp.onreadystatechange=function() {
-	if (this.readyState==4 && this.status==200) {
-		document.getElementById("searchModalBody").innerHTML = this.responseText;
-	}
-  };
-	xmlhttp.open("GET","php/search_results.php?" + param,true);
-	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlhttp.send();
-}
+// Group Functions End
 </script>
 
 <script>
-
-function start() {
-	// alert("Starting");
-	fetchPosts();
-	// alert("Events");
-	fetchEvents();
-	// alert("Banner");
-	fetchUserBannerImage();
-	fetchNotificationNumber();
-	fetchNotificationModal();
-	fetchCurrentUsername();
-	setInterval(fetchNotificationNumber, 1500);
-	setInterval(fetchNotificationModal, 1500);
-	// alert("Done");
-}
-
 // Bind, works better than trigger
 // Does not work
-function tabClick() {
-	var $link = $(this);
-	if($link.attr("id") == "home-tab") {
-		fetchPosts();
-	}
-	if($link.attr("id") == "esports-tab") {
-		
-	}
-	if($link.attr("id") == "groups-tab") {
-		
-	}
-	if($link.attr("id") == "events-tab") {
-		fetchEvents();
-	}
+
+
+function start() {
+	
 }
+
+
+
+$(document).ready(function(){
+  $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+    localStorage.setItem('activeTab', $(e.target).attr('href'));
+  });
+  var activeTab = localStorage.getItem('activeTab');
+  console.log(activeTab);
+  if (activeTab) {
+    $('a[href="' + activeTab + '"]').tab('show');
+  }
+  // $(".loader").fadeOut(1500);
+	// var chatContPos = $(".sgnChatCont").position();
+ //  	// console.log(chatContPos);
+ //  	var buttonPos = $(".createPostButtonCont");
+ //  	buttonPos.css("left", chatContPos.left - 100);
+ //  	$( window ).resize(function() {
+ //  		var chatContPos = $(".sgnChatCont").position();
+ //  		// console.log(chatContPos);
+ //  		var buttonPos = $(".createPostButtonCont");
+ //  		buttonPos.css("left", chatContPos.left - 100);
+ //  		if ($(".sgnChatCont").is(":hidden")) {
+ //  			buttonPos.css("left", "100vw").css("left", "-=120px");
+ //  		} 
+	// });
+	// $( ".sgnChatCont" ).resizable({
+ //  		handles: { w:'.selector'},
+ //  		resize: function( event, ui ) {
+ //  			if (ui.size.width <= 10) {
+ //  				$(this).hide();
+ //  				$(".selector").appendTo($(".afterHidden"));  				  				
+ //  			}
+ //  			else {
+ //  				$(this).show();
+ //  				$(".selector").appendTo($(".afterHiddenSelector"));
+ //  				var chatContPos = $(".sgnChatCont").position();
+ //  				// console.log(chatContPos);
+ //  				var buttonPos = $(".createPostButtonCont");
+ //  				buttonPos.css("left", chatContPos.left - 100);
+ //  			}  		  			
+
+ //  		}  		
+	// });
+	// $(".sgnChatCont").resizable({
+	// 	resize: function( event, ui ) {
+	// 		if $(".selector").appendTo($(".afterHidden")) {
+	// 			$(this).show();
+	// 			$(".selector").appendTo($(".afterHiddenSelector"));
+	// 		}
+	// 	}
+	// });	
+	// $(".selector").click(function() {	
+	// 	if ($(".sgnChatCont").css("display") == "none") {
+	// 		$(".sgnChatCont").show();
+	// 		$(".sgnChatCont").css("width", "35em");
+	// 		$(".selector").appendTo($(".afterHiddenSelector"));
+	// 		var chatContPos = $(".sgnChatCont").position();
+ //  			// console.log(chatContPos);
+ //  			var buttonPos = $(".createPostButtonCont");
+ //  			buttonPos.css("left", chatContPos.left - 100);			
+	// 	}
+ //  });
+  document.getElementById("resizer").addEventListener("mousedown", addMousemove);
+
+  function addMousemove (d) {
+    console.log("movable")
+    document.addEventListener("mousemove", widthDriver)
+  }
+  // document.addEventListener("mouseup", removeMove);
+  function widthDriver(e) {
+      document.addEventListener("mouseup", removeMove);
+      var width = e.screenX;
+      if (width > window.innerWidth - 260) {
+          width = window.innerWidth - 8;
+          document.getElementById("rightCont").style.display = "none";
+            document.getElementById("resizer").removeEventListener("mousedown", addMousemove);
+            document.getElementById("postButtonCont").style.textAlign = "right";
+          
+      }            
+      else {
+        document.getElementById("rightCont").style.display = "block";  
+      }
+      if (width < 8) {
+          width = 8;
+      }      
+      document.getElementById("myTabContent").style.width = (width + 6) + "px";
+      document.getElementById("rightCont").style.width = (document.getElementById("mainCont").clientWidth - width - 6) + "px";
+  }
+  function removeMove(e) {
+      document.removeEventListener("mousemove", widthDriver);
+      document.removeEventListener("mouseup", removeMove);
+  }
+  document.getElementById("resizer").addEventListener("click", popChat);
+  // document.getElementById("resizer").addEventListener("mousedown", addMousemove)
+  function popChat(e) {
+    console.log("clickable")
+      if (document.getElementById("rightCont").style.display == "none") {
+        document.getElementById("rightCont").style.width = "261px";
+        document.getElementById("rightCont").style.display = "block"; } 
+        document.getElementById("resizer").addEventListener("mousedown", addMousemove); 
+  }
+  
+  // $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+  //   localStorage.setItem('activeTab', $(e.target).attr('href'));
+  // });
+
+  // var activeTab = localStorage.getItem('activeTab');
+  // console.log(activeTab);
+  // if (activeTab) {
+  //  $('a[href="' + activeTab + '"]').tab('show');
+  // }
+//   $(function() {
+//       $('ul.tabs li:first').addClass('active').show();
+//       $('div.tab_content:first').show();
+//       $('ul.tabs li').click(function() {
+//             $('ul.tabs li').removeClass('active');
+//             $(this).addClass('active');
+//             $('div.tab_content').hide();
+//             var activeTab = $(this).find('a').attr('href'); 
+//             $(activeTab).show(); 
+//             $.cookie('selectedTab', activeTab, {expires: 7}); // Save active tab in cookie
+//             return false;
+//       });
+//       var activeTab = $.cookie('selectedTab'); // Retrieve active tab
+//       if (activeTab) {
+//             $('ul.tabs li:has(a[href="' + activeTab + '"])').click(); // And simulate clicking it
+//       }
+
+  if (document.getElementById("thumbsUpIcon") != null) {
+    document.getElementById("thumbsUpIcon").addEventListener("click", thumbsUpFunc);
+    function thumbsUpFunc() {
+      document.getElementById("thumbsUpIcon").style.color = "#1E90FF";    
+    }
+  }
+  document.getElementById("handUp").addEventListener("click", voteUpFunc);
+  function voteUpFunc() {
+    document.getElementById("handUp").style.color = "#1E90FF";
+  }
+  document.getElementById("handDown").addEventListener("click", voteDownFunc);
+  function voteDownFunc() {
+    document.getElementById("handDown").style.color = "#1E90FF";
+  }
+  // document.getElementById("logoutDD").addEventListener("click", logoutFunc);
+  // function logoutFunc {
+
+  // }
+  // Search Bar Functionality
+  // $("#searchSubmitBtn").click(function() {
+    // var searchContent = $("#searchContent");    
+    // var contentBox = $("#myTabContent");    
+    // // contentBox.html(' ');
+    // alert();    
+    // contentBox.appendTo(searchContent);
+    // // contentBox.show();
+    // return false;    
+
+  // });
+  // searchContent = $("#searchContent"); 
+  // var contentBox = $("#myTabContent");
+  // contentBox.html('');
+  // contentBox.appendTo(searchContent);
+
+	// alert("Posts");
+	fetchPosts(<?php echo $_SESSION["current_user_id"]; ?>);
+	// alert("Events");
+	// fetchEvents();
+	// alert("Banner Image");
+	fetchUserBannerImage();
+	// alert("Notification Number");
+	fetchNotificationNumber();
+	// alert("Notification modal");
+	fetchNotificationModal();
+	// alert("Current username");
+	fetchCurrentUsername();
+	// alert("Profile");
+	fetchUserProfileModal();
+	fetchEsportsModals();
+	fetchEvents();
+	// fetchEsportsModals();
+	
+	setInterval(fetchNotificationNumber, 1500);
+	setInterval(fetchNotificationModal, 1500);
+	fetchGroupStuff();
+
+  setTimeout(function(){ 
+    $(".loader").delay(150).fadeOut("slow");
+  // $(".loader").delay().fadeOut("slow");
+  }, 200)
+});
+
 </script>
 
 <!-- Start begin-->
@@ -627,13 +283,13 @@ function tabClick() {
 	<div class="sgnTabs">				
 					<ul class="nav nav-tabs mr-auto flex-col flex-sm-row" id="dashTabs" role="tablist">
 					  <li class="nav-item main-tabs">
-					    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" onclick="fetchPosts()">SGN</a>
+					    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" onclick="fetchPosts(<?php echo $_SESSION["current_user_id"]; ?>)">SGN</a>
 					  </li>
 					  <li class="nav-item main-tabs">
-					    <a class="nav-link" id="esports-tab" data-toggle="tab" href="#esports" role="tab" aria-controls="esports" aria-selected="false">Esports</a>
+					    <a class="nav-link" id="esports-tab" data-toggle="tab" href="#esports" role="tab" aria-controls="esports" aria-selected="false" onclick="fetchEsportsModals()">Esports</a>
 					  </li>
 					  <li class="nav-item main-tabs">
-					    <a class="nav-link" id="groups-tab" data-toggle="tab" href="#groups" role="tab" aria-controls="groups" aria-selected="false">Groups</a>
+					    <a class="nav-link" id="groups-tab" data-toggle="tab" href="#groups" role="tab" aria-controls="groups" aria-selected="false" onclick="fetchGroupStuff()">Groups</a>
 					  </li>
 					  <li class="nav-item main-tabs">
 					    <a class="nav-link" id="events-tab" data-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false" onclick="fetchEvents()">Events</a>
@@ -662,24 +318,41 @@ function tabClick() {
 					  <!-- <li class="nav-item main-tabs">
 					    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="notifs" aria-selected="false"><i class="fas fa-bullhorn"></i> 4</a>
 					  </li> -->					 
-					  <li class="nav-item dropdown" id="profileLi" data-toggle="dropdown">					  	
-					  	<a class="nav-link" id="profile-tab" data-toggle="dropdown-toggle"><img src="img/Profile-icon-9.png"></a>
-					  	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-					  	  <a class="dropdown-item" id="profileName">TWICE_Nayeon</a>
-				          <a class="dropdown-item" data-toggle="modal" data-target="#profileModal">Profile</a>
-				          <a class="dropdown-item" href="#">Account</a>
-				          <!-- <div class="dropdown-item"><a id="logoutDD" href="index.html">Logout</a></div> -->
-				          <a class="dropdown-item" id="logoutDD" href="index.html">Logout</a>
-				        </div>				        
+					  <li class="nav-item main-tabs tab-icons">					  	
+					  	<a class="nav-link" id="profile-tab" data-toggle="modal" data-target="#profileModal" role="tab" aria-controls="profile" aria-selected="false"><img src="img/Profile-icon-9.png"></a>
+					  	<a class="nav-link" id="logoutDD" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-power-off"></i></a>
 					  </li>
 					  <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					  	<a class="dropdown" id="logoutDD" href="index.html">Logout</a>
 					  </div>  -->				 
 					</ul>
+					<!-- Logout Modal -->
+					<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Logout</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <h2> Note </h2>
+					        <p>Do you wish to logout?
+					      </div>
+					      <div class="modal-footer">
+							<form action="php/process_logout.php">
+					        <input type="submit" class="btn btn-primary" value="Yes">
+							</form> 
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 					<!-- Dropdown Profile Modal -->
 					<div class="modal fade" id="profileModal" tabindex="-1" role="dialog">
 					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
+					    <div class="modal-content" id="profileModalContent">
 					      <div class="modal-header">
 					        <h5 class="modal-title">Profile</h5>
 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -687,7 +360,11 @@ function tabClick() {
 					        </button>
 					      </div>
 					      <div class="modal-body">
-					        <p>Modal body text goes here.</p>
+					        <h2 class="profileTitle">Whyos</h2>
+						        <div class="profileModalImage"></div>
+						        <div class="profileUserName">Name: Justin Ha</div>
+						        <div class="profileEmail">Email: justinsucks@yahoo.com</div>
+						        <div class="uploadImageSection">Change profile picture: <input id="uploadPictureButton" type="file" name="bannerFile"></div>
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-primary">Save changes</button>
@@ -696,7 +373,6 @@ function tabClick() {
 					    </div>
 					  </div>
 					</div>
-					<!-- Search Modal -->
 					<!-- Search Modal -->
 					<div class='modal fade' id='searchModal' tabindex='-1' role='dialog'>
 					  <div class='modal-dialog modal-lg' role='document'>
@@ -774,35 +450,8 @@ function tabClick() {
 					<i class="far fa-plus-square" data-toggle="modal" data-target="#createPostModal"></i>
 				</div>				
 				<!-- Create Post Modal -->
-				<div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-body">
-				        <textarea class="postTextBox" placeholder="What's currently going on:" rows="6" cols="60"></textarea>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<!-- Create a post start -->
-				        <button type="button" class="btn btn-primary" onclick="createPost(0)">Post!</button>
-						<!-- Create a post end -->
-				      </div>
-				    </div>
-				  </div>
-				</div>
-				<div class="tabWelcome">Dashboard</div>
-				
-				
-				<br>
-				<br>
-				<br>
 				<!-- Fetch posts start -->
-				<div id="posts"> </div>
+				<div id="homePage"> </div>
 				<!-- Fetch posts end -->
 				<!-- Dialog for No Posts to show -->
 			
@@ -820,134 +469,208 @@ function tabClick() {
 			  		<div class="esportsTemplate">
 			  			<div class="esportsTitle">List of Esports Games</div>
 			  			<div class="esportsList">
-			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal"><img class="leagueIcon" src="img/lol-icon.png" onClick=fetchEsportsLOL()></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal"><img class="csgoIcon" src="img/csgo-icon.png" onClick=fetchEsportsCS()></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal"><img class="owIcon" src="img/ow-icon.png" onClick=fetchEsportsOW()></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal"><img class="hotsIcon" src="img/hots-icon.png" onClick=fetchEsportsHOTS()></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal"><img class="sc2Icon" src="img/sc2-icon.png" onClick=fetchEsportsSC2()><br></a>
+			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal"><img class="leagueIcon" src="img/lol-icon.png"></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal"><img class="csgoIcon" src="img/csgo-icon.png"></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal"><img class="owIcon" src="img/ow-icon.png"></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal"><img class="hotsIcon" src="img/hots-icon.png"></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal"><img class="sc2Icon" src="img/sc2-icon.png"><br></a>
 			  			</div>
 			  			<!-- Esports Modals -->			  			
-			  			<div class="esportsModals">
-			  				<!-- League Modal -->
-							<div class="modal fade" id="leagueStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog modal-lg" role="document">
-							    <div class="modal-content modal-1200">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">League of Legends Stream</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body" id="esportModalBody1">
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							<!-- CS Modal -->
-							<div class="modal fade" id="csgoStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog modal-lg" role="document">
-							    <div class="modal-content modal-1200">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Counter-Strike: Global Offensive Stream</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body" id="esportModalBody2">
-								
-
-
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							<!-- OW Modal -->
-							<div class="modal fade" id="owStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog modal-lg" role="document">
-							    <div class="modal-content modal-1200">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Overwatch Stream</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body" id="esportModalBody3">
-							        
-
-
-
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							<!-- HOTS Modal -->
-							<div class="modal fade" id="hotsStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog modal-lg" role="document">
-							    <div class="modal-content modal-1200">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Heroes of the Storm Stream</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body" id="esportModalBody4">
-							        
-
-
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							<!-- SC2 Modal -->
-							<div class="modal fade" id="sc2StreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog modal-lg" role="document">
-							    <div class="modal-content modal-1200">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Starcraft II Stream</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body" id="esportModalBody5">
-							        
-
-
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-							      </div>
-							    </div>
-							  </div>
-							</div>							
+			  			<div class="esportsModals" id="mainEsportsModals">						
 						</div>
 			  		</div>
 
 			  	</div>
 			  	<!-- Esports News Container -->
-			  	<div class="esportsNewsCont">
+			  	<!-- <div class="esportsNewsCont">
 			  		<div class="esportsTitle">Esports News</div>
 			  		<div class="esportsNewsTemplatePost">
 			  			
 			  		</div>
-			  	</div>		  		
+			  	</div>	 -->	  		
 		  	</div>
-		  	<!-- Groups Tab -->
-		  	<div class="tab-pane fade" id="groups" role="tabpanel" aria-labelledby="groups-tab">
-		  		<div class="tabWelcome">Groups</div>
-		  		List of groups and maybe other content
+		  	<!-- Groups Tab --><div class="tab-pane fade" id="groups" role="tabpanel" aria-labelledby="groups-tab">
+		  		<br>
+		  			  		
+		  		<div class="groupsCont">
+		  			<!-- Template Group -->
+					<div id="groupList"> 
+						<div class="templateGroup">
+							<div class="groupHeaderCont">
+								<div class="groupTitle">BlazeChar's Zard Lords</div>
+								<div class="group-image"></div>
+							</div>
+							<br>
+							<div class="groupButtons">
+								<button type="button" class="btn btn-primary" id="groupJoinButton" data-toggle="modal" data-target="#groupJoinModal">Join</button>
+								<button type="button" class="btn btn-primary" id="groupPictureButton" data-toggle="modal" data-target="#groupPictureModal">Change Name/Picture</button>
+								<button type="button" class="btn btn-primary" id="groupEventsButton" data-toggle="modal" data-target="#groupEventModal">Events</button>													
+								<button type="button" class="btn btn-primary" id="groupMembersButton" data-toggle="modal" data-target="#groupMembersModal">See Members</button>
+								<button type="button" class="btn btn-primary" id="groupLeaveButton" data-toggle="modal" data-target="#groupLeaveModal">Leave Group</button>
+							</div>
+						</div>
+						<div class="templateGroup">
+							<div class="groupHeaderCont">
+								<div class="groupTitle">BlazeChar's Zard Lords</div>
+								<div class="group-image"></div>
+							</div>
+							<br>
+							<div class="groupButtons">
+								<button type="button" class="btn btn-primary" id="groupJoinButton" data-toggle="modal" data-target="#groupJoinModal">Join</button>
+								<button type="button" class="btn btn-primary" id="groupPictureButton" data-toggle="modal" data-target="#groupPictureModal">Change Name/Picture</button>
+								<button type="button" class="btn btn-primary" id="groupEventsButton" data-toggle="modal" data-target="#groupEventModal">Events</button>													
+								<button type="button" class="btn btn-primary" id="groupMembersButton" data-toggle="modal" data-target="#groupMembersModal">See Members</button>
+								<button type="button" class="btn btn-primary" id="groupLeaveButton" data-toggle="modal" data-target="#groupLeaveModal">Leave Group</button>
+							</div>
+						</div>
+						<!-- Template Group -->
+						<!-- Template Group -->
+					</div>
+		  			<!-- Group Modals -->
+					<!-- Join Modal -->
+					<div id="groupJoinModals">
+					<div class="modal fade" id="groupJoinModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Join Group</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <h2> Note </h2>
+					        <p>Would you like to join </p><div class="groupName">Blazechar's Zard Lords</div>
+					        <div class="group-image"></div>	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					</div>
+					<!-- Change name/picture modal -->
+					<!-- Group Events Modal -->		
+					<div id="groupEventModals">
+						<div class="modal fade" id="groupEventModal" tabindex="-1" role="dialog">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<h5 class="modal-title">Events</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  <div class="modal-body">
+									<div class="createEventHeader">Create Event</div>
+									<div class="createEventCont">
+										<form class="createEventForm">						        
+											<div class="createEventTitle">Event Title: <input type="text"></div>
+											<div class="createEventDate">Event Date (mm/dd/yy): <input type="text"></div>
+											<div class="createEventTime">Event Time: <input type="text"></div>
+										</form>
+									</div>
+									<br>
+								  </div>
+								  <div class="modal-footer">						        
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								  </div>
+								</div>					  	
+							</div>						
+						</div>
+					</div>
+		  			<!-- Group Members Modal -->
+					<div id="groupMembersModals">
+		  			<div class="modal fade" id="groupMembersModal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title">Group Members</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">						      							        
+						        <div class="listEventsCont">
+									<div class='groupEventsDialog'>Hello Admin!</div>
+									<div class="groupEventsDialog">No members joined just yet!</div>
+									<div class="contenderContBox">
+										<div class="groupEventsTitle">Admins</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Yoshi</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Yoshi's alter ego</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        </div>	
+									<div class="contenderContBox">
+										<div class="groupEventsTitle">Members</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Cock Munch</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Big Dick Energy</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Paul's Fantasy</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        </div>									
+						        </div>
+						      </div>
+						      <div class="modal-footer">						        
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>					  	
+						</div>						
+		  			</div>
+					</div>
+		  			<!-- Leave Group Modal -->
+		  			<div class="modal fade" id="groupLeaveModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Leave Group</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <h2> Warning </h2>
+					        <p>Are you sure you want to leave the group:  </p><div class="groupName">Blazechar's Zard Lords</div>
+					        <div class="group-image"></div>	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+		  		</div>
+		  		
 		  	</div>
 			<!-- Events Tab -->
 			
@@ -965,102 +688,6 @@ function tabClick() {
 
 				<div id="tournaments_modal"> </div>
 			<!-- Fetch Events End -->
-		  		<div class="eventCont">
-		  			<div class="templateEvent">
-		  				<div class="eventHeaderCont">		  					
-			  				<div class="eventTitle">Kyle's D&D Meetup</div>
-			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
-			  			</div>
-			  			<div class="eventDateTimePrivCont">
-			  				<div class="eventDate">November 3, 2018</div>
-		  					<div class="eventTime">6:00 PM</div>		  				
-		  					<div class="eventPrivacy">Public</div>
-			  			</div>
-			  			<div class="eventViewPostsButtons">
-			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#futureEventModal">View</button>
-			  				<button type="button" class="btn btn-primary" id="tournamentButton" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
-			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
-			  			</div>
-		  			</div>
-		  		</div>
-		  		<div class="futureEventTitle">Past Events</div>
-		  		<div class="futureEventCont">
-		  			<div class="templateEvent">
-		  				<div class="eventHeaderCont">		  					
-			  				<div class="eventTitle">Kyle's D&D Meetup</div>
-			  				<div class="eventShortDesc">Just hanging out for today, meet at 6pm for quests.</div>		  							  
-			  			</div>
-			  			<div class="eventDateTimePrivCont">
-			  				<div class="eventDate">November 3, 2018</div>
-		  					<div class="eventTime">6:00 PM</div>		  				
-		  					<div class="eventPrivacy">Public</div>
-			  			</div>
-			  			<div class="eventViewPostsButtons">
-			  				<button type="button" class="btn btn-primary" id="eventButton" data-toggle="modal" data-target="#futureEventModal">View</button>
-			  				<button type="button" class="btn btn-primary" id="tournamentButton" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
-			  				<button type="button" class="btn btn-primary" id="eventPosts" data-toggle="modal" data-target="#eventPostsModal">Posts</button>			  
-			  			</div>
-		  			</div>
-		  		</div>
-		  		<div class="eventsModals">
-		  			<!-- Event Modal -->
-		  			<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        <div class="modalEventInfoCont">
-					        	<!-- should disappear if the event hasnt started -->
-					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
-					        	<h1 id="modalEventDescTitle">Description</h1>					        	
-					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
-					        	<h1 id="modalEventDateTime">Date/Time</h1>
-					        	<div class="eventDate">November 3, 2018</div>
-		  						<div class="eventTime">6:00 PM</div>
-					        </div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
-					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button>					        
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-					<div class="modal fade" id="futureEventModal" tabindex="-1" role="dialog" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title">Kyle's D&D Meetup</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        <div class="modalEventInfoCont">
-					        	<!-- should disappear if the event hasnt started -->
-					        	<div class="modalEventStartedWarning">Note: Event has already started!</div>
-					        	<h1 id="modalEventDescTitle">Description</h1>					        	
-					        	<div class="modalEventDesc">Just hanging out for today, meet at 6pm for quests.</div>
-					        	<h1 id="modalEventDateTime">Date/Time</h1>
-					        	<div class="eventDate">November 3, 2018</div>
-		  						<div class="eventTime">6:00 PM</div>		  						
-					        </div>
-					      </div>
-					      <div class="modal-footer">					      	
-					        <button type="button" class="btn btn-primary" id="eventSignUpButton">Sign Up</button>
-					        <button type="button" class="btn btn-primary" id="eventLeaveButton">Leave</button>
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>  
-		  		</div>
 		  		<!-- Tournament Modals -->
 		  		<div class="tournamentModals">
 					<div class="modal fade" id="tournamentModal" tabindex="-1" role="dialog">

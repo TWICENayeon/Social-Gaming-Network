@@ -97,8 +97,8 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 	}
 	else {
-		echo "<div class='searchResultsCont'>";
-		
+		echo "<div class='searchResultsCont'> <button onclick='showTab()'>Search Button</button";
+			
 		if($users_result->num_rows > 0) {
 					    echo"  	<div class='userSearchResults'>
 					        		<h2 style='color:black'>Users</h2>
@@ -106,13 +106,13 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 			while($user_tuple = $users_result->fetch_assoc()) {
 				
-				$searched_user_pic_query = "SELECT image_name 
+				$fetch_user_pic_query = "SELECT image_name 
 										FROM images
 										WHERE owner_type = 0 AND owner_id = " . $user_tuple["user_id"] . " AND currently_set = 1 AND image_type = 0";
 				
 				echo "
-											<div class='userSearchBoxCont'>						        		
-												<div class='contenderImage' style='background-image: url(user_images/" . (($conn->query($searched_user_pic_query))->fetch_assoc())["image_name"] . ")'></div>
+											<div class='userSearchBoxCont' data-dismiss='modal'  href='#home' onclick='showTab(0, " . $user_tuple["user_id"] . ")'>						        		
+												<div class='contenderImage' style='background-image: url(user_images/" . (($conn->query($fetch_group_pic_query))->fetch_assoc())["image_name"] . ")'></div>
 												<div class='contenderName'>" . $user_tuple["username"] . "</div>
 											</div>";
 			}
@@ -127,9 +127,15 @@ if(!isset($_SESSION["current_user_id"])) {
 						        	<div class='groupsSearchCont'>";
 									
 			while($group_tuple = $groups_result->fetch_assoc()) {
+				
+				
+				$fetch_group_pic_query = "SELECT image_name 
+										FROM images
+										WHERE owner_type = 1 AND owner_id = " . $group_tuple["group_id"] . " AND currently_set = 1 AND image_type = 0";
+										
 				echo "
-											<div class='groupSearchBoxCont'>
-												<div class='contenderImage'></div>						        									        		
+											<div class='groupSearchBoxCont'  data-dismiss='modal'  href='#groups'  onclick='showTab(1, " . $group_tuple["group_id"] . ")'>
+												<div class='contenderImage'  style='background-image: url(user_images/" . (($conn->query($fetch_group_pic_query))->fetch_assoc())["image_name"] . ")'></div>						        									        		
 												<div class='contenderName'>" . $group_tuple["group_name"] . "</div>
 											</div>";					
 			}
@@ -146,10 +152,10 @@ if(!isset($_SESSION["current_user_id"])) {
 						        	<div class='eventsSearchCont'>";
 									
 									
-			while($events_tuple = $events_result->fetch_assoc()) {
+			while($event_tuple = $events_result->fetch_assoc()) {
 				echo "
-											<div class='eventSearchBoxCont'>					        									        		
-												<div class='contenderName'>" . $events_tuple["event_name"] . "</div>
+											<div class='eventSearchBoxCont'  data-dismiss='modal'  href='#events' onclick='showTab(2, " . $event_tuple["event_id"] . ")'>					        									        		
+												<div class='contenderName'>" . $event_tuple["event_name"] . "</div>
 											</div>";
 			}
 			

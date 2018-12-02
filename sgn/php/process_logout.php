@@ -7,7 +7,7 @@ session_start();
 // Check if there is a user signed in_array
 // If not, redirect to index page
 if(!isset($_SESSION["current_user_id"])) {
-	header("Location: http://localhost/sgn/index.php");
+	header("Location: http://localhost/sgn/index.html");
 	exit();
 }
 
@@ -17,7 +17,7 @@ $_SESSION = array();
 
 session_destroy();
 
-header("Location: http://localhost/sgn/index.php");
+header("Location: http://localhost/sgn/index.html");
 
 
 ?>

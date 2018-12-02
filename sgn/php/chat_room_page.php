@@ -80,7 +80,7 @@
 	
 		
 	<?php
-		$chat_room_id = $_POST["chat_room_id"];
+		$chat_room_id = "1";
 	
 		$debug = false;
 	

@@ -85,7 +85,8 @@ if(!isset($_SESSION["current_user_id"])) {
 					echo "<button type='button' id='acceptButton' class='btn btn-primary' onclick='resolveNotif(" . $notif_tuple["notification_id"] . ", 1)'>OK</button>";
 				}
 				else {
-					echo "<button type='button' id='acceptButton' class='btn btn-primary' onclick='resolveNotif(" . $notif_tuple["notification_id"] . ", 1)'>Accept</button>";
+					echo "<button type='button' id='acceptButton' class='btn btn-primary' onclick='resolveNotif(" . $notif_tuple["notification_id"] . ", 1)'>Accept</button>
+					";
 					echo "<button type='button' id='declineButton' class='btn btn-primary' onclick='resolveNotif(" . $notif_tuple["notification_id"] . ", 0)'>Decline</button>";
 				}
 			};

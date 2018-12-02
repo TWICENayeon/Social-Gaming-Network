@@ -24,16 +24,65 @@ if(!isset($_SESSION["current_user_id"])) {
 		$conn->select_db("sgn_database");
 ?>
 
-<?php	
+<?php
+
+	$wall_owner_id = $_POST["wall_owner_id"];
+	
+	$_SESSION["page_id"] = $wall_owner_id;
+	
+		
+	echo "				<div class='modal fade' id='createPostModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+				  <div class='modal-dialog' role='document'>
+				    <div class='modal-content'>
+				      <div class='modal-header'>
+				        <h5 class='modal-title' id='exampleModalLabel'>Create Post</h5>
+				        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+				          <span aria-hidden='true'>&times;</span>
+				        </button>
+				      </div>
+				      <div class='modal-body'>
+				        <textarea class='postTextBox' placeholder='What's currently going on:' rows='6' cols='60'></textarea>
+				      </div>
+				      <div class='modal-footer'>
+				        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+						<!-- Create a post start -->
+				        <button type='button' class='btn btn-primary'  data-dismiss='modal' onclick='createPost(0, " . $wall_owner_id . ")'>Post!</button>
+						<!-- Create a post end -->
+				      </div>
+				    </div>
+				  </div>
+				</div>";
 
 		// Print all of the posts onto the page
+		
+	if($wall_owner_id == $_SESSION["current_user_id"]) {
+		echo "				<div class='tabWelcome'>Your Dashboard</div>";
+	}
+	else {
+		
+		$fetch_wall_owner_username_query = "SELECT username
+											FROM users
+											WHERE user_id = " . $wall_owner_id . ";";
+											
+		$wall_owner_username = (($conn->query($fetch_wall_owner_username_query))->fetch_assoc())["username"];
+		
+		echo "				<div class='tabWelcome'>" . $wall_owner_username . "'s Dashboard</div>";
+		
+		echo "<button type='button'>Add friend!</button>";
+		
+	}
+	
+	echo "
+				<br>
+				<br>
+				<br>";
 		
 		
 		// Fetch the parent posts on the current wall
 		$search_user_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time, user_id
 									FROM sgn_database.posts JOIN sgn_database.users
 									ON posts.poster_id = users.user_id
-									WHERE wall_owner_id = " . $_SESSION["page_id"] . " AND wall_type = 0 AND parent_post_id = 0" .
+									WHERE wall_owner_id = " . $wall_owner_id . " AND wall_type = 0 AND parent_post_id = 0" .
 								   " ORDER BY post_id DESC;";
 								   
 		
@@ -70,7 +119,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				
 				$user_voted_main_query = "SELECT * 
 											FROM post_votes
-											WHERE voter_id = " . $_SESSION["current_user_id"] . " AND voted_id = " . $tuple["post_id"] . ";";
+											WHERE voter_id = " . $wall_owner_id . " AND voted_id = " . $tuple["post_id"] . ";";
 				
 				
 				$user_voted_value = $conn->query($user_voted_main_query)->num_rows == 1;
@@ -90,7 +139,7 @@ if(!isset($_SESSION["current_user_id"])) {
 												
 				$has_liked_main_query = "SELECT *
 								FROM post_votes
-								WHERE voter_id = " . $_SESSION["current_user_id"] . " AND voted_id = " . $tuple["post_id"] . ";";
+								WHERE voter_id = " . $wall_owner_id . " AND voted_id = " . $tuple["post_id"] . ";";
 				
 				$liked_main_value = ($conn->query($has_liked_main_query))->num_rows == 1;
 				
@@ -99,7 +148,7 @@ if(!isset($_SESSION["current_user_id"])) {
 					<div class='image-buttons-container'>			
 						<div class='post-profile-image' data-toggle='modal' data-target='#dashProfileModal_" . $tuple["username"] . "' style='background-image: url(user_images/" . $profile_picture_name_main . ")'></div>	 				
 						<div class='post-profile-gap'></div>
-						<div class='post-like-button' onclick='likeAction(this, " . $tuple["post_id"] . ")'>													
+						<div class='post-like-button' onclick='likeAction(this, " . $tuple["post_id"] . ", 0)'>													
 							<i class='far fa-thumbs-up' id='thumbsUpIcon' " . ($liked_main_value ? " style='color:blue' " : "") ."></i>							
 							<span id='vote_total'>" . $vote_total . " </span>
 						</div>						
@@ -130,7 +179,7 @@ if(!isset($_SESSION["current_user_id"])) {
 												
 					$has_liked_reply_query = "SELECT *
 										FROM post_votes
-										WHERE voter_id = " . $_SESSION["current_user_id"] . " AND voted_id = " . $child_tuple["post_id"] . ";";	
+										WHERE voter_id = " . $wall_owner_id . " AND voted_id = " . $child_tuple["post_id"] . ";";	
 
 					$liked_reply_value = ($conn->query($has_liked_reply_query))->num_rows == 1;
 					
@@ -152,7 +201,7 @@ if(!isset($_SESSION["current_user_id"])) {
 					        		<div class='commentPostTime' style='color:black'>" . $child_tuple["post_time"] . "</div>
 					        		<div class='commentText' style='color:black'>". $child_tuple["post_text"] . "</div>
 					        		<div class='commentPostVoteButtons'>
-					        			<div class='commentPostUpvote'style='color:black' onclick='likeAction(this, " . $child_tuple["post_id"] . ")'>
+					        			<div class='commentPostUpvote'style='color:black' onclick='likeAction(this, " . $child_tuple["post_id"] . ", 0)'>
 										<i class='fa fa-hand-o-up' aria-hidden='false'  " . ($liked_reply_value ? " style='color:blue' " : "") ."></i>			
 										<span id='vote_total'>" . $reply_vote_total . " </span>
 										</div>
@@ -161,11 +210,11 @@ if(!isset($_SESSION["current_user_id"])) {
 					
 				}
 				echo "</div>
-						<textarea class='postTextBox' id='replyTextBox_" . $tuple["post_id"] . "' placeholder='Write what's going on:' rows='6' cols='60'></textarea>
+						<textarea class='postTextBox' id='replyTextBox_" . $tuple["post_id"] . "' placeholder='Write something:' rows='6' cols='60'></textarea>
 						      </div>
 						      <div class='modal-footer'>
 						        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-						        <button type='button' class='btn btn-primary' onclick='createPost(" . $tuple["post_id"] . ")'>Post!</button>
+						        <button type='button' class='btn btn-primary' onclick='createPost(" . $tuple["post_id"] . ", " . $wall_owner_id . ")'>Post!</button>
 						      </div>
 						    </div>
 						  </div>
@@ -189,7 +238,7 @@ if(!isset($_SESSION["current_user_id"])) {
 			$all_posters_info_query = "SELECT DISTINCT(poster_id), username, email, first_name, last_name, creation_date, user_id
 										FROM posts INNER JOIN users
 										ON sgn_database.posts.poster_id = sgn_database.users.user_id
-										WHERE wall_owner_id = " . $_SESSION["current_user_id"] . " AND wall_type = 0;";
+										WHERE wall_owner_id = " . $wall_owner_id . " AND wall_type = 0;";
 										
 			$poster_result = $conn->query($all_posters_info_query);
 			
@@ -215,7 +264,7 @@ if(!isset($_SESSION["current_user_id"])) {
 						        <div class='profileEmail' style='color:black'>Email: " . $user_info["email"] . "</div>
 						        <div class='profileDate' style='color:black'>Date joined: " . $user_info["creation_date"] . "</div>
 						      </div>";
-				if($user_info["user_id"] == $_SESSION["current_user_id"]) {
+				if($user_info["user_id"] == $wall_owner_id) {
 					echo "<form action='php/upload_user_profile_picture.php' method='POST' enctype='multipart/form-data'>
 						        <div class='uploadImageSection' style='color:black'>Change profile picture: <input type='file' name='profilePicture'></div>
 						      <div class='modal-footer'>

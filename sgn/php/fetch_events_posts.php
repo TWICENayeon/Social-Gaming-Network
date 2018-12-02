@@ -62,36 +62,60 @@ if(!isset($_SESSION["current_user_id"])) {
 							<div class='modal-content'>
 							  <div class='modal-header'>
 								<h5 class='modal-title'>Event Posts</h5>
-								<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
 								  <span aria-hidden='true'>&times;</span>
 								</button>
 							  </div>
-							  <div class='modal-body'>
+							  <div class='modal-body' id='eventPostsBody_" . $tuple["event_id"] .  "'>
 								<div class='modalEventInfoCont'>";
 									
-				$search_event_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time
+				$search_event_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time, user_id
 									FROM sgn_database.posts JOIN sgn_database.users
 									ON posts.poster_id = users.user_id
-									WHERE wall_owner_id = " . $tuple["event_id"] . " AND wall_type = 2" .
-								   " ORDER BY post_id DESC;";
+									WHERE wall_owner_id = " . $tuple["event_id"] . " AND wall_type = 2
+									ORDER BY post_id DESC;";
 								   
 				$event_post_result = $conn->query($search_event_wall_posts);
 				
 				if($event_post_result->num_rows > 0) {
 					while($event_post_tuple = $event_post_result->fetch_assoc()) {
+						
+					$fetch_profile_picture_reply = "SELECT image_name
+												FROM images
+												WHERE owner_type = 0 AND owner_id = " . $event_post_tuple["user_id"] . " AND currently_set = 1 AND image_type = 0;";
+												
+												
+					$profile_picture_name_reply = (($conn->query($fetch_profile_picture_reply))->fetch_assoc())["image_name"];
+					
+					
+					$has_liked_reply_query = "SELECT *
+										FROM post_votes
+										WHERE voter_id = " . $_SESSION["current_user_id"] . " AND voted_id = " . $event_post_tuple["post_id"] . ";";	
+
+					$liked_reply_value = ($conn->query($has_liked_reply_query))->num_rows == 1;
+					
+					$fetch_reply_votes_query = "SELECT SUM(sgn_database.post_votes.value) AS total
+											FROM sgn_database.post_votes
+											WHERE voted_id = " . $event_post_tuple["post_id"] . ";";
+											
+					$reply_vote_total = (($conn->query($fetch_reply_votes_query))->fetch_assoc())["total"];
+					
+					if(!isset($reply_vote_total)) {
+						$reply_vote_total = "0";
+					}
 									   
 										// Fetch posts related to the event
 						echo " <div class='eventPostCont'>
-												<div class='eventPostProfileImage'></div>
+												<div class='eventPostProfileImage'  style='background-image: url(user_images/" . $profile_picture_name_reply . ")'></div>
 												<div class='eventPostGap'></div>
 												<div class='eventPostName' style='color:black'>" . $event_post_tuple["username"] . "</div>
 												<div class='eventPostDate' style='color:black'>" . $event_post_tuple["post_date"] . "</div>
 												<div class='eventPostTime' style='color:black'>" . $event_post_tuple["post_time"] . "</div>
 												<div class='eventPostComment' style='color:black'>" . $event_post_tuple["post_text"] . "</div>
-												<div class='eventPostVoteButtons'>					        			
-													<div class='eventPostUpvote'><i class='fa fa-hand-o-up' aria-hidden='true'></i></div>
-													<div class='eventPostDownvote'><i class='fa fa-hand-o-down' aria-hidden='true'></i></div>
-													<button type='button' class='btn btn-primary' id='eventReplyButton'>Post</button>
+										<div class='commentPostVoteButtons'>
+											<div class='commentPostUpvote'style='color:black' onclick='likeAction(this, " . $event_post_tuple["post_id"] . ", 2)'>
+											<i class='fa fa-hand-o-up' aria-hidden='false' " . ($liked_reply_value ? " style='color:blue' " : "style='color:black'") ."></i>			
+											<span id='vote_total'>" . $reply_vote_total . "</span>
+											</div>
 												</div>
 											</div>	";			        	
 
@@ -103,9 +127,10 @@ if(!isset($_SESSION["current_user_id"])) {
 					<div class='modalEventStartedWarning' style='color:black'>No posts to show</div>";
 				}
 				echo "</div>
+					<textarea class='postTextBox' id='eventReplyTextBox_" . $tuple["event_id"] . "' placeholder='Write something:' rows='6' cols='60'></textarea>
 				  </div>
 				  <div class='modal-footer'>					      						        
-					<!-- <button type='button' class='btn btn-primary' id='eventReplyButton'>Post</button> -->
+					<button type='button' class='btn btn-primary' id='eventReplyButton' onclick='createEventPost(" . $tuple["event_id"] . ")'>Post</button>
 					<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 				  </div>
 				</div>
@@ -143,7 +168,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				// </form>";
 				
 				echo "<!-- Work before -->";
-				echo "<div class='modal fade' id='pastEventPostsModal_" . $tuple["event_id"]  .  "' tabindex='-1' role='dialog' aria-hidden='true'>
+				echo "<div class='modal fade' id='eventPostsModal_" . $tuple["event_id"]  .  "' tabindex='-1' role='dialog' aria-hidden='true'>
 						  <div class='modal-dialog modal-lg' role='document'>
 							<div class='modal-content'>
 							  <div class='modal-header'>

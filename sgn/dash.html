@@ -79,20 +79,42 @@
 					  <!-- <li class="nav-item main-tabs">
 					    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="notifs" aria-selected="false"><i class="fas fa-bullhorn"></i> 4</a>
 					  </li> -->					 
-					  <li class="nav-item dropdown" id="profileLi" data-toggle="dropdown">					  	
-					  	<a class="nav-link" id="profile-tab" data-toggle="dropdown-toggle"><img src="img/Profile-icon-9.png"></a>
-					  	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-					  	  <a class="dropdown-item" id="profileName">TWICE_Nayeon</a>
+					  <li class="nav-item main-tabs tab-icons">					  	
+					  	<a class="nav-link" id="profile-tab" data-toggle="modal" data-target="#profileModal" role="tab" aria-controls="profile" aria-selected="false"><img src="img/Profile-icon-9.png"></a>
+					  	<a class="nav-link" id="logoutDD" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-power-off"></i></a>
+					  	<!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink"> -->
+					  	  <!-- <a class="dropdown-item" id="profileName">TWICE_Nayeon</a>
 				          <a class="dropdown-item" data-toggle="modal" data-target="#profileModal">Profile</a>
-				          <a class="dropdown-item" href="#">Account</a>
+				          <a class="dropdown-item" href="#">Account</a> -->
 				          <!-- <div class="dropdown-item"><a id="logoutDD" href="index.html">Logout</a></div> -->
-				          <a class="dropdown-item" id="logoutDD" href="index.html">Logout</a>
-				        </div>				        
+				          <!-- <a class="dropdown-item" id="logoutDD" href="index.html">Logout</a> -->
+				        <!-- </div>-->
 					  </li>
 					  <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					  	<a class="dropdown" id="logoutDD" href="index.html">Logout</a>
 					  </div>  -->				 
 					</ul>
+					<!-- Logout Modal -->
+					<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Logout</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <h2> Note </h2>
+					        <p>Do you wish to logout?
+					      </div>
+					      <div class="modal-footer">
+					        <a href="index.html" class="btn btn-primary">Yes</a>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 					<!-- Dropdown Profile Modal -->
 					<div class="modal fade" id="profileModal" tabindex="-1" role="dialog">
 					  <div class="modal-dialog" role="document">
@@ -104,7 +126,11 @@
 					        </button>
 					      </div>
 					      <div class="modal-body">
-					        <p>Modal body text goes here.</p>
+					        <h2 class="profileTitle">Raios</h2>
+						        <div class="profileModalImage"></div>
+						        <div class="profileUserName">Name: Justin Ha</div>
+						        <div class="profileEmail">Email: justinsucks@yahoo.com</div>
+						        <div class="uploadImageSection">Change profile picture: <input id="uploadPictureButton" type="file" name="bannerFile"></div>
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-primary">Save changes</button>
@@ -130,7 +156,7 @@
 					        	<div class="userSearchResults">
 					        		<h2>Users</h2>
 					        		<div class="usersSearchCont">
-						        		<div class="userSearchBoxCont">						        		
+						        		<div class="userSearchBoxCont" data-toggle="modal" data-target="#searchProfileModal">						        		
 							        		<div class="contenderImage"></div>
 							        		<div class="contenderName">BlazeChar</div>
 							        	</div>
@@ -182,6 +208,30 @@
 							        		<div class="contenderImage"></div>
 							        		<div class="contenderName">BlazeChar</div>
 							        	</div>
+							        	<!-- Search Profile Modal -->
+							        	<div class="modal fade modal-child" id="searchProfileModal" data-backdrop-limit="1" tabindex="-1" role="dialog" aria-hidden="true" data-modal-parent="#searchModal">
+										  <div class="modal-dialog" role="document">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h5 class="profileModalUname">Profile</h5>
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										          <span aria-hidden="true">&times;</span>
+										        </button>
+										      </div>
+										      <div class="modal-body">
+										        <h2 class="profileTitle">Raios</h2>
+										        <div class="profileModalImage"></div>
+										        <div class="profileUserName">Name: Justin Ha</div>
+										        <div class="profileEmail">Email: justinsucks@yahoo.com</div>						        
+										      </div>
+										      <div class="modal-footer">
+										        <!-- <button type="button" class="btn btn-primary" id="friendWallButton" data-dismiss="modal">Wall</button> -->
+										        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
+
 							        </div>
 						        </div>
 						        <div class="groupSearchResults">
@@ -373,7 +423,7 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Post!</button>
+				        <button type="button" class="btn btn-primary" data-dismiss="modal">Post!</button>
 				      </div>
 				    </div>
 				  </div>
@@ -415,11 +465,10 @@
 						        <h2 class="profileTitle">Raios</h2>
 						        <div class="profileModalImage"></div>
 						        <div class="profileUserName">Name: Justin Ha</div>
-						        <div class="profileEmail">Email: justinsucks@yahoo.com</div>
-						        <div class="uploadImageSection">Change profile picture: <input type="file" name="bannerFile"></div>
+						        <div class="profileEmail">Email: justinsucks@yahoo.com</div>						        
 						      </div>
 						      <div class="modal-footer">
-						        <button type="button" class="btn btn-primary">Save changes</button>
+						        <button type="button" class="btn btn-primary" id="friendWallButton" data-dismiss="modal">Wall</button>
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						      </div>
 						    </div>
@@ -467,27 +516,123 @@
 						<div class="post-picture"></div>
 					</div>					
 				</div>
-<!-- 				<div class="template-post">
-					<div class="image-buttons-container">
-						<div class="post-profile-image"></div>						
-						<div class="post-profile-gap"></div>
-						<div class="post-like-button">													
-							<i class="far fa-thumbs-up" id="thumbsUpIcon" onclick="thumbsUpFunc()"></i>							
-							1
-						</div>						
-						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
-							<i class="far fa-comments" id="commentsIcon"></i>
-							2
+				<!-- Friend Dashboard -->
+				<div class="tab-content" id="myFriendContent">
+					<!-- Dashboard Tab -->
+					<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+						<div class="createPostButtonCont" id="postButtonCont">
+							<i class="far fa-plus-square" data-toggle="modal" data-target="#createPostModal"></i>
+						</div>				
+						<!-- Create Post Modal -->
+						<div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						        <textarea class="postTextBox" placeholder="What's currently going on:" rows="6" cols="60"></textarea>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						        <button type="button" class="btn btn-primary">Post!</button>
+						      </div>
+						    </div>
+						  </div>
 						</div>
-					</div>						
-					<div class="post-text-container">
-						<div class="post-date-time">
-							<span class="profile-name">Rathalos09</span>
-							Today - 10:15 PM </div>
-						<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, 
+						<div class="tabWelcome">Friend Dashboard</div>
+						<button data-toggle="modal" data-target="#searchModal">Search</button>
+						<!-- Search Results Modal hidden by default unless searched -->
+						<!-- <div class="searchResults" id="searchContent">
+							<h1 class="searchTitle">Search Results for: </h1><h2 class="searchQuery">Something typed in search bar</h2>
+							<div class="searchResultsBox"></div>
+						</div> -->
+
+						<!-- Dialog for No Posts to show -->
+						<div class="noPostsDialog"><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>
+
+						<div class="template-post">					
+							<div class="image-buttons-container">						
+								<div class="post-profile-image" data-toggle="modal" data-target="#dashProfileModal"></div>						
+								<div class="post-profile-gap"></div>
+								<div class="post-like-button">													
+									<i class="far fa-thumbs-up" id="thumbsUpIcon"></i>							
+									2.5M
+								</div>						
+								<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
+									<i class="far fa-comments" id="commentsIcon"></i>
+									33
+								</div>
+								<!-- User/Profile Modal -->
+								<div class="modal fade" id="dashProfileModal" tabindex="-1" role="dialog">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="profileModalUname">Profile</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								        <h2 class="profileTitle">Raios</h2>
+								        <div class="profileModalImage"></div>
+								        <div class="profileUserName">Name: Justin Ha</div>
+								        <div class="profileEmail">Email: justinsucks@yahoo.com</div>						        
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-primary">Wall</button>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								<!-- Comments Modal -->
+								<div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog modal-lg" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								      	<div class="commentCont">
+							        		<div class="commentProfileImage"></div>
+							        		<div class="commentPostGap"></div>
+							        		<div class="commentPostName">Yoshi</div>
+							        		<div class="commentPostDate">10/10/18</div>
+							        		<div class="commentPostTime">4:20 PM</div>
+							        		<div class="commentText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+							        		<div class="commentPostVoteButtons">
+							        			<div class="commentPostUpvote">10 <i class="fa fa-hand-o-up" id="handUp" aria-hidden="true"></i></div>
+							        			<div class="commentPostDownvote">2 <i class="fa fa-hand-o-down" id="handDown" aria-hidden="true"></i></div>
+							        		</div>
+							        	</div>
+								        <textarea class="postTextBox" placeholder="Write what's going on:" rows="6" cols="60"></textarea>
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								        <button type="button" class="btn btn-primary">Post!</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+							</div>						
+							<div class="post-text-container">						
+								<div class="post-date-time">
+									<span class="profile-name">Yoshi</span>
+									Today - 9:17 PM </div>
+								<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. 
+								</div>
+								<div class="post-picture"></div>
+							</div>					
 						</div>
-					</div>					
-				</div> -->				
+					</div>
+				</div>			
 			</div>	
 			<!-- Esports Tab -->
 		  	<div class="tab-pane fade" id="esports" role="tabpanel" aria-labelledby="esports-tab">
@@ -629,25 +774,384 @@
 						</div>
 			  		</div>
 
-			  	</div>
-			  	<!-- Esports News Container -->
-			  	<div class="esportsNewsCont">
-			  		<div class="esportsTitle">Esports News</div>
-			  		<div class="esportsNoPostDialog">No articles to show!</div>
-			  		<div class="esportsNewsTemplatePost">
-			  			
-			  		</div>
-			  	</div>		  		
+			  	</div>  		
 		  	</div>
 		  	<!-- Groups Tab -->
 		  	<div class="tab-pane fade" id="groups" role="tabpanel" aria-labelledby="groups-tab">
 		  		<div class="tabWelcome">Groups</div>
-		  		List of groups and maybe other content
+		  		<div class="groupsNoGroupDialog">No groups to show, create one or join one!</div>
+		  		<br>
+		  		<button type="button" class="btn btn-primary" id="createGroupButton" data-toggle="modal" data-target="#createGroupModal">Create Group</button>
+		  		<div class="yourGroupsDialog">Your Groups</div>
+		  		<!-- Create Group Modal -->		  	
+	  			<div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog">
+					<div class="modal-dialog modal-lg" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Create Group</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					      	<form class="createGroupForm">						        
+					        	<div class="createGroupTitle">Group Name: <input type="text"></div>
+					        	<div class="createGroupPicture">Upload photo: <input id="uploadGroupPictureButton" type="file" name="groupFile"></div>		
+					        </form>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary">Create!</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>					  	
+					</div>						
+	  			</div>		  		
+		  		<div class="groupsCont">
+		  			<!-- Template Group -->
+		  			<div class="templateGroup">
+						<div class="groupHeaderCont">
+							<div class="groupTitle">BlazeChar's Zard Lords</div>
+							<div class="group-image"></div>
+						</div>
+						<br>
+						<div class="groupButtons">
+							<button type="button" class="btn btn-primary" id="groupJoinButton" data-toggle="modal" data-target="#groupJoinModal">Join</button>
+							<button type="button" class="btn btn-primary" id="groupPictureButton" data-toggle="modal" data-target="#groupPictureModal">Change Name/Picture</button>
+							<button type="button" class="btn btn-primary" id="groupEventsButton" data-toggle="modal" data-target="#groupEventModal">Events</button>													
+							<button type="button" class="btn btn-primary" id="groupMembersButton" data-toggle="modal" data-target="#groupMembersModal">See Members</button>
+							<button type="button" class="btn btn-primary" id="groupLeaveButton" data-toggle="modal" data-target="#groupLeaveModal">Leave Group</button>
+						</div>
+		  			</div>
+		  			<!-- Template Group -->
+		  			<div class="templateGroup">
+						<div class="groupHeaderCont">
+							<div class="groupTitle">BlazeChar's Zard Lords</div>
+							<div class="group-image"></div>
+						</div>
+						<br>
+						<div class="groupButtons">
+							<button type="button" class="btn btn-primary" id="groupJoinButton" data-toggle="modal" data-target="#groupJoinModal">Join</button>
+							<button type="button" class="btn btn-primary" id="groupPictureButton" data-toggle="modal" data-target="#groupPictureModal">Change Name/Picture</button>
+							<button type="button" class="btn btn-primary" id="groupEventsButton" data-toggle="modal" data-target="#groupEventModal">Events</button>													
+							<button type="button" class="btn btn-primary" id="groupMembersButton" data-toggle="modal" data-target="#groupMembersModal">See Members</button>
+							<button type="button" class="btn btn-primary" id="groupLeaveButton" data-toggle="modal" data-target="#groupLeaveModal">Leave Group</button>
+						</div>
+		  			</div>
+		  			<!-- Template Group -->
+		  			<div class="templateGroup">
+						<div class="groupHeaderCont">
+							<div class="groupTitle">BlazeChar's Zard Lords</div>
+							<div class="group-image"></div>
+						</div>
+						<br>
+						<div class="groupButtons">
+							<button type="button" class="btn btn-primary" id="groupJoinButton" data-toggle="modal" data-target="#groupJoinModal">Join</button>
+							<button type="button" class="btn btn-primary" id="groupPictureButton" data-toggle="modal" data-target="#groupPictureModal">Change Name/Picture</button>
+							<button type="button" class="btn btn-primary" id="groupEventsButton" data-toggle="modal" data-target="#groupEventModal">Events</button>													
+							<button type="button" class="btn btn-primary" id="groupMembersButton" data-toggle="modal" data-target="#groupMembersModal">See Members</button>
+							<button type="button" class="btn btn-primary" id="groupLeaveButton" data-toggle="modal" data-target="#groupLeaveModal">Leave Group</button>
+						</div>
+		  			</div>
+		  			<!-- Group Modals -->
+					<!-- Join Modal -->
+					<div class="modal fade" id="groupJoinModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Join Group</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <h2> Note </h2>
+					        <p>Would you like to join </p><div class="groupName">Blazechar's Zard Lords</div>
+					        <div class="group-image"></div>	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<!-- Change name/picture modal -->
+					<div class="modal fade" id="groupPictureModal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title">Change Name/Picture</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	<form class="createGroupForm">						        
+						        	<div class="createGroupTitle">Group Name: <input type="text"></div>
+						        	<div class="createGroupPicture">Upload photo: <input id="uploadGroupPictureButton" type="file" name="groupFile"></div>		
+						        </form>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-primary">Create!</button>
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>					  	
+						</div>
+					</div>
+					<!-- Group Events Modal -->					
+		  			<div class="modal fade" id="groupEventModal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title">Events</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	<div class="createEventHeader">Create Event</div>
+						      	<div class="createEventCont">
+							      	<form class="createEventForm">						        
+							        	<div class="createEventTitle">Event Title: <input type="text"></div>
+							        	<div class="createEventDate">Event Date (mm/dd/yy): <input type="text"></div>
+							        	<div class="createEventTime">Event Time: <input type="text"></div>
+							        </form>
+							    </div>
+						        <br>
+						        <div class="listEventsCont">
+									<div class="groupEventsTitle">Upcoming Events</div>
+									<div class="groupEventsDialog">No upcoming events just yet!</div>
+									<div class="listEventsBox">
+										<div class="eventContBox">							        		
+							        		<div class="listEventName">Kyle's D&D Meetup</div>
+							        		<div class="listEventDate">10/27/18</div>
+							        		<div class="listEventTime">7:00 PM</div>
+							        		<div class="listEventButtons">
+							        			<button type="button" class="btn btn-primary">Join</button>
+							        			<button type="button" class="btn btn-primary">Leave</button>
+							        		</div>
+							        	</div>
+							        	<div class="eventContBox">							        		
+							        		<div class="listEventName">Kyle's D&D Meetup</div>
+							        		<div class="listEventDate">10/27/18</div>
+							        		<div class="listEventTime">7:00 PM</div>
+							        		<div class="listEventButtons">
+							        			<button type="button" class="btn btn-primary">Join</button>
+							        			<button type="button" class="btn btn-primary">Leave</button>
+							        		</div>
+							        	</div>
+							        	<div class="eventContBox">							        		
+							        		<div class="listEventName">Kyle's D&D Meetup</div>
+							        		<div class="listEventDate">10/27/18</div>
+							        		<div class="listEventTime">7:00 PM</div>
+							        		<div class="listEventButtons">
+							        			<button type="button" class="btn btn-primary">Join</button>
+							        			<button type="button" class="btn btn-primary">Leave</button>
+							        		</div>
+							        	</div>
+							        	<div class="eventContBox">							        		
+							        		<div class="listEventName">Kyle's D&D Meetup</div>
+							        		<div class="listEventDate">10/27/18</div>
+							        		<div class="listEventTime">7:00 PM</div>
+							        		<div class="listEventButtons">
+							        			<button type="button" class="btn btn-primary">Join</button>
+							        			<button type="button" class="btn btn-primary">Leave</button>
+							        		</div>
+							        	</div>
+							        	<div class="eventContBox">							        		
+							        		<div class="listEventName">Kyle's D&D Meetup</div>
+							        		<div class="listEventDate">10/27/18</div>
+							        		<div class="listEventTime">7:00 PM</div>
+							        		<div class="listEventButtons">
+							        			<button type="button" class="btn btn-primary">Join</button>
+							        			<button type="button" class="btn btn-primary">Leave</button>
+							        		</div>
+							        	</div>
+							        	<div class="eventContBox">							        		
+							        		<div class="listEventName">Kyle's D&D Meetup</div>
+							        		<div class="listEventDate">10/27/18</div>
+							        		<div class="listEventTime">7:00 PM</div>
+							        		<div class="listEventButtons">
+							        			<button type="button" class="btn btn-primary">Join</button>
+							        			<button type="button" class="btn btn-primary">Leave</button>
+							        		</div>
+							        	</div>
+							        	<div class="eventContBox">							        		
+							        		<div class="listEventName">Kyle's D&D Meetup</div>
+							        		<div class="listEventDate">10/27/18</div>
+							        		<div class="listEventTime">7:00 PM</div>
+							        		<div class="listEventButtons">
+							        			<button type="button" class="btn btn-primary">Join</button>
+							        			<button type="button" class="btn btn-primary">Leave</button>
+							        		</div>
+							        	</div>
+									</div>
+
+						        </div>
+						      </div>
+						      <div class="modal-footer">						        
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>					  	
+						</div>						
+		  			</div>
+		  			<!-- Group Members Modal -->
+		  			<div class="modal fade" id="groupMembersModal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title">Group Members</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">						      							        
+						        <div class="listEventsCont">
+									<div class="groupEventsTitle">Members</div>
+									<div class="groupEventsDialog">No members joined just yet!</div>
+									<div class="contenderContBox">
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Yoshi</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Yoshi's alter ego</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Cock Munch</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Big Dick Energy</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Paul's Fantasy</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage" id="sjImage"></div>
+							        		<div class="contenderName">SJ</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Dog Shit</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage" id="paulImage"></div>
+							        		<div class="contenderName">PaulDSSB</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage" id="allyImage"></div>
+							        		<div class="contenderName">Crimson64</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">ExpandDong</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">BlazeChar</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Kobold.Kim</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        	<div class="contenderCont">							        		
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Trash</div>
+							        		<div class="groupPromoteButtons">
+							        			<button type="button" class="btn btn-primary">Promote</button>
+							        			<button type="button" class="btn btn-primary">Demote</button>
+							        		</div>
+							        	</div>
+							        </div>									
+						        </div>
+						      </div>
+						      <div class="modal-footer">						        
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>					  	
+						</div>						
+		  			</div>
+		  			<!-- Leave Group Modal -->
+		  			<div class="modal fade" id="groupLeaveModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title">Leave Group</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <h2> Warning </h2>
+					        <p>Are you sure you want to leave the group:  </p><div class="groupName">Blazechar's Zard Lords</div>
+					        <div class="group-image"></div>	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+		  		</div>
+		  		
 		  	</div>
 			<!-- Events Tab -->
 		  	<div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
 		  		<div class="tabWelcome">Events</div>
-		  		<div class="eventCont">
+		  		<div class="upcomingEventCont">
 		  			<div class="templateEvent">
 		  				<div class="eventHeaderCont">		  					
 			  				<div class="eventTitle">Kyle's D&D Meetup</div>
@@ -789,71 +1293,73 @@
 						        <div class="participantsCont">
 						        	<div class="participantsTitle">Number of Participants: <div class="numberParticipants">5</div></div>
 						        	<div class="currentParticipantsTitle">Current Participants: </div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">1</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Yoshi</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">2</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Yoshi's alter ego</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">3</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Cock Munch</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">4</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Big Dick Energy</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">5</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Paul's Fantasy</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">6</div>
-						        		<div class="contenderImage" id="sjImage"></div>
-						        		<div class="contenderName">SJ</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">7</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Dog Shit</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">8</div>
-						        		<div class="contenderImage" id="paulImage"></div>
-						        		<div class="contenderName">PaulDSSB</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">9</div>
-						        		<div class="contenderImage" id="allyImage"></div>
-						        		<div class="contenderName">Crimson64</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">10</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">ExpandDong</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">11</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">BlazeChar</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">12</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Kobold.Kim</div>
-						        	</div>
-						        	<div class="contenderCont">
-						        		<div class="contenderNum">13</div>
-						        		<div class="contenderImage"></div>
-						        		<div class="contenderName">Trash</div>
-						        	</div>
+						        	<div class="contenderContBox">
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">1</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Yoshi</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">2</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Yoshi's alter ego</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">3</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Cock Munch</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">4</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Big Dick Energy</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">5</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Paul's Fantasy</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">6</div>
+							        		<div class="contenderImage" id="sjImage"></div>
+							        		<div class="contenderName">SJ</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">7</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Dog Shit</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">8</div>
+							        		<div class="contenderImage" id="paulImage"></div>
+							        		<div class="contenderName">PaulDSSB</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">9</div>
+							        		<div class="contenderImage" id="allyImage"></div>
+							        		<div class="contenderName">Crimson64</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">10</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">ExpandDong</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">11</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">BlazeChar</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">12</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Kobold.Kim</div>
+							        	</div>
+							        	<div class="contenderCont">
+							        		<div class="contenderNum">13</div>
+							        		<div class="contenderImage"></div>
+							        		<div class="contenderName">Trash</div>
+							        	</div>
+							        </div>
 						        	<div class="seedingFormCont">
 						        		<form class="seedingForm">
 						        			<div class="personSeed">Select person to change their seeding: 

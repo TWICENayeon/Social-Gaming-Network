@@ -189,7 +189,7 @@ body {
 	border: 3px solid black;
 	border-radius: 20px;
 }
-.post-profile-image {	
+.post-profile-image, .group-image {	
 	height: 150px;
 	width: 150px;
 	border: 2px solid black;
@@ -254,7 +254,8 @@ body {
 	font-size: 5rem;
 }
 #createPostModal, #commentsModal, #leagueStreamModal, #csgoStreamModal, #hotsStreamModal, #owStreamModal, #sc2StreamModal, #eventModal, #futureEventModal,
-#eventPostsModal, #uploadBannerModal, #profileModal, #tournamentModal, #dashProfileModal, #settingsModal, #notifsModal, #createTournamentModal, #searchModal, #searchProfileModal {
+#eventPostsModal, #uploadBannerModal, #profileModal, #tournamentModal, #dashProfileModal, #settingsModal, #notifsModal, #createTournamentModal, #searchModal,
+#searchProfileModal, #logoutModal, #groupJoinModal, #groupEventModal, #groupMembersModal, #groupLeaveModal, #createGroupModal, #groupPictureModal, #groupMembersModal {
 	color: black;
 	text-align: center;
 } 
@@ -295,7 +296,7 @@ body {
 	margin: auto;
 	text-align: center;
 }
-.eventTitle {
+.eventTitle, .groupName, .createEventHeader, .groupEventsTitle, .groupEventsDialog {
 	font-size: 2rem;
 }
 #eventButton {
@@ -306,7 +307,7 @@ body {
 .futureEventTitle {
 	font-size: 5rem;
 }
-.esportsCont {
+.esportsCont, .templateGroup {
 	display: flex;
 	border: 3px solid black;
 	border-radius: 20px;
@@ -315,7 +316,7 @@ body {
 	margin-bottom: 100px;
 	flex-direction: column;
 }
-.esportsTitle {
+.esportsTitle, .yourGroupsDialog, .groupTitle {
 	font-size: 3.5rem;
 }
 .esportsList {
@@ -358,8 +359,8 @@ body {
 }
 .streamCont {
 	height: 480px;
-	width: 760px;
-	flex-grow: 0;
+	width: 640px;
+	flex-grow: 1;
 	text-align: left;
 }
 .streamChatCont {
@@ -369,7 +370,7 @@ body {
 }
 .streamVideo {
 	border: 2px solid black;
-	flex-grow: 0;
+	flex-grow: 1;
 	height: 480px;	
 }
 .streamChat {
@@ -377,9 +378,9 @@ body {
 	height: 480px;
 	width: 400px;
 }
-#esportModalBody1, #esportModalBody2, #esportModalBody3, #esportModalBody4, #esportModalBody5 {
+#esportModalBody {
 	display: flex;
-	flex-grow: 0;
+	flex-grow: 1;
 	flex-direction: row;
 }
 #esportsNewsCont {
@@ -542,14 +543,28 @@ body {
 	background-repeat: no-repeat;
 	background-color: black;
 }
-.contenderCont, .userSearchBoxCont, .groupSearchBoxCont, .eventSearchBoxCont {
+.templateGroup {
+	margin-bottom: 5em;
+}
+.contenderCont, .userSearchBoxCont, .groupSearchBoxCont, .eventSearchBoxCont, .eventCont, .eventContBox {
 	display: inline-flex;
 	flex-direction: row;
 	margin: auto;
 	margin-right: 10px;
 	text-align: center;
-	border: 1px solid black;
+	border: 1px solid black;	
 	border-radius: 15px;
+	margin-bottom: 10px;
+}
+.contenderCont {
+	margin-top: 10px;
+}
+.eventContBox {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	width: 75%;
+	margin-top: 10px;
 	margin-bottom: 10px;
 }
 .contenderNum {
@@ -593,22 +608,27 @@ body {
 .personSeedNum {
 	margin-bottom: 10px;
 }
-.createTournamentTitle, .createTournamentDate, .createTournamentTime {
+.createTournamentTitle, .createTournamentDate, .createTournamentTime, .createEventTitle, .createEventDate, .createEventTime, .createGroupTitle, .createGroupPicture {
 	margin-bottom: 10px;
 }
 
-.tournamentTitle, .tournamentDate, .tournamentTime, .participantsTitle, .currentParticipantsTitle, .contenderNum, .contenderName,
-.tournamentStartDialog, .personSeed, .roundNum, .matchTitle, .matchCompleteDialog, .winnerDialog, .modal-title {
-	color: black;
-	
-}
 
-.matchContBox {
+.matchContBox, .createEventCont, .listEventsBox, .contenderContBox {
 	border: 1px solid black;
 	border-radius: 10px;
 	margin: auto;
 	width: 75%;
 	margin-bottom: 20px;
+}
+.contenderContBox {
+	width: 100%;
+	/*margin-top: 20px;*/
+}
+.createEventCont {
+	width: 50%;
+}
+.createEventTitle {
+	margin-top: 10px;
 }
 #paulImage {
 	background-image: url("../img/paul.png");
@@ -644,7 +664,39 @@ body {
 .friendWallButton {
 
 }
+#notifs-tab:hover {
+	color: orange;
+}
+#uploadPictureButton {
+	margin-left: 125px;
+}
+.group-image {
+	background-size: cover;
+	margin: auto;
+	text-align: center;
+}
+.createGroupPicture {
+	margin: auto;
+	text-align: center;
+	margin-left: 150px;
+}
+.groupPromoteButtons {
+	margin: auto;
+	margin-right: 10px;
+}
 
-.post-profile-image, .contenderImage {
+.tournamentTitle, .tournamentDate, .tournamentTime, .participantsTitle, .currentParticipantsTitle, .contenderNum, .contenderName,
+.tournamentStartDialog, .personSeed, .roundNum, .matchTitle, .matchCompleteDialog, .winnerDialog, .modal-title, .tournamentWinner {
+	color: black;
+	
+}
+
+.createGroupTitle, .createGroupPicture, .groupName, .modal-title, .groupEventsDialog, .groupEventsTitle
+.createEventTitle, .createEventDate .createEventTime, .listEventName, .listEventDate, .listEventTime, .createEventHeader,
+.groupEventsTitle{
+	color: black;
+}
+
+.post-profile-image, .contenderImage, .eventPostProfileImage, .profileModalImage {
 	background-size: cover;
 }

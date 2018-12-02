@@ -37,7 +37,7 @@ if(!isset($_SESSION["current_user_id"])) {
 			$file_component_array = explode('.',$_FILES['profilePicture']['name']);
 			$file_ext=strtolower(end($file_component_array));
 			  
-			$expensions= array("jpeg","jpg","png");
+			$expensions= array("jpeg","jpg","png", "gif");
 			  
 			if(in_array($file_ext,$expensions)=== false){
 				$errors[]="extension not allowed, please choose a JPEG or PNG file.";

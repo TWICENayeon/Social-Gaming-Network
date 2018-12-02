@@ -42,6 +42,7 @@ if(!isset($_SESSION["current_user_id"])) {
 								ORDER BY date_time ASC;";
 								
 		$result = $conn->query($search_future_user_events);
+									
 		
 		// echo $search_future_user_events;
 		
@@ -55,6 +56,16 @@ if(!isset($_SESSION["current_user_id"])) {
 					// . $tuple["event_name"] . 
 				  // "<br></button>
 				// </form>";
+				
+		
+		
+				$fetch_group_name_query = "SELECT group_name
+									FROM groups
+									WHERE group_id = (SELECT hosting_group_id FROM group_events WHERE hosted_event_id = " . $tuple["event_id"] . ");";
+				
+				
+				$hosting_group_name = (($conn->query($fetch_group_name_query))->fetch_assoc())["group_name"];
+				
 	
 				echo "<div class='modal fade' id='futureEventModal_"  . $tuple["event_id"] .   "' tabindex='-1' role='dialog' aria-hidden='true'>
 					  <div class='modal-dialog' role='document'>
@@ -68,7 +79,7 @@ if(!isset($_SESSION["current_user_id"])) {
 					      <div class='modal-body'>
 					        <div class='modalEventInfoCont'>
 					        	<!-- should disappear if the event hasnt started -->
-					        	<div class='modalEventStartedWarning' style='color:black'>Note: Event has already started!</div>
+									<div class='eventShortDesc' style='color:black'>Hosted by: ". $hosting_group_name . "</div>	
 					        	<h1 id='modalEventDescTitle' style='color:black'>Description</h1>					        	
 					        	<div class='modalEventDesc' style='color:black'>" . $tuple["event_description"] . "</div>
 					        	<h1 id='modalEventDateTime' style='color:black'>Date/Time</h1>

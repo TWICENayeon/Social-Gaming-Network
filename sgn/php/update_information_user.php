@@ -13,10 +13,7 @@ if(!isset($_SESSION["current_user_id"])) {
 
 ?>
 <script> 
-<html>
 <?php
-
-	echo "<script>alert('Hello from update_information_user script start')</script>";
 	
 	$conn = new mysqli("localhost", "root", "");
 	
@@ -37,9 +34,6 @@ if(!isset($_SESSION["current_user_id"])) {
 		$conn->query($insert_request_query);
 	}
 	else {
-		
-		
-		echo "<script>alert('Hello from update_information_user script running')</script>";
 		$update_user_information_query = "UPDATE users
 											SET ";
 		$first_set = false;
@@ -92,7 +86,4 @@ if(!isset($_SESSION["current_user_id"])) {
 	}
 	
 
-?>
-   
-
-</html>
+?> 	

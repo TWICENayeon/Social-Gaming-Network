@@ -53,24 +53,21 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
-				// echo "<br> <br><a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
-				// echo "<form method='post' action='event_page.php' >
-				  // <input type='hidden' name='page_id' value='" . $tuple["event_id"]. "'>
-				  // <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
-					// . $tuple["event_name"] . 
-				  // "<br></button>
-				// </form>";
+				$fetch_group_name_query = "SELECT group_name
+											FROM groups
+											WHERE group_id = (SELECT hosting_group_id FROM group_events WHERE hosted_event_id = " . $tuple["event_id"] . ");";
+											
+				$hosting_group_name = (($conn->query($fetch_group_name_query))->fetch_assoc())["group_name"];
 				
-				echo "<div class='eventCont'>
-							<div class='templateEvent'>
+				echo "		<div class='templateEvent'>
 								<div class='eventHeaderCont'>		  					
 									<div class='eventTitle'>" . $tuple["event_name"] . "</div>
+									<div class='eventShortDesc'>Hosted by: ". $hosting_group_name . "</div>	
 									<div class='eventShortDesc'>" . $tuple["event_description"] . "</div>		  							  
 								</div>
 								<div class='eventDateTimePrivCont'>
 									<div class='eventDate'>" . $tuple["event_start_date"] . "</div>
-									<div class='eventTime'>" . $tuple["event_start_time"] . "</div>		  				
-									<div class='eventPrivacy'>" . $tuple["event_privacy"] . "</div>
+									<div class='eventTime'>" . $tuple["event_start_time"] . "</div>	
 								</div>
 								<div class='eventViewPostsButtons'>
 									<button type='button' class='btn btn-primary' id='eventButton' data-toggle='modal' data-target='#futureEventModal_" . $tuple["event_id"] .  "'>View</button>
@@ -114,18 +111,14 @@ if(!isset($_SESSION["current_user_id"])) {
 
 						}
 					}
-				}
-									
-									
-											  
+				}				  
 				echo				"<button type='button' class='btn btn-primary' id='eventPosts' data-toggle='modal' data-target='#eventPostsModal_"  . $tuple["event_id"] ."'>Posts</button>	
 								</div>
-							</div>
-						</div>";	
+							</div>";	
 			}
 		}
 		else {
-			echo $search_future_user_events;
+			// echo $search_future_user_events;
 			echo "<br>You have no future events";
 			
 		}
@@ -150,24 +143,22 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		if($result->num_rows > 0) {
 			while($tuple = $result->fetch_assoc()) {
-				// echo "<br> <br> <a href='http://localhost/sgn/event_page.php?page_id=" . $tuple["event_id"] . "'>" . $tuple["event_name"] . " </a> <br> <br>";
-				// echo "<form method='post' action='event_page.php' >
-				  // <input type='hidden' name='page_id' value='" . $tuple["event_id"]. "'>
-				  // <button type='submit' name='submit_param' value='submit_value' class='link-button'> <br> <br>"
-					// . $tuple["event_name"] . 
-				  // "<br></button>
-				// </form>";
+				$fetch_group_name_query = "SELECT group_name
+											FROM groups
+											WHERE group_id = (SELECT hosting_group_id FROM group_events WHERE hosted_event_id = " . $tuple["event_id"] . ");";
+											
+				$hosting_group_name = (($conn->query($fetch_group_name_query))->fetch_assoc())["group_name"];
 				
 				echo "<div class='pastEventCont'>
 							<div class='templateEvent'>
 								<div class='eventHeaderCont'>	  					
 									<div class='eventTitle'>" . $tuple["event_name"] . "</div>
+									<div class='eventShortDesc'>Hosted by: ". $hosting_group_name . "</div>	
 									<div class='eventShortDesc'>" . $tuple["event_description"] . "</div>		  							  
 								</div>
 								<div class='eventDateTimePrivCont'>
 									<div class='eventDate'>" . $tuple["event_start_date"] . "</div>
-									<div class='eventTime'>" . $tuple["event_start_time"] . "</div>		  				
-									<div class='eventPrivacy'>" . $tuple["event_privacy"] . "</div>
+									<div class='eventTime'>" . $tuple["event_start_time"] . "</div>	
 								</div>
 								<div class='eventViewPostsButtons'>
 									<button type='button' class='btn btn-primary' id='eventButton' data-toggle='modal' data-target='#pastEventModal_"  . $tuple["event_id"] .    "'>View</button>
@@ -183,7 +174,7 @@ if(!isset($_SESSION["current_user_id"])) {
 					echo "<button type='button' class='btn btn-primary' id='tournamentButton' data-toggle='modal' data-target='#tournamentModal_" . $tournament_id . "'>Tournament</button>
 					";
 				}
-								echo	"<button type='button' class='btn btn-primary' id='eventPosts' data-toggle='modal' data-target='#pastEventPostsModal_"  . $tuple["event_id"] .    "'>Posts</button>			  
+								echo	"<button type='button' class='btn btn-primary' id='eventPosts' data-toggle='modal' data-target='#eventPostsModal_"  . $tuple["event_id"] .    "'>Posts</button>			  
 								</div>
 							</div>
 						</div>";		
