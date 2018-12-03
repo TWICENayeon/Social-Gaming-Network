@@ -144,7 +144,7 @@ if(!isset($_SESSION["current_user_id"])) {
 						<div class='group-image' style='background-image: url(user_images/" . $group_profile_picture_name . "'></div>	
 					  </div>
 					  <div class='modal-footer'>
-						<button type='button' class='btn btn-primary' data-dismiss='modal' onclick='joinGroup()'>Yes</button>
+						<button type='button' class='btn btn-primary' data-dismiss='modal' onclick='joinGroup(" . $tuple["group_id"] . ")'>Yes</button>
 						<button type='button' class='btn btn-secondary' data-dismiss='modal'>No</button>
 					  </div>
 					</div>

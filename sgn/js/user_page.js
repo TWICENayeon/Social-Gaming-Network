@@ -144,10 +144,12 @@ function updateInformationUser() {
 function resolveNotif(notification_id, action) {
 	// action == 1 is accept
 	// action == 0 is decline on_id=" + notification_id + "&action=" + action;
+	var params = "notification_id=" + notification_id + "&action=" + action;
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
 		if (this.readyState==4 && this.status==200) {
 			fetchNotificationModal();
+			fetchGroupList();
 		}
     };
     xmlhttp.open("POST","php/process_notification.php",true);
@@ -235,4 +237,34 @@ function fetchNotificationModal() {
   xmlhttp.open("POST","php/my_notifications.php",true);
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xmlhttp.send();
+}
+
+function addFriend(friended_id) {
+	var param = "friended_id=" + friended_id;
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+		if (this.readyState==4 && this.status==200) {
+			// buttonElement.className = "btn btn-secondary";
+			// buttonElement.onclick = "function onclick(event) {}";
+			// buttonElement.innerHTML = "Request Sent";
+			fetchPosts(friended_id);
+		}
+	  };
+	  xmlhttp.open("POST","php/friend_request_notification.php",true);
+	  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	  xmlhttp.send(param);
+	// alert("Adding new friend");
+}
+function removeFriend(friended_id) {
+	var param = "friended_id=" + friended_id;
+	// alert(param);
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+		if (this.readyState==4 && this.status==200) {
+			fetchPosts(friended_id);
+		}
+	  };
+	  xmlhttp.open("POST","php/remove_friend.php",true);
+	  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	  xmlhttp.send(param);
 }

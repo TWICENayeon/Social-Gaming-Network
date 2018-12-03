@@ -27,6 +27,8 @@
 										FROM sgn_database.notifications
 										WHERE notification_id = " . $_POST["notification_id"] . ";";
 								
+	echo $_POST["notification_id"];
+	echo $_POST["action"];
 	// echo $_POST["notification_id"];
 	$notification_data_result = $conn->query($fetch_notification_data_query);
 	
@@ -36,7 +38,7 @@
 		
 		if($_POST["action"] == "1") {
 			// If notification is for a group invite, is 1
-			if($notification_data_tuple["notification_type"]) {
+			if($notification_data_tuple["notification_type"] == "1") {
 				
 				$new_group_member_query = "INSERT INTO sgn_database.memberships 
 											VALUES (" . $_SESSION["current_user_id"] . ", " . $notification_data_tuple["invitation_to_id"] . ", 0, CURRENT_DATE(), CURRENT_TIME());";
@@ -45,7 +47,7 @@
 				$conn->query($new_group_member_query);
 			}
 			// If notification is for a friend invite, is 0
-			else {
+			else if($notification_data_tuple["notification_type"] == "0") {
 				$search_friend =  "SELECT friendship_id, active
 									FROM sgn_database.friendships
 									WHERE ((friend_id_1 = " . $_SESSION["current_user_id"] . " AND friend_id_2 = " . $notification_data_tuple["invitation_to_id"] . ") OR 
@@ -124,6 +126,23 @@
 						exit();
 					}
 				}
+				$insert_friendship_accept_notification_query = "INSERT INTO notifications (notification_type, invitation_to_id, recipient_id, message, resolved_status, date_created, time_created)
+											VALUES (2, " . $_SESSION["current_user_id"] . ", " . $notification_data_tuple["invitation_to_id"] . ", '" . $_SESSION["current_username"] . " has accepted your friend request', 0, CURRENT_DATE(), CURRENT_TIME());";
+									
+				$conn->query($insert_friendship_accept_notification_query);
+				
+				echo $insert_friendship_accept_notification_query;
+			}
+		}
+		else {
+			if($notification_data_tuple["notification_type"] == "0") {
+				$insert_friendship_rejection_notification_query = "INSERT INTO notifications (notification_type, invitation_to_id, recipient_id, message, resolved_status, date_created, time_created)
+											VALUES (2, " . $_SESSION["current_user_id"] . ", " . $notification_data_tuple["invitation_to_id"] . ", '" . $_SESSION["current_username"] . " has declined your friend request', 0, CURRENT_DATE(), CURRENT_TIME());";
+									
+				$conn->query($insert_friendship_rejection_notification_query);
+				
+				echo $insert_friendship_rejection_notification_query;
+				
 			}
 		}
 		

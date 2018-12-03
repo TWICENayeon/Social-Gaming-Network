@@ -68,21 +68,24 @@
 								
 									echo "<div class='groupEventsDialog'>Greetings" . ($is_admin ? " ADMIN " : " MEMBER " ) . $_SESSION["current_username"] . "!</div>";
 									if($is_admin) {
-										echo "<form class='InviteUserToGroupFor' >	
+										echo "
 										  <div class='modal-body'>					        
-												<div class='createGroupTitle'>Invite User to Group: <input type='text' name='groupName'></div>
-												<button type='submit' class='btn btn-primary'>Create!</button>
-										  </div>
-										</form>";
+												<div class='createGroupTitle'>Invite User to Group: <input type='text' id='invited_to_group_" . $curr_group_id . "'></div>
+												<button type='button' class='btn btn-primary' onclick='inviteUserToGroup(" . $curr_group_id . ")'>Invite!</button>
+										  </div>";
 									}
-									echo "<div class='contenderContBox'>
-										<div class='groupEventsTitle'>Admins</div>";
+									
+									
+									$fetch_admins_query = "SELECT member_id
+															FROM memberships
+															WHERE of_group_id = " . $curr_group_id . " AND membership_role = 1;";
+															
+									$admins_result = $conn->query($fetch_admins_query);
+									
+									if($admins_result->num_rows > 0) {
+										echo "<div class='contenderContBox'>
+											<div class='groupEventsTitle'>Admins</div>";
 										
-										$fetch_admins_query = "SELECT member_id
-																FROM memberships
-																WHERE of_group_id = " . $curr_group_id . " AND membership_role = 1;";
-																
-										$admins_result = $conn->query($fetch_admins_query);
 										while($admin_tuple = $admins_result->fetch_assoc()) {
 											
 											$fetch_admin_name = "SELECT username
@@ -108,6 +111,7 @@
 												
 											echo "</div>";
 										}
+									}
 									// Get members
 									$fetch_members_query = "SELECT member_id
 															FROM memberships
@@ -144,8 +148,7 @@
 											}
 									}
 									
-										echo "</div>
-											";
+										echo "</div>";	
 						        echo "</div>
 						      </div>
 						      <div class='modal-footer'>						        

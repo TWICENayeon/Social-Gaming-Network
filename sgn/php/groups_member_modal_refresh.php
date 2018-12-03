@@ -36,15 +36,25 @@ $group_id = $_POST["group_id"];
 								$membership_role = (((($conn->query($fetch_membership_role_query))->fetch_assoc())["membership_role"]) == "1");
 
 								
-									echo "<div class='groupEventsDialog'>Greetings" . ($membership_role ? " ADMIN " : " MEMBER " ) . $_SESSION["current_username"] . "!</div>
-									<div class='contenderContBox'>
-										<div class='groupEventsTitle'>Admins</div>";
-										// Fetch admins
-										$fetch_admins_query = "SELECT member_id
-																FROM memberships
-																WHERE of_group_id = " . $group_id . " AND membership_role = 1;";
-																
-										$admins_result = $conn->query($fetch_admins_query);
+									echo "<div class='groupEventsDialog'>Greetings" . ($membership_role ? " ADMIN " : " MEMBER " ) . $_SESSION["current_username"] . "!</div>";
+									
+									if($membership_role) {
+										echo "
+										  <div class='modal-body'>					        
+												<div class='createGroupTitle'>Invite User to Group: <input type='text' id='invited_to_group_" . $group_id . "'></div>
+												<button type='button' class='btn btn-primary' onclick='inviteUserToGroup(" . $group_id . ")'>Invite User to Group!</button>
+										  </div>";
+									}
+									
+									// Fetch admins
+									$fetch_admins_query = "SELECT member_id
+															FROM memberships
+															WHERE of_group_id = " . $group_id . " AND membership_role = 1;";
+															
+									$admins_result = $conn->query($fetch_admins_query);
+									if(($admins_result->num_rows) > 0) {
+										echo "<div class='contenderContBox'>
+											<div class='groupEventsTitle'>Admins</div>";
 										while($admin_tuple = $admins_result->fetch_assoc()) {
 											// Get admin name
 											$fetch_admin_name = "SELECT username
@@ -70,6 +80,7 @@ $group_id = $_POST["group_id"];
 												
 											echo "</div>";
 										}
+									}
 							        // Get members
 									$fetch_members_query = "SELECT member_id
 															FROM memberships

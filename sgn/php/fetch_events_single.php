@@ -55,7 +55,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		
 		// Print out event box in the webpage
-				echo "<div class='eventCont'>
+				echo "
 							<div class='templateEvent'>
 								<div class='eventHeaderCont'>		  					
 									<div class='eventTitle'>" . $tuple["event_name"] . "</div>
@@ -114,8 +114,7 @@ if(!isset($_SESSION["current_user_id"])) {
 											  
 				echo				"<button type='button' class='btn btn-primary' id='eventPosts' data-toggle='modal' data-target='#eventPostsModal_"  . $event_id ."'>Posts</button>	
 								</div>
-							</div>
-						</div>";	
+							</div>";	
 						
 		// Print event modal
 		

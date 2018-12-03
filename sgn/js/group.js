@@ -150,6 +150,30 @@ function fetchSingleGroup(group_id) {
 	xmlhttp.send(param);
 }
 
-function joinGroup() {
-	alert("joining group");
+function joinGroup(group_id) {
+	var param = "group_id=" + group_id;
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			alert(this.responseText);
+			fetchSingleGroup(group_id);
+		}
+	};
+	xmlhttp.open("POST", "php/group_join.php", true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(param);
+}
+
+function inviteUserToGroup(group_id) {
+	var invited_username = $("#invited_to_group_" + group_id).val();
+	var params = "group_id=" + group_id + "&invited_username=" + invited_username;
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			refreshGroupMemberModal(group_id);
+		}
+	};
+	xmlhttp.open("POST", "php/invite_to_group.php", true);
+	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlhttp.send(params);
 }

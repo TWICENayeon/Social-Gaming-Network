@@ -97,7 +97,6 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 	}
 	else {
-		echo "<div class='searchResultsCont'> <button onclick='showTab()'>Search Button</button";
 			
 		if($users_result->num_rows > 0) {
 					    echo"  	<div class='userSearchResults'>
@@ -112,7 +111,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				
 				echo "
 											<div class='userSearchBoxCont' data-dismiss='modal'  href='#home' onclick='showTab(0, " . $user_tuple["user_id"] . ")'>						        		
-												<div class='contenderImage' style='background-image: url(user_images/" . (($conn->query($fetch_group_pic_query))->fetch_assoc())["image_name"] . ")'></div>
+												<div class='contenderImage' style='background-image: url(user_images/" . (($conn->query($fetch_user_pic_query))->fetch_assoc())["image_name"] . ")'></div>
 												<div class='contenderName'>" . $user_tuple["username"] . "</div>
 											</div>";
 			}

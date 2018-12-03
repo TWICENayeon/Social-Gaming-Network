@@ -41,7 +41,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				        </button>
 				      </div>
 				      <div class='modal-body'>
-				        <textarea class='postTextBox' placeholder='What's currently going on:' rows='6' cols='60'></textarea>
+				        <textarea class='postTextBox' placeholder=\"What's currently going on:\" rows='6' cols='60'></textarea>
 				      </div>
 				      <div class='modal-footer'>
 				        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
@@ -68,7 +68,32 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		echo "				<div class='tabWelcome'>" . $wall_owner_username . "'s Dashboard</div>";
 		
-		echo "<button type='button'>Add friend!</button>";
+		$search_friend =  "SELECT friendship_id, active
+									FROM sgn_database.friendships
+									WHERE ((friend_id_1 = " . $_SESSION["current_user_id"] . " AND friend_id_2 = " . $wall_owner_id . ") OR 
+									(friend_id_2 = " . $_SESSION["current_user_id"] . " AND friend_id_1 = " . $wall_owner_id . "));";
+									
+		$is_friend = ((($conn->query($search_friend))->fetch_assoc())["active"]) == "1";						
+				
+		if($is_friend) {
+			// Remove friend button
+			echo "<button type='button' id='addFriendButton' class='btn btn-primary' onclick='removeFriend(" . $wall_owner_id . ")'>Remove Friend</button>";
+		}
+		else {
+			$check_pending_friend_request_query = "SELECT notification_id
+													FROM notifications
+													WHERE notification_type = 0 AND invitation_to_id = " . $_SESSION["current_user_id"] . " AND recipient_id = " . $wall_owner_id . " AND resolved_status = 0;";
+													
+			$pending_friend_request = ((($conn->query($check_pending_friend_request_query))->num_rows) == 1);
+			
+			if($pending_friend_request) {
+				// Gray Friend Request Pending Button
+				echo "<button type='button' id='addFriendButton' class='btn btn-secondary'>Friend Request Pending!</button>";
+			}
+			else {
+				echo "<button type='button' id='addFriendButton' class='btn btn-primary' onclick='addFriend(" . $wall_owner_id . ")'>Add as Friend!</button>";
+			}
+		}
 		
 	}
 	
@@ -279,8 +304,8 @@ if(!isset($_SESSION["current_user_id"])) {
 			}
 		}
 		else {
-			echo $_SESSION["page_id"] . "<br><br><br>";
-			echo $search_user_wall_posts;
+			// echo $_SESSION["page_id"] . "<br><br><br>";
+			// echo $search_user_wall_posts;
 			echo "<!-- Dialog for No Posts to show -->
 				<div class='noPostsDialog'><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>";
 		}

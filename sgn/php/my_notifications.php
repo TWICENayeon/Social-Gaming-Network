@@ -38,15 +38,6 @@ if(!isset($_SESSION["current_user_id"])) {
  ?>
 <html>
 <?php
-// Get number of unresolved notifications
-	$fetch_num_unresolved_notifications_query = "SELECT COUNT(resolved_status) AS num_unresolved
-												FROM notifications
-												WHERE recipient_id = " . $_SESSION["current_user_id"] . " and resolved_status = false;";
-	
-	// echo $fetch_num_unresolved_notifications_query;
-												
-	$num_unresolved_string = (($conn->query($fetch_num_unresolved_notifications_query))->fetch_assoc())["num_unresolved"];
-
 
 
 ?><?php

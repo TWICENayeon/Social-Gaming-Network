@@ -464,6 +464,7 @@ $(document).ready(function(){
 			<!-- Esports Tab -->
 		  	<div class="tab-pane fade" id="esports" role="tabpanel" aria-labelledby="esports-tab">
 		  		<div class="tabWelcome">Esports</div>
+				<button type='button' class='btn btn-primary' data-toggle="modal" data-target="#freeStreamModal">Watch a Stream</button><br><br><br>
 		  		<!-- Esports Viewing Container -->
 		  		<div class="esportsCont">
 			  		<div class="esportsTemplate">
