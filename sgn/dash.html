@@ -423,7 +423,7 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary" data-dismiss="modal">Post!</button>
+				        <button type="button" class="btn btn-primary">Post!</button>
 				      </div>
 				    </div>
 				  </div>
@@ -632,7 +632,29 @@
 							</div>					
 						</div>
 					</div>
-				</div>			
+				</div>
+
+<!-- 				<div class="template-post">
+					<div class="image-buttons-container">
+						<div class="post-profile-image"></div>						
+						<div class="post-profile-gap"></div>
+						<div class="post-like-button">													
+							<i class="far fa-thumbs-up" id="thumbsUpIcon" onclick="thumbsUpFunc()"></i>							
+							1
+						</div>						
+						<div class="post-comment-button" data-toggle="modal" data-target="#commentsModal">							
+							<i class="far fa-comments" id="commentsIcon"></i>
+							2
+						</div>
+					</div>						
+					<div class="post-text-container">
+						<div class="post-date-time">
+							<span class="profile-name">Rathalos09</span>
+							Today - 10:15 PM </div>
+						<div class="post-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, 
+						</div>
+					</div>					
+				</div> -->				
 			</div>	
 			<!-- Esports Tab -->
 		  	<div class="tab-pane fade" id="esports" role="tabpanel" aria-labelledby="esports-tab">
@@ -661,8 +683,114 @@
 							        	<div class="streamVideo"></div>
 							        </div>
 							        <div class="streamChatCont">
-							        	<div class="streamChat"></div>
-							        </div>
+							        	<div class="streamFriendList">
+							        		<div class="streamFriendListTitle">Friends List</div>
+							        		<div class="streamFriendListBox">
+							        			<div class="streamFriendListContent shrink">
+							        				<!-- Friend Container -->
+							        				<div class="streamFriendCont">
+														<div class="streamFriendHeader">
+															<div class="streamFriendContImage"></div>
+															<div class="streamFriendName">PaulDSSB</div>
+														</div>
+														<div class="friendButtons">															
+															<button class="btn btn-primary" id="streamFriendChatButton">Chat</button>
+														</div>
+													</div>
+													<!-- Friend Container -->
+							        				<div class="streamFriendCont">
+														<div class="streamFriendHeader">
+															<div class="streamFriendContImage"></div>
+															<div class="streamFriendName">PaulDSSB</div>
+														</div>
+														<div class="friendButtons">															
+															<button class="btn btn-primary" id="streamFriendChatButton">Chat</button>
+														</div>
+													</div>
+													<!-- Friend Container -->
+							        				<div class="streamFriendCont">
+														<div class="streamFriendHeader">
+															<div class="streamFriendContImage"></div>
+															<div class="streamFriendName">PaulDSSB</div>
+														</div>
+														<div class="friendButtons">															
+															<button class="btn btn-primary" id="streamFriendChatButton">Chat</button>
+														</div>
+													</div>
+													<!-- Friend Container -->
+							        				<div class="streamFriendCont">
+														<div class="streamFriendHeader">
+															<div class="streamFriendContImage"></div>
+															<div class="streamFriendName">PaulDSSB</div>
+														</div>
+														<div class="friendButtons">															
+															<button class="btn btn-primary" id="streamFriendChatButton">Chat</button>
+														</div>
+													</div>
+													<!-- Friend Container -->
+							        				<div class="streamFriendCont">
+														<div class="streamFriendHeader">
+															<div class="streamFriendContImage"></div>
+															<div class="streamFriendName">PaulDSSB</div>
+														</div>
+														<div class="friendButtons">															
+															<button class="btn btn-primary" id="streamFriendChatButton">Chat</button>
+														</div>
+													</div>
+							        			</div>
+							        		</div>
+							        	</div>
+							        	<!-- Chat when pressed on chat button in stream -->							        
+							        	<div class="sgnStreamChatRoom shrink2" id="sgnStreamChat">
+							            	<div class="chatFriendName">PaulDSSB</div>
+											<div class="messageBoxCont" id="streamMessageBox">
+												<!-- <div class="messageCont"></div> -->
+												<div class="container">
+												  <div class="chatProfImage"></div>
+												  <p id="chatText">Hello. How are you today?</p>					  
+												</div>
+
+												<div class="container darker">
+												  <div class="friendChatImage"></div>
+												  <p id="chatText">Hey! I'm fine. Thanks for asking!</p>					  
+												</div>
+
+												<div class="container">
+												  <div class="chatProfImage"></div>
+												  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+												</div>
+
+												<div class="container darker">
+												  <div class="friendChatImage"></div>
+												  <p id="chatText">Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>					  
+												</div>
+
+												<div class="container">
+												  <div class="chatProfImage"></div>
+												  <p id="chatText">Suck my titties Paul.</p>					  
+												</div>
+
+												<div class="container">
+												  <div class="chatProfImage"></div>
+												  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+												</div>
+
+												<div class="container">
+												  <div class="chatProfImage"></div>
+												  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+												</div>
+											</div>
+											<div class="chatTextBox">
+												<form name="chatTextCont" id="chatTextCont">
+													<input name="usermsg" type="text" id="usermsg" size="63">
+													<input name="submitmsg" type="submit" id="submitmsg" value="Send">
+												</form>
+											</div>
+											<div class="chatButtons">
+												<button class="btn btn-primary streamFriendListButton">Back to Friends List</button>
+											</div>
+										</div>
+							    	</div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -774,7 +902,15 @@
 						</div>
 			  		</div>
 
-			  	</div>  		
+			  	</div>
+			  	<!-- Esports News Container -->
+			  	<!-- <div class="esportsNewsCont">
+			  		<div class="esportsTitle">Esports News</div>
+			  		<div class="esportsNoPostDialog">No articles to show!</div>
+			  		<div class="esportsNewsTemplatePost">
+			  			
+			  		</div>
+			  	</div> -->		  		
 		  	</div>
 		  	<!-- Groups Tab -->
 		  	<div class="tab-pane fade" id="groups" role="tabpanel" aria-labelledby="groups-tab">
@@ -1613,16 +1749,177 @@
 					</div>		  			
 		  		</div>		  		
 		  	 </div>
-		</div>
-		<!-- <div class="afterHidden"></div> -->
+		</div>		
+		<!-- Chat Container -->
 		<div class="sgnChatCont">
 			<!-- <div class="afterHiddenSelector"></div> -->
 			<div id="resizer">
                 <div id="resizerIcon">|||</div>
             </div>
+            <div class="friendList" id="friendContBox">
+				<div class="friendsListTitle">Friends List</div>
+				<div id="friendsClosedContainables">
+					<div class="friendsPopChatDialog">Click/drag to show chat!</div>
+					<div class="friendArrowDirection">&#8595;</div>
+				</div>
+				<div class="friendListBox" id="friendBox">
+					<div class="friendListContent">
+						<div class="friendCont">
+							<div class="friendHeader">
+								<div class="friendContImage"></div>
+								<div class="friendName">PaulDSSB</div>
+							</div>
+							<div class="friendButtons">
+								<button class="btn btn-primary" id="friendWallButton">Wall</button>
+								<button class="btn btn-primary" id="friendChatButton">Chat</button>
+							</div>
+						</div>
+						<div class="friendCont">
+							<div class="friendHeader">
+								<div class="friendContImage"></div>
+								<div class="friendName">PaulDSSB</div>
+							</div>
+							<div class="friendButtons">
+								<button class="btn btn-primary" id="friendWallButton">Wall</button>
+								<button class="btn btn-primary" id="friendChatButton">Chat</button>
+							</div>
+						</div>
+						<div class="friendCont">
+							<div class="friendHeader">
+								<div class="friendContImage"></div>
+								<div class="friendName">PaulDSSB</div>
+							</div>
+							<div class="friendButtons">
+								<button class="btn btn-primary" id="friendWallButton">Wall</button>
+								<button class="btn btn-primary" id="friendChatButton">Chat</button>
+							</div>
+						</div>
+						<div class="friendCont">
+							<div class="friendHeader">
+								<div class="friendContImage"></div>
+								<div class="friendName">PaulDSSB</div>
+							</div>
+							<div class="friendButtons">
+								<button class="btn btn-primary" id="friendWallButton">Wall</button>
+								<button class="btn btn-primary" id="friendChatButton">Chat</button>
+							</div>
+						</div>
+						<div class="friendCont">
+							<div class="friendHeader">
+								<div class="friendContImage"></div>
+								<div class="friendName">PaulDSSB</div>
+							</div>
+							<div class="friendButtons">
+								<button class="btn btn-primary" id="friendWallButton">Wall</button>
+								<button class="btn btn-primary" id="friendChatButton">Chat</button>
+							</div>
+						</div>
+						<div class="friendCont">
+							<div class="friendHeader">
+								<div class="friendContImage"></div>
+								<div class="friendName">PaulDSSB</div>
+							</div>
+							<div class="friendButtons">
+								<button class="btn btn-primary" id="friendWallButton">Wall</button>
+								<button class="btn btn-primary" id="friendChatButton">Chat</button>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+            <div class="sgnChatRoom" id="sgnChat">
+            	<div class="chatFriendName">PaulDSSB</div>
+				<div class="messageBoxCont" id="messageBox">
+					<!-- <div class="messageCont"></div> -->
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Hello. How are you today?</p>					  
+					</div>
 
+					<div class="container darker">
+					  <div class="friendChatImage"></div>
+					  <p id="chatText">Hey! I'm fine. Thanks for asking!</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+					</div>
+
+					<div class="container darker">
+					  <div class="friendChatImage"></div>
+					  <p id="chatText">Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Suck my titties Paul.</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+					</div>
+				</div>
+				<div class="chatTextBox">
+					<form name="chatTextCont" id="chatTextCont">
+						<input name="usermsg" type="text" id="usermsg" size="63">
+						<input name="submitmsg" type="submit" id="submitmsg" value="Send">
+					</form>
+				</div>
+				<div class="chatButtons">
+					<button class="btn btn-primary friendListButton">Back to Friends List</button>
+				</div>
+			</div>
+            <!-- Chat Room Cont -->
 			<div class="sgnChatBox" id="rightCont">
-				<div id="wrapper">
+				<!-- <div class="chatFriendName">PaulDSSB</div>
+				<div class="messageBoxCont">					
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Hello. How are you today?</p>					  
+					</div>
+
+					<div class="container darker">
+					  <div class="friendContImage"></div>
+					  <p id="chatText">Hey! I'm fine. Thanks for asking!</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+					</div>
+
+					<div class="container darker">
+					  <div class="friendContImage"></div>
+					  <p id="chatText">Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Suck my titties Paul.</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+					</div>
+
+					<div class="container">
+					  <div class="chatProfImage"></div>
+					  <p id="chatText">Sweet! So, what do you wanna do today?</p>					  
+					</div>
+				</div -->
+				<!-- <div class="chatTextBox">
+					
+				</div> -->
+
+				<!-- <div id="wrapper">
 					<div id="friendPanel">
 					
 					</div>
@@ -1631,7 +1928,7 @@
 						<input name="usermsg" type="text" id="usermsg" size="63"/>
 						<input name="submitmsg" type="submit" id="submitmsg" value="Send"/>
 					</form>
-				</div>
+				</div> -->
 				<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 				<script type="text/javascript">
 				//jQuery Document

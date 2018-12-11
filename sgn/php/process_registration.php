@@ -18,6 +18,12 @@ session_start();
 // Connect to the database
 $conn = new mysqli("localhost", "root", "");
 
+$username = $conn->real_escape_string($_POST["username"]);
+$password = $conn->real_escape_string($_POST["password"]);
+$email = $conn->real_escape_string($_POST["email"]);
+$first_name = $conn->real_escape_string($_POST["first_name"]);
+$last_name = $conn->real_escape_string($_POST["last_name"]);
+
 
 // Database connection error
 if($conn->connect_error) {
@@ -27,7 +33,7 @@ if($conn->connect_error) {
 
 // Validate user information query
 // to test if the username and/or email are already in the database
-$search_user_sql = "SELECT email, username FROM sgn_database.users WHERE username = '" . $_POST["username"] . "' OR email = '" . $_POST["email"] . "';";
+$search_user_sql = "SELECT email, username FROM sgn_database.users WHERE username = '" . $username . "' OR email = '" . $email . "';";
 
 //$search_user_sql = "SELECT email, username FROM sgn_database.users WHERE username = \"delta\" OR email = \"delta@mail.com\";";
 
@@ -42,7 +48,7 @@ if (mysqli_connect_errno())
 
 if(mysqli_num_rows($result) == 0) {
 	// Create a new user if it does not exist
-	$search_user_sql = "INSERT INTO sgn_database.users (email, username, password, first_name, last_name, creation_date) VALUES ('" . $_POST["email"] . "','" . $_POST["username"] . "','" . $_POST["password"] . "','" . $_POST["first_name"] . "','" . $_POST["last_name"] . "',CURRENT_DATE());";
+	$search_user_sql = "INSERT INTO sgn_database.users (email, username, password, first_name, last_name, creation_date) VALUES ('" . $email . "','" . $username . "','" . $password . "','" . $first_name . "','" . $last_name . "',CURRENT_DATE());";
 	$result = mysqli_query($conn, $search_user_sql);
 	if (mysqli_connect_errno())
 	{

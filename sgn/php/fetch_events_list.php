@@ -27,11 +27,6 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		$conn->select_db("sgn_database");
 ?>
-
-
-
-
-	
 	
 
 <!-- Print out all of the current user's upcoming events --> 	

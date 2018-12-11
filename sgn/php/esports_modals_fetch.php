@@ -25,7 +25,7 @@
 											</iframe></div>
 							        </div>
 							        <div class='streamChatCont'>
-							        	<div class='streamChat'></div>
+							        	<div class='streamChat'><div id='lolStreamChat'></div></div>
 							        </div>
 							      </div>
 							      <div class='modal-footer'>
@@ -55,7 +55,7 @@
 											</iframe></div>
 							        </div>
 							        <div class='streamChatCont'>
-							        	<div class='streamChat'></div>
+							        	<div class='streamChat'><div id='csgoStreamChat'></div></div>
 							        </div>
 							      </div>
 							      <div class='modal-footer'>
@@ -85,7 +85,7 @@
 											</iframe></div>
 							        </div>
 							        <div class='streamChatCont'>
-							        	<div class='streamChat'></div>
+							        	<div class='streamChat'><div id='owStreamChat'></div></div>
 							        </div>
 							      </div>
 							      <div class='modal-footer'>
@@ -115,7 +115,7 @@
 											</iframe></div>
 							        </div>
 							        <div class='streamChatCont'>
-							        	<div class='streamChat'></div>
+							        	<div class='streamChat' id='hotsStreamChat'></div>
 							        </div>
 							      </div>
 							      <div class='modal-footer'>
@@ -145,7 +145,7 @@
 											</iframe></div>
 							        </div>
 							        <div class='streamChatCont'>
-							        	<div class='streamChat'></div>
+							        	<div class='streamChat'><div id='sc2StreamChat'></div></div>
 							        </div>
 							      </div>
 							      <div class='modal-footer'>
@@ -168,7 +168,7 @@
 							        	<div class='streamVideo' id='freeStreamVideo'></div>
 							        </div>
 							        <div class='streamChatCont'>
-							        	<div class='streamChat'></div>
+							        	<div class='streamChat'><div id='freeStreamChat'></div></div>
 							        </div>
 							      </div>
 							      <div class='modal-footer'>

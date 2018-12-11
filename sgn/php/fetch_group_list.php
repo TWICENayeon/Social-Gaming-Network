@@ -55,7 +55,8 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_user_groups =  "SELECT *
 									FROM sgn_database.memberships JOIN sgn_database.groups
 									ON memberships.of_group_id = groups.group_id
-									WHERE member_id = " . $_SESSION["current_user_id"] . ";";
+									WHERE member_id = " . $_SESSION["current_user_id"] . "
+									ORDER BY group_name;";
 		
 		$result = $conn->query($search_user_groups);
 		
@@ -72,19 +73,21 @@ if(!isset($_SESSION["current_user_id"])) {
 
 				$group_profile_picture_name = (($conn->query($group_profile_picture_query))->fetch_assoc())["image_name"];
 				
+				
+				$fetch_membership_role_query = "SELECT membership_role
+												FROM memberships
+												WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = " . $tuple["group_id"] . ";";
+												
+				$is_admin = ((($conn->query($fetch_membership_role_query))->fetch_assoc())["membership_role"]) == "1";
+				
 				echo "<div class='templateGroup'>
 						<div class='groupHeaderCont'>
-							<div class='groupTitle'>" . $tuple["group_name"] . "</div>
+							<div class='groupTitle'>" . $tuple["group_name"] . ($is_admin ? "★" : "") . "</div>
 							<div class='group-image' style='background-image: url(user_images/" . $group_profile_picture_name . "'></div>
 						</div>
 						<br>
 						<div class='groupButtons'>";
-						$fetch_membership_role_query = "SELECT membership_role
-														FROM memberships
-														WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = " . $tuple["group_id"] . ";";
-														
-						$membership_role_value = (($conn->query($fetch_membership_role_query))->fetch_assoc())["membership_role"];
-						if($membership_role_value == "1") {
+						if($is_admin) {
 							echo "<button type='button' class='btn btn-primary' id='groupPictureButton' data-toggle='modal' data-target='#groupPictureModal_" . $tuple["group_id"] . "'>Change Name/Picture</button>
 							";	
 						}								

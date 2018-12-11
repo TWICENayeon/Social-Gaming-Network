@@ -202,11 +202,12 @@ function showTab(tabNum, entityID) {
 		tabName = "#home";
 		fetchPosts(entityID);
 	}
-	if(tabNum == "1") {
+	else if(tabNum == "1") {
+		alert("fetching Groups");
 		tabName = "#groups";
 		fetchSingleGroup(entityID);
 	}
-	if(tabNum == "2") {
+	else if(tabNum == "2") {
 		tabName = "#events";
 		fetchSingleEvent(entityID);
 	}

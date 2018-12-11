@@ -25,9 +25,12 @@
 		{
 		  echo "Failed to connect to MySQL: " . $conn->connect_error;
 		}
+
+		$new_event_name = $_POST["new_event_name"];
+		$new_event_description = $_POST["new_event_description"];
 		
 		$new_event_query = "INSERT INTO sgn_database.events (event_name, event_description, event_start_date, event_start_time, event_privacy)
-							VALUES ('" . $_POST["new_event_name"] . "', '" . $_POST["new_event_description"] . "', '" . $_POST["new_event_date"] . "', '" . $_POST["new_event_time"] .  "', 0);";
+							VALUES ('" . $new_event_name . "', '" . $new_event_description . "', '" . $_POST["new_event_date"] . "', '" . $_POST["new_event_time"] .  "', 0);";
 
 
 		echo $new_event_query;

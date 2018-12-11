@@ -39,6 +39,9 @@ function leaveGroup(group_id) {
 	xmlhttp.send(param);
 }
 
+// fetches all the membership modals for all the groups
+// Should only have one main member modal and have 
+// specific things load into that instead
 function fetchGroupMembersModals() {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {

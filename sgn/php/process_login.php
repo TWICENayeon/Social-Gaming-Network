@@ -19,9 +19,12 @@ echo  "<br>";
 echo "Connection successful";
 echo  "<br>";
 
+$main = $conn->real_escape_string($_POST["main"]);
+$password = $conn->real_escape_string($_POST["password"]);
+
 // Validate the credentials
 // TODO: store the hashes of the password instead of the plaintext
-$search_user_sql = "SELECT user_id, username FROM sgn_database.users WHERE (username = '" . $_POST["main"] . "' OR email = '" . $_POST["main"] . "') AND password = '" . $_POST["password"] . "';";
+$search_user_sql = "SELECT user_id, username FROM sgn_database.users WHERE (username = '" . $main . "' OR email = '" . $main . "') AND password = '" . $password . "';";
 
 //$search_user_sql = "SELECT email, username FROM sgn_database.users WHERE username = \"delta\" OR email = \"delta@mail.com\";";
 

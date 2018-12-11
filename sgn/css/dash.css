@@ -108,8 +108,9 @@ body {
 	left: 0 !important;
 	max-width: 35em;
 }
-.sgnChatBox {
-	display: inline-block;
+.sgnChatBox, .sgnChatRoom, .sgnStreamChatRoom {
+	/*display: inline-block;*/
+	display: none;
 	/*border: 1px black;*/
 	/*padding: 10px;*/
 	/*margin: 10px;*/
@@ -144,7 +145,7 @@ body {
 	flex-grow: 1;	
 	overflow: hidden;	
 }
-#myTabContent {
+#myTabContent, .sgnChatCont, .messageBoxCont {
 	overflow-x: hidden;
 	overflow-y: scroll;
 	/*height: 100%;*/
@@ -171,8 +172,11 @@ body {
     overflow: scroll; 
 }
 #usermsg {
-    width: 190px;
+	outline: none;
+	padding-left: 10px;
+    width: 80%;
     border: 1px solid #ACD8F0; 
+    border-radius: 25px;
 } 
 #submit { 
 	width: 60px; 
@@ -186,7 +190,7 @@ body {
 	margin: auto;
 	margin-bottom: 100px;
 	/*margin-left: 30px;*/
-	border: 3px solid black;
+	border: 3px solid white;
 	border-radius: 20px;
 }
 .post-profile-image, .group-image {	
@@ -282,7 +286,7 @@ body {
 .templateEvent {
 	display: flex;
 	flex-direction: column;
-	border: 3px solid black;
+	border: 3px solid white;
 	border-radius: 20px;
 	width: 800px;
 	margin: auto;
@@ -309,7 +313,7 @@ body {
 }
 .esportsCont, .templateGroup {
 	display: flex;
-	border: 3px solid black;
+	border: 3px solid white;
 	border-radius: 20px;
 	width: 800px;
 	margin: auto;
@@ -344,8 +348,9 @@ body {
 	width: 1.5em;;
 }
 #resizer {
-	margin-top: 15.5em;
-	height: 2em;
+	position: fixed;
+	top: 50%;
+	transform: translateY(50%);
 	width: 2em;
 	user-select: none;
 }
@@ -364,19 +369,24 @@ body {
 	text-align: left;
 }
 .streamChatCont {
+	overflow-x: hidden;
+	overflow-y: scroll;
 	height: 480px;
 	width: 400px;	
 	text-align: right;
+	border: 2px solid blue;
 }
 .streamVideo {
 	border: 2px solid black;
 	flex-grow: 1;
 	height: 480px;	
 }
-.streamChat {
-	border: 2px solid blue;
-	height: 480px;
-	width: 400px;
+/* .streamChat { */
+	/* height: 480px; */
+	/* width: 400px; */
+/* } */
+#streamMessageBox {
+	border-color: black;
 }
 #esportModalBody {
 	display: flex;
@@ -399,25 +409,25 @@ body {
 	max-width: 1200px;
 }
 /* Width */
-#myTabContent::-webkit-scrollbar {
+#myTabContent::-webkit-scrollbar, .sgnChatCont::-webkit-scrollbar, .messageBoxCont::-webkit-scrollbar, .streamChatCont::-webkit-scrollbar, #notificationsBody::-webkit-scrollbar {
     width: 10px;    
 }
 
 /* Track */
-#myTabContent::-webkit-scrollbar-track {
+#myTabContent::-webkit-scrollbar-track, .sgnChatCont::-webkit-scrollbar-track, .messageBoxCont::-webkit-scrollbar-track, .streamChatCont::-webkit-scrollbar-track, #notificationsBody::-webkit-scrollbar-track {
     /*background: #f1f1f1;*/ 
     background: #202020;
     border-radius: 5px;
 }
 
 /* Handle */
-#myTabContent::-webkit-scrollbar-thumb {
+#myTabContent::-webkit-scrollbar-thumb, .sgnChatCont::-webkit-scrollbar-thumb, .messageBoxCont::-webkit-scrollbar-thumb, .streamChatCont::-webkit-scrollbar-thumb, #notificationsBody::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 5px; 
 }
 
 /* Handle on hover */
-#myTabContent::-webkit-scrollbar-thumb:hover {
+#myTabContent::-webkit-scrollbar-thumb:hover, .sgnChatCont::-webkit-scrollbar-thumb:hover, .messageBoxCont::-webkit-scrollbar-thumb:hover, .streamChatCont::-webkit-scrollbar-thumb:hover, #notificationsBody::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
 .modalEventCont {
@@ -429,10 +439,10 @@ body {
 	margin: auto;
 	text-align: center;
 }
-.eventPostProfileImage, .commentProfileImage, .profileModalImage {
+.eventPostProfileImage, .commentProfileImage, .profileModalImage, .friendContImage, .friendChatImage, .chatProfImage, .streamFriendContImage {
 	height: 60px;
 	width: 60px;
-	border: 1px solid black;
+	border: 1px solid white;
 	border-radius: 40px;
 	margin-left: 2em;
 	margin-top: 1.5em;
@@ -442,6 +452,19 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-color: gray;
+}
+.friendChatImage {
+	margin-left: 1em;
+}
+.chatProfImage {
+	margin-left: 1em;
+	background-image: url("../img/yoshi.jpg");
+	background-size: cover;
+}
+
+.modalChatProfImage, .modalFriendChatImage {
+	height: 30px;
+	width: 30px;
 }
 .profileModalImage {
 	margin: auto;
@@ -611,8 +634,6 @@ body {
 .createTournamentTitle, .createTournamentDate, .createTournamentTime, .createEventTitle, .createEventDate, .createEventTime, .createGroupTitle, .createGroupPicture {
 	margin-bottom: 10px;
 }
-
-
 .matchContBox, .createEventCont, .listEventsBox, .contenderContBox {
 	border: 1px solid black;
 	border-radius: 10px;
@@ -671,6 +692,7 @@ body {
 	margin-left: 125px;
 }
 .group-image {
+	background-image: url("../img/zard.gif");
 	background-size: cover;
 	margin: auto;
 	text-align: center;
@@ -684,6 +706,161 @@ body {
 	margin: auto;
 	margin-right: 10px;
 }
+.friendsListTitle, .chatFriendName {
+	font-size: 2rem;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.friendArrowDirection {
+	font-size: 4rem;
+}
+#friendsClosedContainables {
+	display: none;
+}
+.friendsPopChatDialog {
+/*	display: flex;
+	flex-direction: column;*/
+}
+.friendListContent, .sgnChatBox, .sgnChatRoom, .streamFriendListContent {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.streamFriendListTitle {
+	font-size: 1.5rem;
+	margin: auto;
+	text-align: center;
+}
+.streamFriendListContent {
+	
+}
+.friendCont, .streamFriendCont {
+	display: flex;
+	border: 2px solid white;
+	border-radius: 10px;	
+	height: 100%;
+	width: 100%;
+	margin-bottom: 10px;
+}
+.streamFriendCont {
+	border-color: black;
+}
+.friendName, .streamFriendName {
+	font-size: 2rem;
+	margin: auto;
+}
+.friendButtons {
+	margin: auto;
+	padding: 0;
+	margin-left: 20px;
+	margin-right: 5px;
+}
+.friendHeader, .streamFriendHeader {
+	flex-direction: row;
+	margin: auto;
+	margin-left: 50px;
+}
+.messageBoxCont {
+	border: 3px solid white;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+	max-height: 375px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-right: 5px;
+}
+
+.messageBoxContModal {
+	
+	max-height: 300px;
+	
+}
+.messageBox {
+	border: 1.5px solid white;
+	border-radius: 10px;
+	height: 100%;
+	width: 100%;
+}
+/* Chat containers */
+.container {
+	display: flex;
+    border: 2px solid #dedede;
+    background-color: #606060;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Darker chat container */
+.darker {
+	display: flex;
+    border-color: #ccc;
+    background-color: #282828;
+}
+
+/* Clear floats */
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Style images */
+/*.container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}*/
+
+/* Style the right image */
+.container.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+#streamProfImage {
+	margin-left: 0.5em;
+	margin-bottom: 1em;
+}
+#streamChatText {
+	max-width: 220px;
+	text-align: right;
+	color: white;
+}
+#chatText, #streamChatText {
+	flex-direction: column;
+}
+#chatTextCont {
+	text-align: center;
+}
+#chatText {
+	max-width: 380px;
+}
+.chatButtons {
+	margin: auto;
+	text-align: center;
+	margin-top: 10px;
+}
+.shrink{
+	-webkit-transform:scale(0.85);
+	-moz-transform:scale(0.85);
+	-ms-transform:scale(0.85);
+	transform:scale(0.85);
+}
+.shrink2{
+	-webkit-transform:scale(0.95);
+	-moz-transform:scale(0.95);
+	-ms-transform:scale(0.95);
+	transform:scale(0.95);
+}
+#notificationsBody {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	max-height: 550px;
+}
+
 
 .tournamentTitle, .tournamentDate, .tournamentTime, .participantsTitle, .currentParticipantsTitle, .contenderNum, .contenderName,
 .tournamentStartDialog, .personSeed, .roundNum, .matchTitle, .matchCompleteDialog, .winnerDialog, .modal-title, .tournamentWinner {

@@ -34,6 +34,7 @@
 	<script src="js/group.js"></script>
 	<script src="js/user_page.js"></script>
 	<script src="js/esports.js"></script>
+	<script src="js/sidebar.js"></script>
 	<script src='https://embed.twitch.tv/embed/v1.js'></script>
 	<title>Social Gaming Network - Dashboard</title>
 	
@@ -50,7 +51,8 @@
 <script>
 // Bind, works better than trigger
 // Does not work
-
+var fetchSidebarChatIntervalFunction = null;
+var fetchSidebarFriendsListIntervalFunction = null;
 
 function start() {
 	
@@ -131,18 +133,23 @@ $(document).ready(function(){
       if (width > window.innerWidth - 260) {
           width = window.innerWidth - 8;
           document.getElementById("rightCont").style.display = "none";
-            document.getElementById("resizer").removeEventListener("mousedown", addMousemove);
-            document.getElementById("postButtonCont").style.textAlign = "right";
-          
+          document.getElementById("friendsClosedContainables").style.display = "unset";
+          document.getElementById("friendBox").style.display = "none"; 
+          document.getElementById("resizer").removeEventListener("mousedown", addMousemove);
+          document.getElementById("postButtonCont").style.textAlign = "right";   
       }            
       else {
-        document.getElementById("rightCont").style.display = "block";  
+        document.getElementById("rightCont").style.display = "block";
+        document.getElementById("friendsClosedContainables").style.display = "none";
+        document.getElementById("friendBox").style.display = "unset";        
       }
       if (width < 8) {
           width = 8;
+          document.getElementById("friendsClosedContainables").style.display = "unset";
+          document.getElementById("friendBox").style.display = "unset"; 
       }      
       document.getElementById("myTabContent").style.width = (width + 6) + "px";
-      document.getElementById("rightCont").style.width = (document.getElementById("mainCont").clientWidth - width - 6) + "px";
+      document.getElementById("rightCont").style.width = (document.getElementById("mainCont").clientWidth - width - 6) + "px";      
   }
   function removeMove(e) {
       document.removeEventListener("mousemove", widthDriver);
@@ -153,9 +160,12 @@ $(document).ready(function(){
   function popChat(e) {
     console.log("clickable")
       if (document.getElementById("rightCont").style.display == "none") {
+        document.getElementById("friendsClosedContainables").style.display = "none";
+        document.getElementById("friendBox").style.display = "unset";
         document.getElementById("rightCont").style.width = "261px";
-        document.getElementById("rightCont").style.display = "block"; } 
-        document.getElementById("resizer").addEventListener("mousedown", addMousemove); 
+        document.getElementById("rightCont").style.display = "block"; 
+      } 
+      document.getElementById("resizer").addEventListener("mousedown", addMousemove); 
   }
   
   // $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -203,22 +213,40 @@ $(document).ready(function(){
 
   // }
   // Search Bar Functionality
-  // $("#searchSubmitBtn").click(function() {
-    // var searchContent = $("#searchContent");    
-    // var contentBox = $("#myTabContent");    
-    // // contentBox.html(' ');
-    // alert();    
-    // contentBox.appendTo(searchContent);
-    // // contentBox.show();
-    // return false;    
+  $("#searchSubmitBtn").click(function() {
+    var searchContent = $("#searchContent");    
+    var contentBox = $("#myTabContent");    
+    // contentBox.html(' ');
+    alert();    
+    contentBox.appendTo(searchContent);
+    // contentBox.show();
+    return false;    
 
-  // });
+  });
   // searchContent = $("#searchContent"); 
   // var contentBox = $("#myTabContent");
   // contentBox.html('');
   // contentBox.appendTo(searchContent);
+  
 
-	// alert("Posts");
+  // Home Tab Refresh
+  // $("#home-tab").click(function() {
+    // history.go(0);
+  // })
+
+  // Go to user tabs after search
+  $('.modal-child').on('show.bs.modal', function () {
+    var modalParent = $(this).attr('data-modal-parent');
+    $(modalParent).css('opacity', 0);
+    // $('.modal-child').css('opacity', 1);
+  });
+ 
+  $('.modal-child').on('hidden.bs.modal', function () {
+    var modalParent = $(this).attr('data-modal-parent');
+    $(modalParent).css('opacity', 1);
+  });
+
+// alert("Posts");
 	fetchPosts(<?php echo $_SESSION["current_user_id"]; ?>);
 	// alert("Events");
 	// fetchEvents();
@@ -235,15 +263,17 @@ $(document).ready(function(){
 	fetchEsportsModals();
 	fetchEvents();
 	// fetchEsportsModals();
+	fetchSidebarFriendsList();
 	
 	setInterval(fetchNotificationNumber, 1500);
 	setInterval(fetchNotificationModal, 1500);
+	fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 1000 );
 	fetchGroupStuff();
 
   setTimeout(function(){ 
-    $(".loader").delay(150).fadeOut("slow");
+  $(".loader").delay(150).fadeOut("slow");
   // $(".loader").delay().fadeOut("slow");
-  }, 200)
+  }, 200);
 });
 
 </script>
@@ -464,13 +494,13 @@ $(document).ready(function(){
 			<!-- Esports Tab -->
 		  	<div class="tab-pane fade" id="esports" role="tabpanel" aria-labelledby="esports-tab">
 		  		<div class="tabWelcome">Esports</div>
-				<button type='button' class='btn btn-primary' data-toggle="modal" data-target="#freeStreamModal">Watch a Stream</button><br><br><br>
+				<button type='button' class='btn btn-primary' data-toggle="modal" data-target="#freeStreamModal" onclick='fetchStreamFriendsList(0)'>Watch a Stream</button><br><br><br>
 		  		<!-- Esports Viewing Container -->
 		  		<div class="esportsCont">
 			  		<div class="esportsTemplate">
 			  			<div class="esportsTitle">List of Esports Games</div>
 			  			<div class="esportsList">
-			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal"><img class="leagueIcon" src="img/lol-icon.png"></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal"><img class="csgoIcon" src="img/csgo-icon.png"></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal"><img class="owIcon" src="img/ow-icon.png"></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal"><img class="hotsIcon" src="img/hots-icon.png"></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal"><img class="sc2Icon" src="img/sc2-icon.png"><br></a>
+			  				League of Legends<br><a data-toggle="modal" data-target="#leagueStreamModal" onclick='fetchStreamFriendsList(1)'><img class="leagueIcon" src="img/lol-icon.png"></a><br>Counter-Strike: Global Offensive<br><a data-toggle="modal" data-target="#csgoStreamModal" onclick='fetchStreamFriendsList(2)'><img class="csgoIcon" src="img/csgo-icon.png"></a><br>Overwatch<br><a data-toggle="modal" data-target="#owStreamModal" onclick='fetchStreamFriendsList(3)'><img class="owIcon" src="img/ow-icon.png"></a><br>Heroes of the Storm<br><a data-toggle="modal" data-target="#hotsStreamModal" onclick='fetchStreamFriendsList(4)'><img class="hotsIcon" src="img/hots-icon.png"></a><br>Starcraft II<br><a data-toggle="modal" data-target="#sc2StreamModal" onclick='fetchStreamFriendsList(5)'><img class="sc2Icon" src="img/sc2-icon.png"><br></a>
 			  			</div>
 			  			<!-- Esports Modals -->			  			
 			  			<div class="esportsModals" id="mainEsportsModals">						
@@ -880,8 +910,64 @@ $(document).ready(function(){
 			<div id="resizer">
                 <div id="resizerIcon">|||</div>
             </div>
+			<div id="sgnChatContContent">
+				<div class="friendList" id="friendContBox">
+					<div class="friendsListTitle">Friends List</div>
+					<div id="friendsClosedContainables">
+						<div class="friendsPopChatDialog">Click/drag to show chat!</div>
+						<div class="friendArrowDirection">&#8595;</div>
+					</div>
+					<div class="friendListBox" id="friendBox">
+						<div class="friendListContent">
+							<div class="friendCont">
+								<div class="friendHeader">
+									<div class="friendContImage"></div>
+									<div class="friendName">PaulDSSB</div>
+								</div>
+								<div class="friendButtons">
+									<button class="btn btn-primary" id="friendWallButton">Wall</button>
+									<button class="btn btn-primary" id="friendChatButton">Chat</button>
+								</div>
+							</div>
+							<div class="friendCont">
+								<div class="friendHeader">
+									<div class="friendContImage"></div>
+									<div class="friendName">PaulDSSB</div>
+								</div>
+								<div class="friendButtons">
+									<button class="btn btn-primary" id="friendWallButton">Wall</button>
+									<button class="btn btn-primary" id="friendChatButton">Chat</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>			
+				<div class="sgnChatRoom" id="sgnChat" style="display:none">
+					<div class="chatFriendName">PaulDSSB</div>
+					<div class="messageBoxCont">
+						<!-- <div class="messageCont"></div> -->
+						<div class="container">
+						  <div class="chatProfImage"></div>
+						  <p id="chatText">Hello. How are you today?</p>					  
+						</div>
 
-			<div class="sgnChatBox" id="rightCont">
+						<div class="container darker">
+						  <div class="friendChatImage"></div>
+						  <p id="chatText">Hey! I'm fine. Thanks for asking!</p>					  
+						</div>
+					</div>
+					<div class="chatTextBox">
+						<form name="chatTextCont" id="chatTextCont">
+							<input name="usermsg" type="text" id="usermsg" size="63">
+							<input name="submitmsg" type="submit" id="submitmsg" value="Send">
+						</form>
+					</div>
+					<div class="chatButtons">
+						<button class="btn btn-primary friendListButton">Back to Friends List</button>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="sgnChatBox" id="rightCont">
 				<div id="wrapper">
 					<div id="friendPanel">
 					
@@ -891,7 +977,7 @@ $(document).ready(function(){
 						<input name="usermsg" type="text" id="usermsg" size="63"/>
 						<input name="submitmsg" type="submit" id="submitmsg" value="Send"/>
 					</form>
-				</div>
+				</div> -->
 				<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 				<script type="text/javascript">
 				//jQuery Document
@@ -900,7 +986,7 @@ $(document).ready(function(){
 			    //
 				//});
 				</script> -->
-			</div>
+			<!-- </div> -->
 		</div>	
 	</div>			
 	<!-- <div class="tabsContent"></div> -->

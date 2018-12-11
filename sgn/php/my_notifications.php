@@ -45,7 +45,8 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_user_notifications =  "SELECT *
 									FROM sgn_database.notifications
 									WHERE recipient_id = " . $_SESSION["current_user_id"] . "
-									ORDER BY notification_id DESC;";
+									ORDER BY notification_id DESC
+									LIMIT 10;";
 		
 		$user_notifications_result = $conn->query($search_user_notifications);
 		

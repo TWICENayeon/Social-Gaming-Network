@@ -71,14 +71,17 @@
 										echo "
 										  <div class='modal-body'>					        
 												<div class='createGroupTitle'>Invite User to Group: <input type='text' id='invited_to_group_" . $curr_group_id . "'></div>
-												<button type='button' class='btn btn-primary' onclick='inviteUserToGroup(" . $curr_group_id . ")'>Invite!</button>
+												<button type='button' class='btn btn-primary' onclick='inviteUserToGroup(" . $curr_group_id . ")'>Invite User to Group!</button>
 										  </div>";
 									}
 									
 									
-									$fetch_admins_query = "SELECT member_id
-															FROM memberships
-															WHERE of_group_id = " . $curr_group_id . " AND membership_role = 1;";
+									
+									$fetch_admins_query = "SELECT member_id, username
+															FROM memberships INNER JOIN users
+															ON member_id = user_id
+															WHERE of_group_id = " . $curr_group_id . " AND membership_role = 1
+															ORDER BY username;";
 															
 									$admins_result = $conn->query($fetch_admins_query);
 									
@@ -87,12 +90,8 @@
 											<div class='groupEventsTitle'>Admins</div>";
 										
 										while($admin_tuple = $admins_result->fetch_assoc()) {
-											
-											$fetch_admin_name = "SELECT username
-																	FROM users
-																	WHERE user_id = " . $admin_tuple["member_id"] . ";";
 																	
-											$admin_name = ((($conn->query($fetch_admin_name))->fetch_assoc())["username"]);
+											$admin_name = $admin_tuple["username"];
 											
 											$fetch_admin_picture_name = "SELECT image_name
 																	FROM images
@@ -113,9 +112,11 @@
 										}
 									}
 									// Get members
-									$fetch_members_query = "SELECT member_id
-															FROM memberships
-															WHERE of_group_id = " . $curr_group_id . " AND membership_role = 0;";
+									$fetch_members_query = "SELECT member_id, username
+															FROM memberships INNER JOIN users
+															ON member_id = user_id
+															WHERE of_group_id = " . $curr_group_id . " AND membership_role = 0
+															ORDER BY username;";
 															
 									$members_result = $conn->query($fetch_members_query);
 									if($members_result->num_rows > 0) {
@@ -124,11 +125,8 @@
 											<div class='groupEventsTitle'>Members</div>";
 											while($member_tuple = $members_result->fetch_assoc()) {
 												// Get member name
-												$fetch_member_name = "SELECT username
-																		FROM users
-																		WHERE user_id = " . $member_tuple["member_id"] . ";";
 																		
-												$member_name = ((($conn->query($fetch_member_name))->fetch_assoc())["username"]);
+												$member_name = $member_tuple["username"];
 												
 												$fetch_member_picture_name = "SELECT image_name
 																		FROM images

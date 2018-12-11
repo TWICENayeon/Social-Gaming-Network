@@ -24,11 +24,11 @@ if(!isset($_SESSION["current_user_id"])) {
 		$conn->select_db("sgn_database");
 ?>
  <?php
-		
+		$search_term = $conn->real_escape_string($_GET["search_term"]);
 		
 		$search_users =  "SELECT username, user_id
 						  FROM sgn_database.users
-						  WHERE username LIKE '%" . $_GET["search_term"]. "%';";
+						  WHERE username LIKE '%" . $search_term. "%';";
 		
 		$users_result = $conn->query($search_users);
 		
@@ -39,12 +39,12 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		$search_groups =  "SELECT group_id, group_name
 						  FROM sgn_database.groups
-						  WHERE group_name LIKE '%" . $_GET["search_term"]. "%' AND group_privacy = 0
+						  WHERE group_name LIKE '%" . $search_term. "%' AND group_privacy = 0
 						  UNION
 						  SELECT group_id, group_name
 						  FROM sgn_database.groups JOIN sgn_database.memberships
 						  ON groups.group_id = memberships.of_group_id
-						  WHERE group_name LIKE '%" . $_GET["search_term"]. "%' AND group_privacy = 1 AND member_id = " . $_SESSION["current_user_id"] . ";";
+						  WHERE group_name LIKE '%" . $search_term. "%' AND group_privacy = 1 AND member_id = " . $_SESSION["current_user_id"] . ";";
 		
 		$groups_result = $conn->query($search_groups);
 		
@@ -74,11 +74,11 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_events =  "SELECT event_id, event_name, event_start_date, event_start_time
 							FROM sgn_database.group_events  JOIN sgn_database.events JOIN sgn_database.memberships
 							ON `group_events`.`hosted_event_id` = `events`.`event_id` AND `group_events`.`hosting_group_id` = `memberships`.`of_group_id`
-							WHERE  member_id = " . $_SESSION["current_user_id"] . " AND event_privacy = 1 AND event_name LIKE '%" . $_GET["search_term"]. "%'" .
+							WHERE  member_id = " . $_SESSION["current_user_id"] . " AND event_privacy = 1 AND event_name LIKE '%" . $search_term. "%'" .
 							" UNION
 							SELECT event_id, event_name, event_start_date, event_start_time
 							FROM  sgn_database.events
-							WHERE  event_privacy = 0 AND event_name LIKE '%" . $_GET["search_term"]. "%' 
+							WHERE  event_privacy = 0 AND event_name LIKE '%" . $search_term. "%' 
 							ORDER BY event_start_date, event_start_time ASC;";
 		
 		$events_result = $conn->query($search_events);
@@ -91,7 +91,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		// }
 		
 		
-	echo "<div class='keywordSearchDialog'><h1 style='text-align:center'>Search Results for : </h1><span class='searchKeywords'><h2 style='color:purple; text-align:center'>" . $_GET["search_term"] . "</h2></span></div>";
+	echo "<div class='keywordSearchDialog'><h1 style='text-align:center'>Search Results for : </h1><span class='searchKeywords'><h2 style='color:purple; text-align:center'>" . $search_term . "</h2></span></div>";
 	if($users_result->num_rows == 0 && $groups_result->num_rows == 0 && $events_result->num_rows == 0) {
 		echo "<div class='noMatchDialog'>Nothing here, search for something else!</div>";
 		

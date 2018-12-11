@@ -35,7 +35,7 @@
 			$new_group_privacy = 0;
 		}
 		$insert_new_group_query = "INSERT INTO sgn_database.groups (group_name, group_description, group_creation_date, group_privacy) 
-								   VALUES ('" . $_POST["new_group_name"] . "', '" . $_POST["new_group_description"] . "', CURRENT_DATE(), " . $new_group_privacy . ");";
+								   VALUES ('" . $conn->real_escape_string($_POST["new_group_name"]) . "', '" . $conn->real_escape_string($_POST["new_group_description"]) . "', CURRENT_DATE(), " . $new_group_privacy . ");";
 
 
 		echo $insert_new_group_query;
