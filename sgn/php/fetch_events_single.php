@@ -199,10 +199,11 @@ if(!isset($_SESSION["current_user_id"])) {
 																FROM images
 																WHERE owner_type = 0 AND owner_id = " . $contenders_info["user_id"] . " AND currently_set = 1 AND image_type = 0";
 										
+										$contender_pic_name = (($conn->query($contender_pic_query))->fetch_assoc())["image_name"];
 										
 										echo "<div class='contenderCont'>
 														<div class='contenderNum'>" . $contenders_info["ordering"] . "</div>
-														<div class='contenderImage' style='background-image: url(user_images/" . (($conn->query($contender_pic_query))->fetch_assoc())["image_name"] . ")'></div>
+														<div class='contenderImage' style='background-image: url(user_images/" . (!empty($contender_pic_name) ? $contender_pic_name : "Profile-icon-9.png") . ")'></div>
 														<div class='contenderName'>" . $contenders_info["username"] . "</div>
 													</div>";
 										
@@ -349,7 +350,7 @@ if(!isset($_SESSION["current_user_id"])) {
 														
 														echo "<div class='contenderCont'>
 										        		<div class='contenderNum'>" . $first_contender_order_value . "</div>
-										        		<div class='contenderImage'  style='background-image: url(user_images/" . $first_contender_profile_pic_value . ")'></div>
+										        		<div class='contenderImage'  style='background-image: url(user_images/" . (!empty($first_contender_profile_pic_value) ? $first_contender_profile_pic_value : "Profile-icon-9.png") . ")'></div>
 										        		<div class='contenderName'>" . $first_contender_username_value . "</div>
 										        	</div>";
 													}
@@ -383,7 +384,7 @@ if(!isset($_SESSION["current_user_id"])) {
 														
 														echo "<div class='contenderCont'>
 										        		<div class='contenderNum'>" . $second_contender_order_value . "</div>
-										        		<div class='contenderImage'  style='background-image: url(user_images/" . $second_contender_profile_pic_value . ")'></div>
+										        		<div class='contenderImage'  style='background-image: url(user_images/" . (!empty($second_contender_profile_pic_value) ? $second_contender_profile_pic_value : "Profile-icon-9.png") . ")'></div>
 										        		<div class='contenderName'>" . $second_contender_username_value . "</div>
 										        	</div>";
 													}
@@ -413,7 +414,7 @@ if(!isset($_SESSION["current_user_id"])) {
 															<div class='winnerDialog'>Winner of Match 1:</div>
 															<div class='contenderCont'>
 																<div class='contenderNum'>" .  ($winner_is_first_cont ? $first_contender_order_value : $second_contender_order_value) . "</div>
-																<div class='contenderImage'  style='background-image: url(user_images/" . ($winner_is_first_cont ? $first_contender_profile_pic_value : $second_contender_profile_pic_value) . ")'></div>
+																<div class='contenderImage'  style='background-image: url(user_images/" . ($winner_is_first_cont ?  (!empty($first_contender_profile_pic_value) ? $first_contender_profile_pic_value : "Profile-icon-9.png")  : (!empty($second_contender_profile_pic_value) ? $second_contender_profile_pic_value : "Profile-icon-9.png")) . ")'></div>
 																<div class='contenderName'>" .  ($winner_is_first_cont ? $first_contender_username_value : $second_contender_username_value) . "</div>
 															</div>";
 													}
@@ -465,7 +466,7 @@ if(!isset($_SESSION["current_user_id"])) {
 													<div class='tournamentWinner'>Tournament Winner: 
 														<div class='contenderCont'>
 															<div class='contenderNum'>" . $winner_order_value . "</div>
-										        		<div class='contenderImage'  style='background-image: url(user_images/" . $winner_profile_pic_value . ")'></div>
+										        		<div class='contenderImage'  style='background-image: url(user_images/" . (!empty($winner_profile_pic_value) ? $winner_profile_pic_value : "Profile-icon-9.png") . ")'></div>
 															<div class='contenderName'>" . $winner_username_value . "</div>
 														</div>
 													</div>";
@@ -601,7 +602,7 @@ if(!isset($_SESSION["current_user_id"])) {
 									   
 										// Fetch posts related to the event
 						echo " <div class='eventPostCont'>
-												<div class='eventPostProfileImage'  style='background-image: url(user_images/" . $profile_picture_name_reply . ")'></div>
+												<div class='eventPostProfileImage'  style='background-image: url(user_images/" . (!empty($profile_picture_name_reply) ? $profile_picture_name_reply : "Profile-icon-9.png") . ")'></div>
 												<div class='eventPostGap'></div>
 												<div class='eventPostName' style='color:black'>" . $event_post_tuple["username"] . "</div>
 												<div class='eventPostDate' style='color:black'>" . $event_post_tuple["post_date"] . "</div>

@@ -101,20 +101,24 @@ if(!isset($_SESSION["current_user_id"])) {
 						        <h2 class='tournamentDate'>" . $tournament_info["tournament_date"] . "</h2>
 						        <h2 class='tournamentTime'>" . $tournament_info["tournament_time"] . "</h2>
 						        <div class='participantsCont'>
-						        	<div class='participantsTitle'>Number of Participants: <div class='numberParticipants'>" . $participant_count_value . "</div></div>
-						        	<div class='currentParticipantsTitle'>Current Participants: </div>";
-									while($contenders_info = $contenders_info_result->fetch_assoc()) {
-										$contender_pic_query = "SELECT image_name 
-																FROM images
-																WHERE owner_type = 0 AND owner_id = " . $contenders_info["user_id"] . " AND currently_set = 1 AND image_type = 0";
-										
-										
-										echo "<div class='contenderCont'>
-														<div class='contenderNum'>" . $contenders_info["ordering"] . "</div>
-														<div class='contenderImage' style='background-image: url(user_images/" . (($conn->query($contender_pic_query))->fetch_assoc())["image_name"] . ")'></div>
-														<div class='contenderName'>" . $contenders_info["username"] . "</div>
-													</div>";
-										
+						        	<div class='participantsTitle'>Number of Participants: <div class='numberParticipants'>" . $participant_count_value . "</div></div>";
+									if($contenders_info_result->num_rows > 0) {
+										echo "<div class='currentParticipantsTitle'>Current Participants: </div>";
+										while($contenders_info = $contenders_info_result->fetch_assoc()) {
+											$contender_pic_query = "SELECT image_name 
+																	FROM images
+																	WHERE owner_type = 0 AND owner_id = " . $contenders_info["user_id"] . " AND currently_set = 1 AND image_type = 0";
+																	
+											$contender_pic_name = (($conn->query($contender_pic_query))->fetch_assoc())["image_name"];
+											
+											
+											echo "<div class='contenderCont'>
+															<div class='contenderNum'>" . $contenders_info["ordering"] . "</div>
+															<div class='contenderImage' style='background-image: url(user_images/" .  (!empty($contender_pic_name) ? $contender_pic_name : "Profile-icon-9.png")  . ")'></div>
+															<div class='contenderName'>" . $contenders_info["username"] . "</div>
+														</div>";
+											
+										}
 									}
 									
 									
@@ -164,11 +168,15 @@ if(!isset($_SESSION["current_user_id"])) {
 													</form>
 												</div>
 												<br><br>
-												<form class='streamLinkCont' id='streamName_" . $tournament_info["tournament_id"] . "'>
+												";
+											}
+											else {
+												echo "Nobody has signed up yet";
+											}
+											echo "<form class='streamLinkCont' id='streamName_" . $tournament_info["tournament_id"] . "'>
 												<div class='streamLink'>Stream for Tournament (Name here) &rarr; <input type='text' id='streamNameForm_" . $tournament_info["tournament_id"] . "'></div>
 												<input type='button' value='Add Stream!' onclick='addTournamentStream(" . $tournament_info["tournament_id"] . ")'>
 											</form>";
-											}
 										}
 									}
 									else {
@@ -258,7 +266,7 @@ if(!isset($_SESSION["current_user_id"])) {
 														
 														echo "<div class='contenderCont'>
 										        		<div class='contenderNum'>" . $first_contender_order_value . "</div>
-										        		<div class='contenderImage'  style='background-image: url(user_images/" . $first_contender_profile_pic_value . ")'></div>
+										        		<div class='contenderImage'  style='background-image: url(user_images/" .  (!empty($first_contender_profile_pic_value) ? $first_contender_profile_pic_value : "Profile-icon-9.png")  . ")'></div>
 										        		<div class='contenderName'>" . $first_contender_username_value . "</div>
 										        	</div>";
 													}
@@ -292,7 +300,7 @@ if(!isset($_SESSION["current_user_id"])) {
 														
 														echo "<div class='contenderCont'>
 										        		<div class='contenderNum'>" . $second_contender_order_value . "</div>
-										        		<div class='contenderImage'  style='background-image: url(user_images/" . $second_contender_profile_pic_value . ")'></div>
+										        		<div class='contenderImage'  style='background-image: url(user_images/" .  (!empty($second_contender_profile_pic_value) ? $second_contender_profile_pic_value : "Profile-icon-9.png")  . ")'></div>
 										        		<div class='contenderName'>" . $second_contender_username_value . "</div>
 										        	</div>";
 													}
@@ -322,7 +330,7 @@ if(!isset($_SESSION["current_user_id"])) {
 															<div class='winnerDialog'>Winner of Match 1:</div>
 															<div class='contenderCont'>
 																<div class='contenderNum'>" .  ($winner_is_first_cont ? $first_contender_order_value : $second_contender_order_value) . "</div>
-																<div class='contenderImage'  style='background-image: url(user_images/" . ($winner_is_first_cont ? $first_contender_profile_pic_value : $second_contender_profile_pic_value) . ")'></div>
+																<div class='contenderImage'  style='background-image: url(user_images/" . ($winner_is_first_cont ?  (!empty($first_contender_profile_pic_value) ? $first_contender_profile_pic_value : "Profile-icon-9.png")  : (!empty($second_contender_profile_pic_value) ? $second_contender_profile_pic_value : "Profile-icon-9.png")) . ")'></div>
 																<div class='contenderName'>" .  ($winner_is_first_cont ? $first_contender_username_value : $second_contender_username_value) . "</div>
 															</div>";
 													}
@@ -374,7 +382,7 @@ if(!isset($_SESSION["current_user_id"])) {
 													<div class='tournamentWinner'>Tournament Winner: 
 														<div class='contenderCont'>
 															<div class='contenderNum'>" . $winner_order_value . "</div>
-										        		<div class='contenderImage'  style='background-image: url(user_images/" . $winner_profile_pic_value . ")'></div>
+										        		<div class='contenderImage'  style='background-image: url(user_images/" .  (!empty($winner_profile_pic_value) ? $winner_profile_pic_value : "Profile-icon-9.png")  . ")'></div>
 															<div class='contenderName'>" . $winner_username_value . "</div>
 														</div>
 													</div>";
@@ -446,7 +454,7 @@ if(!isset($_SESSION["current_user_id"])) {
 												<div class='createTournamentTime' style='color:black'>Tournament Time: <input type='time' id='createTournamentTime_" . $curr_event_id . "'></div>
 										  </div>
 										  <div class='modal-footer'>
-											<button type='button' class='btn btn-primary' onclick='createTournament(" . $curr_event_id . ")'>Create</button>
+											<button type='button' class='btn btn-primary' data-dismiss='modal' onclick='createTournament(" . $curr_event_id . ")'>Create</button>
 											</form>
 											<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 										  </div>

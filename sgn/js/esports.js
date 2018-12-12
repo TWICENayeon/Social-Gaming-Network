@@ -61,7 +61,7 @@ function fetchStreamFriendsList(index) {
 			if(fetchStreamFriendsListIntervalFunction == null) {
 				clearInterval(fetchStreamChatIntervalFunction);
 				fetchStreamChatIntervalFunction = null;
-				// fetchStreamFriendsListIntervalFunction = setInterval( function() { fetchStreamFriendsList(index); }, 500 );
+				fetchStreamFriendsListIntervalFunction = setInterval( function() { fetchStreamFriendsList(index); }, 500 );
 			}
 		}
 	};
@@ -102,7 +102,7 @@ function fetchStreamChat(friend_id, index) {
 			if(fetchStreamChatIntervalFunction == null) {
 				clearInterval(fetchStreamFriendsListIntervalFunction);
 				fetchStreamFriendsListIntervalFunction = null;
-				// fetchStreamChatIntervalFunction = setInterval( function() { refreshStreamChatMessages(friend_id, index); }, 500 );
+				fetchStreamChatIntervalFunction = setInterval( function() { refreshStreamChatMessages(friend_id, index); }, 500 );
 			}
 			// alert(document.getElementById("sgnChat").scrollHeight);
 			// alert($("#sgnChat").scrollTop());
@@ -156,8 +156,8 @@ function viewStreamChat() {
 }
 
 function streamSubmitNewMessage(chat_id, index) {
-	alert(chat_id);
-	alert(index);
+	// alert(chat_id);
+	// alert(index);
 	streamChatPrefix = "";
 	if(index == 0) {
 		streamChatPrefix = "free";
@@ -184,10 +184,9 @@ function streamSubmitNewMessage(chat_id, index) {
 	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			alert(this.responseText);
+			// alert(this.responseText);
 			document.getElementById(streamChatPrefix + "chatTextCont").reset();
 		}
 	};
 	xmlhttp.send(params);
-	alert("request sent");
 }

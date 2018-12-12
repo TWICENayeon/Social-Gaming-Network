@@ -32,7 +32,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		echo "	<div class='modalEventInfoCont'>";
 									
-				$search_event_wall_posts =  "SELECT post_id, username, post_text, post_date, post_time
+				$search_event_wall_posts =  "SELECT post_id, username, user_id, post_text, post_date, post_time
 									FROM sgn_database.posts JOIN sgn_database.users
 									ON posts.poster_id = users.user_id
 									WHERE wall_owner_id = " . $_POST["event_id"] . " AND wall_type = 2
@@ -63,7 +63,7 @@ if(!isset($_SESSION["current_user_id"])) {
 												FROM sgn_database.post_votes
 												WHERE voted_id = " . $event_post_tuple["post_id"] . ";";
 												
-						$reply_vote_total = (($conn->query($fetch_reply_votes_query))->fetch_assoc())["total"]
+						$reply_vote_total = (($conn->query($fetch_reply_votes_query))->fetch_assoc())["total"];
 
 						
 						if(!isset($reply_vote_total)) {
@@ -77,9 +77,8 @@ if(!isset($_SESSION["current_user_id"])) {
 												<div class='eventPostDate' style='color:black'>" . $event_post_tuple["post_date"] . "</div>
 												<div class='eventPostTime' style='color:black'>" . $event_post_tuple["post_time"] . "</div>
 												<div class='eventPostComment' style='color:black'>" . $event_post_tuple["post_text"] . "</div>
-												<div class='eventPostName' style='color:black'>" . $event_post_tuple["post_id"] . "</div>
 										<div class='commentPostVoteButtons'>
-											<div class='commentPostUpvote'style='color:black' onclick='likeAction(this, " . $event_post_result["post_id"] . ", 2)'>
+											<div class='commentPostUpvote'style='color:black' onclick='likeAction(this, " . $event_post_tuple["post_id"] . ", 2)'>
 											<i class='fa fa-hand-o-up' aria-hidden='false'  " . ($liked_reply_value ? " style='color:blue' " : "style='color:black'") ."></i>			
 											<span id='vote_total'>" . $reply_vote_total . " </span>
 											</div>

@@ -12,6 +12,7 @@ function fetchSidebarFriendsList() {
 				clearInterval(fetchSidebarChatIntervalFunction);
 				fetchSidebarChatIntervalFunction = null;
 				fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 500 );
+				sidebarOnFriendsList = true;
 			}
 		}
 	};
@@ -40,6 +41,7 @@ function fetchSidebarChat(friend_id) {
 				clearInterval(fetchSidebarFriendsListIntervalFunction);
 				fetchSidebarFriendsListIntervalFunction = null;
 				fetchSidebarChatIntervalFunction = setInterval( function() { refreshSidebarChatMessages(friend_id); }, 500 );
+				sidebarOnFriendsList = false;
 			}
 			// var objDiv = document.getElementById("sgnChat");
 			// objDiv.scrollTop = objDiv.scrollHeight;

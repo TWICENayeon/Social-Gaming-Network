@@ -53,7 +53,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		echo "<div class='templateGroup'>
 				<div class='groupHeaderCont'>
 					<div class='groupTitle'>" . $tuple["group_name"] . "</div>
-					<div class='group-image' style='background-image: url(user_images/" . $group_profile_picture_name . "'></div>
+					<div class='group-image' style='background-image: url(user_images/" . (!empty($group_profile_picture_name) ? $group_profile_picture_name : "generic_group_star.png") . "'></div>
 				</div>
 				<br>
 				<div class='groupButtons'>";
@@ -118,7 +118,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				  <div class='modal-body'>
 					<h2 style='color:black'> Warning </h2>
 					<p style='color:black'>Are you sure you want to leave the group:  </p><div class='groupName'>" . $tuple["group_name"] . "</div>
-					<div class='group-image'  style='background-image: url(user_images/" . $group_profile_picture_name . "'></div>	
+					<div class='group-image'  style='background-image: url(user_images/" . (!empty($group_profile_picture_name) ? $group_profile_picture_name : "generic_group_star.png") . "'></div>	
 				  </div>
 				  <div class='modal-footer'>
 					<button type='button' class='btn btn-primary' data-dismiss='modal' onclick='leaveGroup(" . $tuple["group_id"] . ")'>Yes</button>
@@ -141,7 +141,7 @@ if(!isset($_SESSION["current_user_id"])) {
 					  <div class='modal-body'>
 						<h2 style='color:black'> Note </h2>
 						<p style='color:black'>Would you like to join </p><div class='groupName'>" . $tuple["group_name"] . "</div>
-						<div class='group-image' style='background-image: url(user_images/" . $group_profile_picture_name . "'></div>	
+						<div class='group-image' style='background-image: url(user_images/" . (!empty($group_profile_picture_name) ? $group_profile_picture_name : "generic_group_star.png")  . "'></div>	
 					  </div>
 					  <div class='modal-footer'>
 						<button type='button' class='btn btn-primary' data-dismiss='modal' onclick='joinGroup(" . $tuple["group_id"] . ")'>Yes</button>
@@ -280,7 +280,7 @@ if(!isset($_SESSION["current_user_id"])) {
 											$admin_picture_name = ((($conn->query($fetch_admin_picture_name))->fetch_assoc())["image_name"]);
 											
 											echo "<div class='contenderCont'>							        		
-												<div class='contenderImage' style='background-image: url(user_images/" . $admin_picture_name . ")'></div>
+												<div class='contenderImage' style='background-image: url(user_images/" . (!empty($admin_picture_name) ? $admin_picture_name : "Profile-icon-9.png")  . ")'></div>
 												<div class='contenderName'>" . $admin_name . "</div>";
 												if($is_admin) {
 													echo "<div class='groupPromoteButtons'>
@@ -315,7 +315,7 @@ if(!isset($_SESSION["current_user_id"])) {
 												$member_picture_name = ((($conn->query($fetch_member_picture_name))->fetch_assoc())["image_name"]);
 												
 												echo "<div class='contenderCont'>							        		
-													<div class='contenderImage' style='background-image: url(user_images/" . $member_picture_name . ")'></div>
+													<div class='contenderImage' style='background-image: url(user_images/" . (!empty($member_picture_name) ? $member_picture_name : "Profile-icon-9.png") . ")'></div>
 													<div class='contenderName'>" . $member_name . "</div>";
 													if($is_admin) {
 														echo "<div class='groupPromoteButtons'>

@@ -63,7 +63,7 @@
 								if($is_admin) {
 									echo "<div class='createEventHeader'>Create Event</div>
 									<div class='createEventCont'>
-										<form class='createEventForm'>						        
+										<form class='createEventForm' id='createEventForm_" . $curr_group_id . "'>						        
 											<div class='createEventTitle'><span style='color:black'>Event Title: </span><input type='text' id='newEventTitle_" . $curr_group_id . "'></div>
 											<div class='createEventDate'><span style='color:black'>Event Date:  </span><input type='date' id='newEventDate_" . $curr_group_id . "'></div>
 											<div class='createEventTime'><span style='color:black'>Event Time:  </span><input type='time' id='newEventTime_" . $curr_group_id . "'></div>

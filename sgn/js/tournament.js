@@ -16,7 +16,7 @@ function fetchTournamentInfo(tournament_id) {
 	var param = "tournament_id=" + tournament_id;
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("notifsModal").innerHTML = this.responseText;
+			document.getElementById("tournamentModal_" + tournament_id).innerHTML = this.responseText; // Why is this the notif modal???
 		}
 	};
 	xmlhttp.open("POST", "php/fetch_tournament_info.php", true);
@@ -40,15 +40,15 @@ function createTournament(event_id) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			// alert(this.responseText);
 			try {
 				// alert(this.responseText);
 				fetchEvents();
-				fetchTournamentsModal();
+				// fetchTournamentsModal();
 			}
 			catch(err) {
 				alert(err.message);
 			}
+			$('a[href="#events"]').tab('show');
 			// alert("Printing span innerHTML");
 			// alert(document.getElementById(numRepliesSpan).innerHTML);
 		}

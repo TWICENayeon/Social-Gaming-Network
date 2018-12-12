@@ -374,17 +374,12 @@ body {
 	height: 480px;
 	width: 400px;	
 	text-align: right;
-	border: 2px solid blue;
 }
 .streamVideo {
 	border: 2px solid black;
 	flex-grow: 1;
 	height: 480px;	
 }
-/* .streamChat { */
-	/* height: 480px; */
-	/* width: 400px; */
-/* } */
 #streamMessageBox {
 	border-color: black;
 }
@@ -453,22 +448,28 @@ body {
 	background-repeat: no-repeat;
 	background-color: gray;
 }
+
+.streamFriendContImage {
+	background-color: black;
+}
 .friendChatImage {
-	margin-left: 1em;
+	background-color: white;
 }
 .chatProfImage {
 	margin-left: 1em;
 	background-image: url("../img/yoshi.jpg");
 	background-size: cover;
+	background-color: white;
 }
 
-.modalChatProfImage, .modalFriendChatImage {
-	height: 30px;
-	width: 30px;
+.friendContImage {
+	background-color: white;
 }
 .profileModalImage {
 	margin: auto;
 	text-align: center;
+	background-color: black;
+	
 }
 
 .eventPostCont, .commentCont {
@@ -550,7 +551,7 @@ body {
 .participantsCont {
 	
 }
-.contenderImage {
+.contenderImage, .groupSearchImage {
 	margin: auto;	
 	height: 60px;
 	width: 60px;
@@ -565,6 +566,11 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-color: black;
+}
+
+.groupSearchImage {
+	
+	background-color: white;
 }
 .templateGroup {
 	margin-bottom: 5em;
@@ -696,6 +702,7 @@ body {
 	background-size: cover;
 	margin: auto;
 	text-align: center;
+	background-color: white;
 }
 .createGroupPicture {
 	margin: auto;
@@ -764,16 +771,10 @@ body {
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 10px;
-	max-height: 375px;
+	max-height: 544px;
 	margin-left: 10px;
 	margin-right: 10px;
 	padding-right: 5px;
-}
-
-.messageBoxContModal {
-	
-	max-height: 300px;
-	
 }
 .messageBox {
 	border: 1.5px solid white;
@@ -785,7 +786,7 @@ body {
 .container {
 	display: flex;
     border: 2px solid #dedede;
-    background-color: #606060;
+    background-color: #404040;
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
@@ -795,7 +796,7 @@ body {
 .darker {
 	display: flex;
     border-color: #ccc;
-    background-color: #282828;
+    background-color: #303030;
 }
 
 /* Clear floats */
@@ -861,9 +862,8 @@ body {
 	max-height: 550px;
 }
 
-
 .tournamentTitle, .tournamentDate, .tournamentTime, .participantsTitle, .currentParticipantsTitle, .contenderNum, .contenderName,
-.tournamentStartDialog, .personSeed, .roundNum, .matchTitle, .matchCompleteDialog, .winnerDialog, .modal-title, .tournamentWinner {
+.tournamentStartDialog, .personSeed, .personSeedNum, .roundNum, .matchTitle, .matchCompleteDialog, .winnerDialog, .modal-title, .tournamentWinner, .streamLink {
 	color: black;
 	
 }
@@ -874,6 +874,10 @@ body {
 	color: black;
 }
 
-.post-profile-image, .contenderImage, .eventPostProfileImage, .profileModalImage {
+.post-profile-image, .contenderImage, .eventPostProfileImage, .profileModalImage, .groupSearchImage {
 	background-size: cover;
+}
+
+.post-profile-image {
+	background-color: white;
 }

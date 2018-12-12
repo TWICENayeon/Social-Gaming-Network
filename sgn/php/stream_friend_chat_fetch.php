@@ -91,21 +91,21 @@ if(!isset($_SESSION["current_user_id"])) {
 						while($chat_message_tuple = $chat_messages_result->fetch_assoc()) {
 							if($chat_message_tuple["chat_writer_id"] == $_SESSION["current_user_id"]) {
 								echo "<div class='container darker' >
-										  <div class='chatProfImage modalChatProfImage' style='background-image: url(user_images/" . $self_profile_picture_name . ")'></div>
+										  <div class='chatProfImage' id='streamProfImage' style='background-image: url(user_images/" .  (!empty($self_profile_picture_name) ? $self_profile_picture_name : "Profile-icon-9.png")  . ")'></div>
 										  ";
 							}
 							else {
 								echo "<div class='container'>
-								  <div class='friendChatImage modalFriendChatImage'  style='background-image: url(user_images/" . $friend_profile_picture_name . ")'></div>
+								  <div class='friendChatImage' id='streamProfImage'  style='background-image: url(user_images/" . (!empty($friend_profile_picture_name) ? $friend_profile_picture_name : "Profile-icon-9.png") . ")'></div>
 								  ";
 							}
-							echo "<p id='chatText' style='color:white'>" . $chat_message_tuple["chat_message"] . "</p>					  
+							echo "<p id='streamChatText' style='color:white'>" . $chat_message_tuple["chat_message"] . "</p>					  
 								</div>";
 						}
 					}
 					else {
 						echo "<div class='container darker' >
-										  <p id='chatText' style='text-align:center;color:white'>No messages</p>					  
+										  <p id='streamChatText' style='text-align:center;color:white'>No messages</p>					  
 								</div>";
 					}
 			

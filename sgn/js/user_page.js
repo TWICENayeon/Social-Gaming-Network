@@ -133,7 +133,7 @@ function updateInformationUser() {
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			start();
-			$("#updateUserForm").reset();
+			document.getElementById("updateUserForm").reset();
 			
 		}
 	};
@@ -203,7 +203,6 @@ function showTab(tabNum, entityID) {
 		fetchPosts(entityID);
 	}
 	else if(tabNum == "1") {
-		alert("fetching Groups");
 		tabName = "#groups";
 		fetchSingleGroup(entityID);
 	}

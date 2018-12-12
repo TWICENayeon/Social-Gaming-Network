@@ -108,10 +108,12 @@ if(!isset($_SESSION["current_user_id"])) {
 				$fetch_user_pic_query = "SELECT image_name 
 										FROM images
 										WHERE owner_type = 0 AND owner_id = " . $user_tuple["user_id"] . " AND currently_set = 1 AND image_type = 0";
+										
+				$user_pic_name = (($conn->query($fetch_user_pic_query))->fetch_assoc())["image_name"];
 				
 				echo "
 											<div class='userSearchBoxCont' data-dismiss='modal'  href='#home' onclick='showTab(0, " . $user_tuple["user_id"] . ")'>						        		
-												<div class='contenderImage' style='background-image: url(user_images/" . (($conn->query($fetch_user_pic_query))->fetch_assoc())["image_name"] . ")'></div>
+												<div class='contenderImage' style='background-image: url(user_images/" .  (!empty($user_pic_name) ? $user_pic_name : "Profile-icon-9.png")  . ")'></div>
 												<div class='contenderName'>" . $user_tuple["username"] . "</div>
 											</div>";
 			}
@@ -132,9 +134,11 @@ if(!isset($_SESSION["current_user_id"])) {
 										FROM images
 										WHERE owner_type = 1 AND owner_id = " . $group_tuple["group_id"] . " AND currently_set = 1 AND image_type = 0";
 										
+				$group_pic_name = (($conn->query($fetch_group_pic_query))->fetch_assoc())["image_name"];
+										
 				echo "
 											<div class='groupSearchBoxCont'  data-dismiss='modal'  href='#groups'  onclick='showTab(1, " . $group_tuple["group_id"] . ")'>
-												<div class='contenderImage'  style='background-image: url(user_images/" . (($conn->query($fetch_group_pic_query))->fetch_assoc())["image_name"] . ")'></div>						        									        		
+												<div class='groupSearchImage'  style='background-image: url(user_images/" . (!empty($group_pic_name) ? $group_pic_name : "generic_group_star.png") . ")'></div>						        									        		
 												<div class='contenderName'>" . $group_tuple["group_name"] . "</div>
 											</div>";					
 			}

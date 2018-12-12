@@ -70,7 +70,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				
 				echo "<div class=\"streamFriendCont\">
 						<div class=\"streamFriendHeader\">
-							<div class=\"streamFriendContImage\" style='background-image: url(user_images/" . $friend_picture_name . ")'></div>
+							<div class=\"streamFriendContImage\" style='background-image: url(user_images/" .  (!empty($friend_picture_name) ? $friend_picture_name : "Profile-icon-9.png")  . ")'></div>
 							<div class=\"streamFriendName\"  style='color:black'>" . $friend_tuple["friend_username"] . "</div>
 						</div>
 						<div class=\"friendButtons\">

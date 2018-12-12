@@ -72,7 +72,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				
 				echo "<div class=\"friendCont\">
 						<div class=\"friendHeader\">
-							<div class=\"friendContImage\" style='background-image: url(user_images/" . $friend_picture_name . ")'></div>
+							<div class=\"friendContImage\" style='background-image: url(user_images/" . (!empty($friend_picture_name) ? $friend_picture_name : "Profile-icon-9.png") . ")'></div>
 							<div class=\"friendName\">" . $friend_tuple["friend_username"] . "</div>
 						</div>
 						<div class=\"friendButtons\">

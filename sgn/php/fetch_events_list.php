@@ -176,7 +176,7 @@ if(!isset($_SESSION["current_user_id"])) {
 			}
 		}
 		else {
-			echo $_SESSION["current_user_id"];
+			// echo $_SESSION["current_user_id"];
 			echo "You have no past events";
 		}
 		

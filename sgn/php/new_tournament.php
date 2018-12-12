@@ -30,7 +30,7 @@
 
 		
 		$insert_new_tournament_query = "INSERT INTO sgn_database.tournaments (host_event_id, tournament_name, tournament_date, tournament_time)
-								    VALUES (" . $conn->real_escape_string($_POST["event_id"]) . ", '" . $conn->real_escape_string($_POST["tournament_name"]) . "', '" . $conn->real_escape_string($_POST["tournament_date"]) . "', '" . $conn->real_escape_string($_POST["tournament_time"]) ."');";
+								    VALUES (" . $_POST["event_id"] . ", '" . $conn->real_escape_string($_POST["tournament_name"]) . "', '" . $conn->real_escape_string($_POST["tournament_date"]) . "', '" . $conn->real_escape_string($_POST["tournament_time"]) ."');";
 									
 		echo $insert_new_tournament_query;
 		$result = $conn->query($insert_new_tournament_query);
@@ -44,13 +44,13 @@
 		//Redirect back to the group page
 		echo "This is the new tournament page";
 
-		if(ob_get_length()) {
-			ob_end_clean();
-		}
+		// if(ob_get_length()) {
+			// ob_end_clean();
+		// }
 
 		// echo "Heading to tournament page";
-		$_SESSION["page_id"] = $new_tournament_id;
-		header("Location: http://localhost/sgn/tournament_page.php");
+		// $_SESSION["page_id"] = $new_tournament_id;
+		// header("Location: http://localhost/sgn/tournament_page.php");
 	}
 	else {
 		echo "Complete and utter failure";

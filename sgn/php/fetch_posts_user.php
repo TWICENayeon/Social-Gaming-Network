@@ -171,7 +171,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				// Load profile picture
 				echo "<div class='template-post'>					
 					<div class='image-buttons-container'>			
-						<div class='post-profile-image' data-toggle='modal' data-target='#dashProfileModal_" . $tuple["username"] . "' style='background-image: url(user_images/" . $profile_picture_name_main . ")'></div>	 				
+						<div class='post-profile-image' data-toggle='modal' data-target='#dashProfileModal_" . $tuple["username"] . "' style='background-image: url(user_images/" . (!empty($profile_picture_name_main) ? $profile_picture_name_main : "Profile-icon-9.png")  . ")'></div>	 				
 						<div class='post-profile-gap'></div>
 						<div class='post-like-button' onclick='likeAction(this, " . $tuple["post_id"] . ", 0)'>													
 							<i class='far fa-thumbs-up' id='thumbsUpIcon' " . ($liked_main_value ? " style='color:blue' " : "") ."></i>							
@@ -219,7 +219,7 @@ if(!isset($_SESSION["current_user_id"])) {
 					}
 												
 					echo 		"<div class='commentCont'>
-					        		<div class='commentProfileImage' style='background-image: url(user_images/" . $profile_picture_name_reply . ")'></div>
+					        		<div class='commentProfileImage' style='background-image: url(user_images/" . (!empty($profile_picture_name_reply) ? $profile_picture_name_reply : "Profile-icon-9.png") . ")'></div>
 					        		<div class='commentPostGap'></div>
 					        		<div class='commentPostName' style='color:black'>" . $child_tuple["username"] . "</div>
 					        		<div class='commentPostDate' style='color:black'>" . $child_tuple["post_date"] . "</div>
@@ -271,6 +271,8 @@ if(!isset($_SESSION["current_user_id"])) {
 				$fetch_profile_picture_main = "SELECT image_name
 												FROM images
 												WHERE owner_type = 0 AND owner_id = " . $user_info["user_id"] . " AND currently_set = 1 AND image_type = 0;";
+												
+				$profile_picture_main_name = (($conn->query($fetch_profile_picture_main))->fetch_assoc())["image_name"];
 				
 				echo "
 				<div class='modal fade' id='dashProfileModal_" . $user_info["username"] ."' tabindex='-1' role='dialog'>
@@ -284,7 +286,7 @@ if(!isset($_SESSION["current_user_id"])) {
 						      </div>
 						      <div class='modal-body'>
 						        <h2 class='profileTitle' style='color:black'>" . $user_info["username"] . "</h2>
-						        <div class='profileModalImage'  style='background-image: url(user_images/" . (($conn->query($fetch_profile_picture_main))->fetch_assoc())["image_name"] . ")'></div>
+						        <div class='profileModalImage'  style='background-image: url(user_images/" .  (!empty($profile_picture_main_name) ? $profile_picture_main_name : "Profile-icon-9.png")  . ")'></div>
 						        <div class='profileUserName' style='color:black'>Name:" . $user_info["first_name"] . "       " . $user_info["last_name"] . "</div>
 						        <div class='profileEmail' style='color:black'>Email: " . $user_info["email"] . "</div>
 						        <div class='profileDate' style='color:black'>Date joined: " . $user_info["creation_date"] . "</div>
@@ -306,8 +308,14 @@ if(!isset($_SESSION["current_user_id"])) {
 		else {
 			// echo $_SESSION["page_id"] . "<br><br><br>";
 			// echo $search_user_wall_posts;
-			echo "<!-- Dialog for No Posts to show -->
-				<div class='noPostsDialog'><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>";
+			if($wall_owner_id != $_SESSION["current_user_id"]) {
+				echo "<div class='noPostsDialog'><h2>No Posts to show! </h2></div>";
+			}
+			else {
+				echo "<!-- Dialog for No Posts to show -->
+
+					<div class='noPostsDialog'><h2>No Posts to show! Create some posts with the plus button on the bottom left to get started!</h2></div>";
+			}
 		}
 
 		$conn->close();

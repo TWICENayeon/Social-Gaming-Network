@@ -16,16 +16,6 @@ function fetchGroupList() {
 	xmlhttp.send();
 }
 
-function changeGroupInfo() {
-	alert('hello hello hello');
-}
-
-function createGroup() {
-	alert("Creating group");
-	alert($(".createGroupTitle").val());
-	alert($(".createGroupPicture").val());
-}
-
 function leaveGroup(group_id) {
 	var param = "group_id=" + group_id;
 	var xmlhttp = new XMLHttpRequest();
@@ -131,7 +121,7 @@ function createNewEvent(group_id) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			alert(this.responseText);
+			document.getElementById("createEventForm_" + group_id).reset();
 			refreshGroupEventModal(group_id);
 		}
 	};
@@ -158,7 +148,6 @@ function joinGroup(group_id) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			alert(this.responseText);
 			fetchSingleGroup(group_id);
 		}
 	};

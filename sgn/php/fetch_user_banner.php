@@ -35,7 +35,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		echo "url('user_images/" . $banner_img_name . "')";
 	}
 	else {
-		echo "No banner image set yet";
+		echo "url('user_images/sgn_banner.png')";
 	}
 
 ?>

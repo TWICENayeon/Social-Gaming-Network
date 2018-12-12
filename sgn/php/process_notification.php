@@ -27,8 +27,8 @@
 										FROM sgn_database.notifications
 										WHERE notification_id = " . $_POST["notification_id"] . ";";
 								
-	echo $_POST["notification_id"];
-	echo $_POST["action"];
+	// echo $_POST["notification_id"];
+	// echo $_POST["action"];
 	// echo $_POST["notification_id"];
 	$notification_data_result = $conn->query($fetch_notification_data_query);
 	
@@ -74,13 +74,17 @@
 					// Make current user as a member to new chat group
 					
 					$new_chat_member_one = "INSERT INTO sgn_database.chat_group_members 
-											VALUES (" . $chat_id . ", " . $_SESSION["current_user_id"] . ")";
+											VALUES (" . $chat_id . ", " . $_SESSION["current_user_id"] . ", 0)";
 											
 					
 				
 					$result = $conn->query($new_chat_member_one);
 					
 					if($result === false) {
+						echo($chat_id);
+						echo("				");
+						echo($_SESSION["current_user_id"]);
+						echo $new_chat_member_one;
 						echo("Failed to insert new chat friend 1");
 						exit();
 					}
@@ -89,7 +93,7 @@
 					// Make new friend as a member to new chat group
 					
 					$new_chat_member_two = "INSERT INTO sgn_database.chat_group_members 
-											VALUES (" . $chat_id . ", " . $notification_data_tuple["invitation_to_id"] . ")";
+											VALUES (" . $chat_id . ", " . $notification_data_tuple["invitation_to_id"] . ", 0)";
 											
 					
 				

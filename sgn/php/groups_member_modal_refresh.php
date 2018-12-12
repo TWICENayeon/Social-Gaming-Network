@@ -69,7 +69,7 @@ $group_id = $_POST["group_id"];
 											$admin_picture_name = ((($conn->query($fetch_admin_picture_name))->fetch_assoc())["image_name"]);
 											
 											echo "<div class='contenderCont'>							        		
-												<div class='contenderImage' style='background-image: url(user_images/" . $admin_picture_name . ")'></div>
+												<div class='contenderImage' style='background-image: url(user_images/" .  (!empty($admin_picture_name) ? $admin_picture_name : "Profile-icon-9.png")  . ")'></div>
 												<div class='contenderName'>" . $admin_name . "</div>";
 												if($membership_role) {
 													echo "<div class='groupPromoteButtons'>
@@ -104,7 +104,7 @@ $group_id = $_POST["group_id"];
 												$member_picture_name = ((($conn->query($fetch_member_picture_name))->fetch_assoc())["image_name"]);
 												
 												echo "<div class='contenderCont'>							        		
-													<div class='contenderImage' style='background-image: url(user_images/" . $member_picture_name . ")'></div>
+													<div class='contenderImage' style='background-image: url(user_images/" .  (!empty($member_picture_name) ? $member_picture_name : "Profile-icon-9.png")  . ")'></div>
 													<div class='contenderName'>" . $member_name . "</div>";
 													if($membership_role) {
 														echo "<div class='groupPromoteButtons'>

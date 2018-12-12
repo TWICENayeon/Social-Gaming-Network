@@ -30,6 +30,8 @@ session_start();
 	$fetch_profile_picture_main = "SELECT image_name
 									FROM images
 									WHERE owner_type = 0 AND owner_id = " . $_SESSION["current_user_id"] . " AND currently_set = 1 AND image_type = 0;";
+									
+	$profile_picture_main_name = (($conn->query($fetch_profile_picture_main))->fetch_assoc())["image_name"];
 
 	echo "<div class='modal-header'>
 						        <h5 class='profileModalUname'>Profile</h5>
@@ -39,7 +41,7 @@ session_start();
 						      </div>
 						      <div class='modal-body'>
 						        <h2 class='profileTitle' style='color:black'>" . $user_info["username"] . "</h2>
-						        <div class='profileModalImage'  style='background-image: url(user_images/" . (($conn->query($fetch_profile_picture_main))->fetch_assoc())["image_name"] . ")'></div>
+						        <div class='profileModalImage'  style='background-image: url(user_images/" .  (!empty($profile_picture_main_name) ? $profile_picture_main_name : "Profile-icon-9.png")  . ")'></div>
 						        <div class='profileUserName' style='color:black'>Name:" . $user_info["first_name"] . "       " . $user_info["last_name"] . "</div>
 						        <div class='profileEmail' style='color:black'>Email: " . $user_info["email"] . "</div>
 						        <div class='profileDate' style='color:black'>Date joined: " . $user_info["creation_date"] . "</div>

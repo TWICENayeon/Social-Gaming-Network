@@ -53,9 +53,15 @@
 // Does not work
 var fetchSidebarChatIntervalFunction = null;
 var fetchSidebarFriendsListIntervalFunction = null;
+var sidebarOnFriendsList = true;
 
 function start() {
-	
+	fetchPosts(<?php echo $_SESSION["current_user_id"]; ?>);
+	fetchCurrentUsername();
+	// alert("Profile");
+	fetchUserProfileModal();
+	fetchEsportsModals();
+	fetchEvents();
 }
 
 
@@ -132,21 +138,37 @@ $(document).ready(function(){
       var width = e.screenX;
       if (width > window.innerWidth - 260) {
           width = window.innerWidth - 8;
-          document.getElementById("rightCont").style.display = "none";
+		  // if(sidebarOnFriendsList) {
+			// clearInterval(fetchSidebarFriendsListIntervalFunction);
+			// fetchSidebarFriendsListIntervalFunction = null;
+		  // }
+		  // else {
+			// clearInterval(fetchSidebarChatIntervalFunction);
+			// fetchSidebarChatIntervalFunction = null;
+		  
+		  // }
+          
+		  clearInterval(fetchSidebarFriendsListIntervalFunction);
+		  fetchSidebarFriendsListIntervalFunction = null;
+		  document.getElementById("rightCont").style.display = "none";
           document.getElementById("friendsClosedContainables").style.display = "unset";
           document.getElementById("friendBox").style.display = "none"; 
           document.getElementById("resizer").removeEventListener("mousedown", addMousemove);
-          document.getElementById("postButtonCont").style.textAlign = "right";   
+          document.getElementById("postButtonCont").style.textAlign = "right";  
+
+				// fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 500 );	  
       }            
       else {
         document.getElementById("rightCont").style.display = "block";
         document.getElementById("friendsClosedContainables").style.display = "none";
-        document.getElementById("friendBox").style.display = "unset";        
+        document.getElementById("friendBox").style.display = "unset";   
+				// fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 500 );   
       }
       if (width < 8) {
           width = 8;
           document.getElementById("friendsClosedContainables").style.display = "unset";
           document.getElementById("friendBox").style.display = "unset"; 
+				fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 500 );
       }      
       document.getElementById("myTabContent").style.width = (width + 6) + "px";
       document.getElementById("rightCont").style.width = (document.getElementById("mainCont").clientWidth - width - 6) + "px";      
@@ -160,6 +182,13 @@ $(document).ready(function(){
   function popChat(e) {
     console.log("clickable")
       if (document.getElementById("rightCont").style.display == "none") {
+		  
+		// if(sidebarOnFriendsList) {
+			// fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 500 );
+		// }
+		// else {
+			// fetchSidebarChatIntervalFunction = setInterval( function() { refreshSidebarChatMessages(friend_id); }, 500 );
+		// }
         document.getElementById("friendsClosedContainables").style.display = "none";
         document.getElementById("friendBox").style.display = "unset";
         document.getElementById("rightCont").style.width = "261px";
@@ -213,21 +242,97 @@ $(document).ready(function(){
 
   // }
   // Search Bar Functionality
-  $("#searchSubmitBtn").click(function() {
-    var searchContent = $("#searchContent");    
-    var contentBox = $("#myTabContent");    
-    // contentBox.html(' ');
-    alert();    
-    contentBox.appendTo(searchContent);
-    // contentBox.show();
-    return false;    
+  // $("#searchSubmitBtn").click(function() {
+    // var searchContent = $("#searchContent");    
+    // var contentBox = $("#myTabContent");    
+    // // contentBox.html(' ');
+    // contentBox.appendTo(searchContent);
+    // // contentBox.show();
+    // return false;    
 
-  });
+  // });
   // searchContent = $("#searchContent"); 
   // var contentBox = $("#myTabContent");
   // contentBox.html('');
   // contentBox.appendTo(searchContent);
   
+  // Friend Wall Button Functionality
+  $("#friendWallButton").click(function() {
+    var originContent = $("#myTabContent");
+    var friendContent = $("#myFriendContent");
+    // history.go(0);
+    // location.reload();
+    originContent.html(friendContent.html());
+    friendContent.css("display", "unset");
+    // location.reload();
+    // $("#dashProfileModal").modal('hide');
+    $("body").removeClass('modal-open');
+    $(".modal-backdrop").remove();    
+  });
+
+  // Stream Friend Chat Button Functionality
+  $("#streamFriendChatButton").click(function() {
+    var originContent = $(".streamFriendList");
+    var friendChatContent = $(".sgnStreamChatRoom");
+    // originContent.html(friendChatContent.html());
+    // friendChatContent.css("display", "unset");
+    originContent.css("display", "none");
+    // originContent.append(".sgnChatRoom");
+    friendChatContent.css("display", "unset");
+    $("#streamMessageBox").scrollTop(16000);
+  });
+
+  // Friend Chat Button Functionality
+  $("#friendChatButton").click(function() {
+    var originContent = $("#friendContBox");
+    var friendChatContent = $(".sgnChatRoom");
+    // originContent.html(friendChatContent.html());
+    // friendChatContent.css("display", "unset");
+    originContent.css("display", "none");
+    // originContent.append(".sgnChatRoom");
+    friendChatContent.css("display", "unset");
+    $("#messageBox").scrollTop(16000);
+        
+  });
+
+  // Return to Friend List Functionality
+  $(".friendListButton").click(function() {
+    var originContent = $("#friendContBox");
+    var friendChatContent = $(".sgnChatRoom");
+    friendChatContent.css("display", "none");
+    // originContent.remove(".sgnChatRoom");
+    originContent.css("display", "unset");
+  });
+
+  // Return to Stream Friend List Functionality
+  $(".streamFriendListButton").click(function() {
+    var originContent = $(".streamFriendList");
+    var friendChatContent = $(".sgnStreamChatRoom");
+    friendChatContent.css("display", "none");
+    // originContent.remove(".sgnChatRoom");
+    originContent.css("display", "unset");
+  });
+
+  // Scroll Bar goes to bottom for chat
+
+  // var objDiv = $(".messageBoxCont");
+  // var h = objDiv.get(0).scrollHeight;
+  // objDiv.animate({scrollTop: h});
+  // Other Method  
+  // $(".messageBoxCont").scrollTop($(".messageBoxCont")[0].scrollHeight);
+  // var objDiv = document.getElementById("messageBox");
+  // objDiv.scrollTop = objDiv.scrollHeight;
+  // $("#messageBox").scrollTop($("#messageBox")[0].scrollHeight);
+  // $('#messageBox').stop().animate({
+  //   scrollTop: $('#messageBox')[0].scrollHeight
+  // }, 800);
+  // var myDiv = $("#messageBox").get(0);
+  // myDiv.animate({
+  //   scrollTop: myDiv.scrollHeight
+  // }, 500);
+
+  // $("#messageBox").scrollTop(16000)
+
 
   // Home Tab Refresh
   // $("#home-tab").click(function() {
@@ -246,7 +351,6 @@ $(document).ready(function(){
     $(modalParent).css('opacity', 1);
   });
 
-// alert("Posts");
 	fetchPosts(<?php echo $_SESSION["current_user_id"]; ?>);
 	// alert("Events");
 	// fetchEvents();
@@ -267,7 +371,7 @@ $(document).ready(function(){
 	
 	setInterval(fetchNotificationNumber, 1500);
 	setInterval(fetchNotificationModal, 1500);
-	fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 1000 );
+	// fetchSidebarFriendsListIntervalFunction = setInterval( function() { fetchSidebarFriendsList(); }, 1000 );
 	fetchGroupStuff();
 
   setTimeout(function(){ 
@@ -967,8 +1071,8 @@ $(document).ready(function(){
 					</div>
 				</div>
 			</div>
-			<!-- <div class="sgnChatBox" id="rightCont">
-				<div id="wrapper">
+			<div class="sgnChatBox" id="rightCont">
+				<!--<div id="wrapper">
 					<div id="friendPanel">
 					
 					</div>
@@ -986,7 +1090,7 @@ $(document).ready(function(){
 			    //
 				//});
 				</script> -->
-			<!-- </div> -->
+			</div>
 		</div>	
 	</div>			
 	<!-- <div class="tabsContent"></div> -->
