@@ -49,7 +49,7 @@ function fetchSidebarChat(friend_id) {
 		}
 	};
 	xmlhttp.send(param);
-	
+	// alert(param);
 }
 
 function refreshSidebarChatMessages(friend_id) {
@@ -69,7 +69,6 @@ function refreshSidebarChatMessages(friend_id) {
 }
 
 function viewSidebarChat() {
-	alert("Displaying sidebar chat");
 	$('#friendContBox').attr('style', 'display:none');
 	$('#sgnChat').attr('style', '');
 }

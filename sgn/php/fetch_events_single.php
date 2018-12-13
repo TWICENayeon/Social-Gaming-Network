@@ -139,7 +139,6 @@ if(!isset($_SESSION["current_user_id"])) {
 					        </div>
 					      </div>
 					      <div class='modal-footer'>
-					        <button type='button' class='btn btn-primary' id='eventLeaveButton'>Leave</button>
 					        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 					      </div>
 					    </div>
@@ -479,17 +478,6 @@ if(!isset($_SESSION["current_user_id"])) {
 						        echo "</div>					        
 						      </div>
 						      <div class='modal-footer'>";
-							if(($conn->query($has_not_started_query))->num_rows == 1) {
-								$is_contender = "SELECT TRUE
-													FROM tournament_participants
-													WHERE tournament_id = " . $tournament_info["tournament_id"] . " AND participant_id = " . $_SESSION["current_user_id"] . "";
-								if(($conn->query($is_contender))->num_rows == 1) {
-									echo "<button type='button' class='btn btn-primary' onclick='updateTournamentAttendance(" . $tournament_info["tournament_id"] . ",1, " . $event_id . ")'>Leave</button>";
-								}
-								else {
-									echo "<button type='button' class='btn btn-primary' onclick='updateTournamentAttendance(" . $tournament_info["tournament_id"] . ",0, " . $event_id . ")'>Sign Up</button>";
-								}
-							}
 						        
 						        echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 						      </div>

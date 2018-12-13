@@ -51,6 +51,7 @@ if(!isset($_SESSION["current_user_id"])) {
 				$fetch_group_name_query = "SELECT group_name
 											FROM groups
 											WHERE group_id = (SELECT hosting_group_id FROM group_events WHERE hosted_event_id = " . $tuple["event_id"] . ");";
+																	
 											
 				$hosting_group_name = (($conn->query($fetch_group_name_query))->fetch_assoc())["group_name"];
 				
@@ -85,13 +86,12 @@ if(!isset($_SESSION["current_user_id"])) {
 										 WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = 
 										 (	SELECT hosting_group_id
 											FROM sgn_database.group_events
-											WHERE hosted_event_id = " . $_SESSION["page_id"] . ");";
+											WHERE hosted_event_id = " . $tuple["event_id"] . ");";
 					// $search_member_role_query;
 					
 					$role_result = $conn->query($search_member_role_query);
 					
 
-					
 					
 					
 					//echo "membership role: " . ($result->fetch_assoc())["membership_role"];

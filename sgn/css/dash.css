@@ -449,6 +449,10 @@ body {
 	background-color: gray;
 }
 
+.commentProfileImage {
+	background-color: black;
+}
+
 .streamFriendContImage {
 	background-color: black;
 }
@@ -878,10 +882,10 @@ body {
 	background-size: cover;
 }
 
-.post-profile-image {
+.post-profile-image, .eventPostProfileImage {
 	background-color: white;
 }
 
-.commentProfileImage {
+.eventPostProfileImage {
 	background-color: black;
 }

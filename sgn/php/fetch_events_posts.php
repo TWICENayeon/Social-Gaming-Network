@@ -37,7 +37,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_future_user_events =  "SELECT event_id, event_name, event_description, event_start_date, event_start_time, event_privacy, CONVERT(CONCAT( CONVERT(event_start_date, CHARACTER) , ' ', CONVERT(event_start_time, CHARACTER)), DATETIME) AS date_time
 								FROM sgn_database.attendees JOIN sgn_database.events
 								ON attendees.attended_event_id = events.event_id
-								WHERE attendee_id = " . $_SESSION["page_id"] . " AND (event_start_date > CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time > CURRENT_TIME))
+								WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date > CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time > CURRENT_TIME))
 								ORDER BY date_time ASC;";
 								
 		$result = $conn->query($search_future_user_events);
@@ -105,7 +105,7 @@ if(!isset($_SESSION["current_user_id"])) {
 									   
 										// Fetch posts related to the event
 						echo " <div class='eventPostCont'>
-												<div class='eventPostProfileImage'  style='background-image: url(user_images/" . $profile_picture_name_reply . ")'></div>
+												<div class='eventPostProfileImage'  style='background-image: url(user_images/" . (!empty($profile_picture_name_reply) ? $profile_picture_name_reply : "Profile-icon-9.png") . ")'></div>
 												<div class='eventPostGap'></div>
 												<div class='eventPostName' style='color:black'>" . $event_post_tuple["username"] . "</div>
 												<div class='eventPostDate' style='color:black'>" . $event_post_tuple["post_date"] . "</div>
@@ -144,7 +144,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_past_user_events =  "SELECT event_id, event_name, event_description, event_start_date, event_start_time, event_privacy, CONVERT(CONCAT( CONVERT(event_start_date, CHARACTER) , ' ', CONVERT(event_start_time, CHARACTER)), DATETIME) AS date_time
 								FROM sgn_database.attendees JOIN sgn_database.events
 								ON attendees.attended_event_id = events.event_id
-								WHERE attendee_id = " . $_SESSION["page_id"] . " AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
+								WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
 								ORDER BY date_time DESC
 								LIMIT 5;";
 								

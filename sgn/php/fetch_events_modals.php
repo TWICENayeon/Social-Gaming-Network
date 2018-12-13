@@ -38,7 +38,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_future_user_events =  "SELECT event_id, event_name, event_description, event_start_date, event_start_time, event_privacy, CONVERT(CONCAT( CONVERT(event_start_date, CHARACTER) , ' ', CONVERT(event_start_time, CHARACTER)), DATETIME) AS date_time
 								FROM sgn_database.attendees JOIN sgn_database.events
 								ON attendees.attended_event_id = events.event_id
-								WHERE attendee_id = " . $_SESSION["page_id"] . " AND (event_start_date > CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time > CURRENT_TIME))
+								WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date > CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time > CURRENT_TIME))
 								ORDER BY date_time ASC;";
 								
 		$result = $conn->query($search_future_user_events);
@@ -104,7 +104,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_past_user_events =  "SELECT event_id, event_name, event_description, event_start_date, event_start_time, event_privacy, CONVERT(CONCAT( CONVERT(event_start_date, CHARACTER) , ' ', CONVERT(event_start_time, CHARACTER)), DATETIME) AS date_time
 								FROM sgn_database.attendees JOIN sgn_database.events
 								ON attendees.attended_event_id = events.event_id
-								WHERE attendee_id = " . $_SESSION["page_id"] . " AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
+								WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
 								ORDER BY date_time DESC
 								LIMIT 5;";
 								

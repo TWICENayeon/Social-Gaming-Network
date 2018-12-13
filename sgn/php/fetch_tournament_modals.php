@@ -11,10 +11,7 @@ if(!isset($_SESSION["current_user_id"])) {
 	exit();
 }
 ?>
-
-
 <html>
-
 <?php
 	
 		// Connect to the database
@@ -27,10 +24,6 @@ if(!isset($_SESSION["current_user_id"])) {
 		
 		$conn->select_db("sgn_database");
 ?>
-
-
-
-
 <div class="eventsModals">
 
  <?php
@@ -38,13 +31,13 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_past_future_events =  "(SELECT event_id, CONVERT(CONCAT( CONVERT(event_start_date, CHARACTER) , ' ', CONVERT(event_start_time, CHARACTER)), DATETIME) AS date_time
 										FROM sgn_database.attendees JOIN sgn_database.events
 										ON attendees.attended_event_id = events.event_id
-										WHERE attendee_id = 1 AND (event_start_date > CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time > CURRENT_TIME))
+										WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date > CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time > CURRENT_TIME))
 										ORDER BY date_time ASC)
 										UNION
 										(SELECT event_id,  CONVERT(CONCAT( CONVERT(event_start_date, CHARACTER) , ' ', CONVERT(event_start_time, CHARACTER)), DATETIME) AS date_time
 										FROM sgn_database.attendees JOIN sgn_database.events
 										ON attendees.attended_event_id = events.event_id
-										WHERE attendee_id = 1 AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
+										WHERE attendee_id = " . $_SESSION["current_user_id"] . "  AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
 										ORDER BY date_time DESC
 										LIMIT 5)";
 								
@@ -63,8 +56,10 @@ if(!isset($_SESSION["current_user_id"])) {
 										FROM tournaments 
 										WHERE host_event_id = " . $curr_event_id . ";";
 										
+									
 				$has_tournament_result = $conn->query($search_tournament);
 				
+				// echo $has_tournament_result->num_rows == 1;	
 				// Tournament Content modal
 				if($has_tournament_result->num_rows == 1) {
 					// General tournament info
@@ -420,7 +415,7 @@ if(!isset($_SESSION["current_user_id"])) {
 										 WHERE member_id = " . $_SESSION["current_user_id"] . " AND of_group_id = 
 										 (	SELECT hosting_group_id
 											FROM sgn_database.group_events
-											WHERE hosted_event_id = " . $_SESSION["page_id"] . ");";
+											WHERE hosted_event_id = " . $curr_event_id . ");";
 					// $search_member_role_query;
 					
 					$role_result = $conn->query($search_member_role_query);
@@ -476,7 +471,7 @@ if(!isset($_SESSION["current_user_id"])) {
 		$search_past_user_events =  "SELECT event_id
 								FROM sgn_database.attendees JOIN sgn_database.events
 								ON attendees.attended_event_id = events.event_id
-								WHERE attendee_id = " . $_SESSION["page_id"] . " AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
+								WHERE attendee_id = " . $_SESSION["current_user_id"] . " AND (event_start_date < CURRENT_DATE() OR (event_start_date = CURRENT_DATE() AND event_start_time < CURRENT_TIME))
 								LIMIT 5;";
 								
 		$result = $conn->query($search_past_user_events);
