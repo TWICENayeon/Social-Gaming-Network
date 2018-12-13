@@ -881,3 +881,7 @@ body {
 .post-profile-image {
 	background-color: white;
 }
+
+.commentProfileImage {
+	background-color: black;
+}
