@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2018 at 04:57 AM
+-- Generation Time: Jan 14, 2019 at 04:28 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -62,24 +62,11 @@ CREATE TABLE `attendees` (
 --
 
 INSERT INTO `attendees` (`attendee_id`, `attended_event_id`, `registration_date`, `registration_time`, `attendee_role`) VALUES
-(1, 1, '2018-08-13', '09:55:41', 'Creator'),
-(3, 2, '2018-08-13', '09:55:56', 'Creator'),
-(2, 1, '2018-08-13', '09:56:35', 'Attendee'),
-(13, 16, '2018-08-19', '14:21:56', 'Creator'),
-(10, 17, '2018-08-19', '14:32:55', 'Creator'),
-(4, 21, '2018-08-19', '14:56:41', 'Creator'),
-(4, 22, '2018-08-19', '15:00:02', 'Creator'),
-(1, 21, '2018-09-09', '17:24:49', ' Attendee '),
-(1, 23, '2018-10-21', '16:59:54', 'Creator'),
-(1, 24, '2018-10-21', '17:02:48', 'Creator'),
-(1, 25, '2018-10-21', '17:03:53', 'Creator'),
-(1, 26, '2018-10-21', '17:06:58', 'Creator'),
-(1, 27, '2018-10-21', '19:59:03', 'Creator'),
-(1, 28, '2018-10-27', '22:08:45', 'Creator'),
-(2, 28, '2018-10-28', '12:49:46', ' Attendee '),
-(1, 29, '2018-11-13', '13:57:58', 'Creator'),
-(1, 30, '2018-11-13', '14:05:10', 'Creator'),
-(1, 31, '2018-11-21', '20:50:02', 'Creator');
+(20, 1, '2018-12-12', '22:19:55', 'Creator'),
+(21, 1, '2018-12-12', '23:15:32', ''),
+(23, 1, '2018-12-12', '23:38:13', ''),
+(22, 1, '2018-12-12', '23:38:45', ''),
+(20, 2, '2018-10-09', '10:00:00', 'Creator');
 
 -- --------------------------------------------------------
 
@@ -118,7 +105,10 @@ CREATE TABLE `chat_groups` (
 
 INSERT INTO `chat_groups` (`chat_id`, `chat_name`, `esport_id`) VALUES
 (1, '', 0),
-(7, 'beta\'s League of Legends Chat Room', 1);
+(2, '', 0),
+(3, '', 0),
+(4, '', 0),
+(5, '', 0);
 
 -- --------------------------------------------------------
 
@@ -128,18 +118,25 @@ INSERT INTO `chat_groups` (`chat_id`, `chat_name`, `esport_id`) VALUES
 
 CREATE TABLE `chat_group_members` (
   `chat_id` int(11) NOT NULL,
-  `chat_member_id` int(11) NOT NULL
+  `chat_member_id` int(11) NOT NULL,
+  `new_message` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `chat_group_members`
 --
 
-INSERT INTO `chat_group_members` (`chat_id`, `chat_member_id`) VALUES
-(1, 1),
-(1, 2),
-(7, 2),
-(7, 1);
+INSERT INTO `chat_group_members` (`chat_id`, `chat_member_id`, `new_message`) VALUES
+(0, 21, 0),
+(0, 20, 0),
+(2, 21, 1),
+(2, 20, 0),
+(3, 22, 1),
+(3, 20, 0),
+(4, 20, 0),
+(4, 24, 0),
+(5, 20, 0),
+(5, 23, 0);
 
 -- --------------------------------------------------------
 
@@ -161,19 +158,13 @@ CREATE TABLE `chat_group_messages` (
 --
 
 INSERT INTO `chat_group_messages` (`chat_message_id`, `chat_id`, `chat_writer_id`, `chat_write_date`, `chat_write_time`, `chat_message`) VALUES
-(1, 1, 1, '2018-11-05', '23:42:17', 'Hello beta'),
-(2, 1, 1, '2018-11-05', '23:44:48', 'Bye beta'),
-(3, 1, 1, '2018-11-05', '23:45:02', 'Another try Beta'),
-(4, 1, 2, '2018-11-05', '23:46:06', 'Why is this not working'),
-(5, 1, 2, '2018-11-05', '23:54:55', 'New chat!'),
-(6, 1, 1, '2018-11-06', '14:25:00', 'Semi-functional Chat'),
-(7, 1, 1, '2018-11-06', '15:37:09', 'Kaboom, baby'),
-(8, 1, 1, '2018-11-06', '16:05:44', 'Is real time chat working?'),
-(9, 1, 1, '2018-11-06', '16:22:07', 'Is this real time chat actually working now?'),
-(11, 1, 1, '2018-11-08', '08:59:05', 'Live chat is live'),
-(12, 1, 1, '2018-11-08', '08:59:46', 'Everyone is dead'),
-(13, 1, 1, '2018-11-09', '09:34:41', 'Beta should be able to see this message in his window'),
-(14, 1, 2, '2018-11-09', '09:36:19', 'Alpha should be able to see this message in alpha window');
+(0, 2, 21, '2018-12-12', '23:58:43', 'Hello Kyle'),
+(0, 3, 22, '2018-12-12', '23:59:24', 'Yo Kyle'),
+(0, 2, 20, '2018-12-13', '07:34:37', 'Hey There :)'),
+(0, 3, 20, '2018-12-13', '07:34:47', 'What\'s up?'),
+(0, 3, 22, '2018-12-13', '07:37:57', 'Nothing much, how are you?'),
+(0, 2, 20, '2018-12-13', '08:20:44', 'Let us watch TwitchPlaysPokemon'),
+(0, 3, 20, '2018-12-13', '08:25:38', 'I am good');
 
 -- --------------------------------------------------------
 
@@ -238,24 +229,8 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `event_name`, `event_description`, `event_start_date`, `event_start_time`, `event_privacy`) VALUES
-(1, 'Party @ SGN', 'A party at SGN', '2008-12-18', '20:26:00', 0),
-(2, 'Scam @ SGN', 'A scam at SGN', '2008-12-18', '20:26:00', 0),
-(4, 'Party 2.0 @ SGN', 'A second private party at SGN', '2018-08-13', '18:00:00', 1),
-(5, 'Privacy @ SGN', 'SGN Privacy', '2018-08-17', '09:30:41', 1),
-(6, 'new event name', 'new event description', '2018-08-17', '15:30:04', 1),
-(16, 'Learning ABCs', 'We learn the ABCs', '2018-08-19', '14:21:56', 0),
-(17, 'Event I', 'Event for India', '2018-08-19', '14:32:55', 0),
-(21, 'Delta Event', 'Event of Delta', '2018-08-19', '14:56:41', 0),
-(22, 'Private Delta Event', 'Private Event of Delta', '2018-08-19', '15:00:02', 1),
-(23, 'October 21 16:58', 'asd', '0000-00-00', '16:58:00', 0),
-(24, 'oct 21 5 PM ', 'October 21st, 5 PM', '0000-00-00', '22:00:00', 0),
-(25, 'oct 21 5:03 PM ', 'October 21st, 5 PM', '0000-00-00', '22:00:00', 0),
-(26, 'oct 21 5:06 PM ', 'October 21st, 5 PM', '2018-10-21', '22:00:00', 0),
-(27, '8 PM Party', 'Party at 8 PM', '2018-10-21', '20:00:00', 0),
-(28, 'New Event Name', 'New Event Description', '2018-11-12', '15:00:00', 0),
-(29, 'BRAND NEW TOURNAMENT EVENT', 'NOW WITH A TOURNAMENT', '2018-11-13', '17:00:00', 1),
-(30, 'ANOTHER NEW TOURNAMENT EVENT', 'ANOTHER TOURNAMENT', '2018-11-15', '18:00:00', 1),
-(31, 'Test Tournament Adding', 'Add Tournament button should show up', '2020-11-21', '20:26:00', 0);
+(1, 'First Tournament', 'Let us celebrate with the first event with a Christmas Eve tournament!', '2018-12-24', '17:00:00', 0),
+(2, 'Past event', 'All in the past', '2018-10-10', '10:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -277,9 +252,10 @@ CREATE TABLE `friendships` (
 --
 
 INSERT INTO `friendships` (`friendship_id`, `friend_id_1`, `friend_id_2`, `friendship_start_date`, `chat_id`, `active`) VALUES
-(1, 3, 1, '2018-08-12', 0, 1),
-(2, 1, 7, '2018-08-20', 0, 1),
-(6, 1, 2, '2018-11-04', 1, 1);
+(1, 21, 20, '2018-12-12', 2, 1),
+(2, 22, 20, '2018-12-12', 3, 1),
+(3, 20, 24, '2018-12-13', 4, 1),
+(4, 20, 23, '2018-12-13', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -300,15 +276,8 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`group_id`, `group_name`, `group_description`, `group_creation_date`, `group_privacy`) VALUES
-(1, 'SGN SQUAD', 'A squad at SGN', '2018-08-12', 0),
-(2, 'SGN FRAUD', 'A fraud at SGN', '2018-08-12', 0),
-(5, 'New Group name', 'New Group description', '2018-08-17', 0),
-(6, 'Neo-neo Group 2', 'My second neo-neo group', '2018-08-17', 1),
-(7, 'Pokemon Group', 'All bout Pokemon', '2018-08-17', 1),
-(8, 'Learn the ABC', 'learning abc', '2018-08-19', 0),
-(9, 'Group I', 'Group for India', '2018-08-19', 0),
-(10, 'Delta Group', 'Group of Delta', '2018-08-19', 0),
-(11, 'Private Delta Group', 'Private Group of Delta', '2018-08-19', 1);
+(1, 'Cool Guys of SGN', '', '2018-12-12', 0),
+(2, 'Pineapple Corp', '', '2018-12-12', 0);
 
 -- --------------------------------------------------------
 
@@ -326,21 +295,7 @@ CREATE TABLE `group_events` (
 --
 
 INSERT INTO `group_events` (`hosting_group_id`, `hosted_event_id`) VALUES
-(1, 1),
-(2, 2),
-(1, 4),
-(1, 5),
-(10, 21),
-(11, 22),
-(1, 23),
-(1, 24),
-(1, 25),
-(1, 26),
-(5, 27),
-(1, 28),
-(1, 29),
-(1, 30),
-(1, 31);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -361,25 +316,22 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`owner_type`, `owner_id`, `currently_set`, `image_type`, `image_name`) VALUES
-(0, 2, 0, 0, 'rockruff.jpg'),
-(0, 2, 0, 1, 'ecllipse.PNG'),
-(0, 2, 0, 0, 'Charizard.jpg'),
-(0, 2, 0, 0, 'Charizard.jpg'),
-(1, 1, 1, 0, 'jolteon.jpg'),
-(2, 28, 1, 1, 'favorite_pokemons.jpg'),
-(0, 1, 0, 1, 'fetch_posts_dash.PNG'),
-(0, 1, 0, 1, 'ajax_chat.PNG'),
-(0, 1, 0, 1, 'tournament_table.PNG'),
-(0, 1, 0, 1, 'tournament_page_two.PNG'),
-(0, 1, 1, 1, 'Charizard.jpg'),
-(0, 1, 0, 0, 'zorark.png'),
-(0, 1, 0, 0, 'fennekin.jpg'),
-(0, 1, 0, 0, 'charizard_approves.jpg'),
-(0, 1, 1, 0, 'seal.jpg'),
-(0, 2, 0, 0, 'charizard_approves.jpg'),
-(0, 2, 1, 1, 'tournament_page_two.PNG'),
-(0, 2, 0, 0, 'jolteon.jpg'),
-(0, 2, 1, 0, 'Arbys_Charizard.jpg');
+(0, 20, 0, 1, 'blueprint_sun.jpg'),
+(1, 1, 0, 0, 'blueprint_sun.jpg'),
+(0, 20, 0, 0, 'blueprint_sun.jpg'),
+(0, 20, 1, 0, 'cow.jpg'),
+(0, 20, 1, 1, 'cow.jpg'),
+(0, 23, 1, 0, 'tropical.jpg'),
+(0, 23, 1, 1, 'blueprint_sun.jpg'),
+(0, 22, 1, 1, 'blueprint_sun.jpg'),
+(0, 22, 1, 0, 'synthwave-cover.jpg'),
+(1, 2, 1, 0, 'tropical.jpg'),
+(0, 21, 1, 0, 'lion.jpg'),
+(0, 22, 0, 0, ''),
+(1, 3, 1, 0, 'blueprint_sun.jpg'),
+(0, 24, 1, 1, 'blueprint_sun.jpg'),
+(0, 24, 1, 0, 'blueprint_sun.jpg'),
+(1, 1, 1, 0, 'lion.jpg');
 
 -- --------------------------------------------------------
 
@@ -400,19 +352,12 @@ CREATE TABLE `memberships` (
 --
 
 INSERT INTO `memberships` (`member_id`, `of_group_id`, `membership_role`, `membership_start_date`, `membership_start_time`) VALUES
-(1, 1, 1, '2018-08-12', '20:30:53'),
-(3, 2, 1, '2018-08-13', '09:35:26'),
-(2, 1, 1, '2018-08-13', '11:06:44'),
-(2, 2, 0, '2018-08-13', '11:06:53'),
-(1, 5, 1, '2018-08-17', '14:21:55'),
-(1, 6, 1, '2018-08-17', '14:23:42'),
-(13, 8, 1, '2018-08-19', '14:07:24'),
-(10, 9, 1, '2018-08-19', '14:31:11'),
-(4, 10, 1, '2018-08-19', '14:52:57'),
-(4, 11, 1, '2018-08-19', '14:58:41'),
-(4, 1, 0, '2018-09-01', '10:20:16'),
-(2, 5, 0, '2018-11-07', '16:22:45'),
-(3, 1, 0, '2018-11-08', '16:13:49');
+(20, 1, 1, '2018-12-12', '22:17:46'),
+(21, 1, 0, '2018-12-12', '23:15:27'),
+(22, 1, 1, '2018-12-12', '23:34:49'),
+(23, 2, 1, '2018-12-12', '23:37:15'),
+(23, 1, 0, '2018-12-12', '23:38:04'),
+(20, 2, 0, '2018-12-13', '08:26:31');
 
 -- --------------------------------------------------------
 
@@ -436,14 +381,21 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`notification_id`, `notification_type`, `invitation_to_id`, `recipient_id`, `message`, `resolved_status`, `date_created`, `time_created`) VALUES
-(1, 0, 1, 3, 'COME JOIN -SGN SQUAD-', 1, '2018-11-08', '14:54:16'),
-(2, 1, 7, 1, 'COME JOIN ESPORT CHAT -beta\'s League of Legends Chat Room-', 0, '2018-11-08', '21:27:26'),
-(3, 1, 7, 1, 'COME JOIN ESPORT CHAT -beta\'s League of Legends Chat Room-', 1, '2018-11-08', '21:28:41'),
-(7, 2, 0, 3, 'Your request to post articles has been accepted', 1, '2018-11-11', '16:06:19'),
-(8, 0, 1, 1, '-COME JOIN -SGN SQUAD-', 0, '2018-11-20', '13:48:58'),
-(9, 2, 0, 1, 'Your request to post articles has been approved', 0, '2018-11-20', '13:50:46'),
-(10, 0, 1, 1, 'COME JOIN -SGN SQUAD-', 1, '2018-11-20', '13:52:11'),
-(11, 2, 0, 1, 'Your request to post articles has been approved', 1, '2018-11-20', '13:53:00');
+(2, 1, 1, 21, 'Come join -Pioneers of SGN-', 1, '2018-12-12', '23:13:34'),
+(3, 2, 20, 21, 'kyleChang has accepted your friend request', 1, '2018-12-12', '23:13:52'),
+(7, 1, 2, 20, 'Come join -Pineapple Corp-', 1, '2018-12-12', '23:37:23'),
+(8, 1, 1, 23, 'Come join -Pioneers of SGN-', 1, '2018-12-12', '23:37:52'),
+(9, 0, 20, 22, 'kyleChang wants to be your friend', 1, '2018-12-12', '23:52:44'),
+(10, 0, 20, 21, 'kyleChang wants to be your friend', 1, '2018-12-12', '23:52:54'),
+(11, 0, 23, 20, 'sAhmed wants to be your friend', 1, '2018-12-12', '23:53:15'),
+(12, 2, 21, 20, 'kKim has accepted your friend request', 1, '2018-12-12', '23:53:34'),
+(13, 0, 20, 21, 'kyleChang wants to be your friend', 1, '2018-12-12', '23:56:41'),
+(14, 2, 21, 20, 'kKim has accepted your friend request', 1, '2018-12-12', '23:56:54'),
+(15, 2, 22, 20, 'dWong has accepted your friend request', 1, '2018-12-12', '23:59:18'),
+(16, 0, 24, 20, 'tester wants to be your friend', 1, '2018-12-13', '08:19:05'),
+(17, 1, 1, 24, 'Come join -Cool Guys of SGN-', 0, '2018-12-13', '08:21:54'),
+(18, 2, 20, 24, 'kChang has accepted your friend request', 0, '2018-12-13', '08:26:10'),
+(19, 2, 20, 23, 'kChang has accepted your friend request', 0, '2018-12-13', '08:26:20');
 
 -- --------------------------------------------------------
 
@@ -468,73 +420,19 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `parent_post_id`, `poster_id`, `wall_type`, `wall_owner_id`, `post_text`, `post_date`, `post_time`, `post_votes`) VALUES
-(13, 0, 1, 0, 1, 'Hello, World! This is the very first post on SGN', '2018-08-16', '23:46:42', 0),
-(14, 0, 1, 1, 1, 'Alpha post on SGN SQUAD group page', '2018-08-16', '23:49:27', 0),
-(15, 0, 1, 2, 1, 'Alpha post on Party @ SGN group page', '2018-08-16', '23:53:09', 0),
-(17, 0, 1, 0, 3, 'Hello Charlie the Traitor', '2018-08-16', '23:57:37', 0),
-(18, 0, 1, 2, 1, 'Alpha second post on page', '2018-08-17', '10:39:05', 0),
-(19, 0, 1, 1, 1, 'Alpha second post on SGN  SQUAD page', '2018-08-17', '10:59:44', 0),
-(20, 0, 3, 0, 3, 'Alpha, it is a pleasure to meet you', '2018-08-17', '11:00:07', 0),
-(21, 0, 3, 1, 2, 'This is my Fraud!', '2018-08-17', '11:00:17', 0),
-(22, 0, 3, 2, 2, 'Time to Scam!', '2018-08-17', '11:00:25', 0),
-(23, 0, 3, 1, 1, 'Charlie was here   >:P', '2018-08-17', '11:00:41', 0),
-(24, 0, 3, 2, 1, 'This party is a sham >:P', '2018-08-17', '11:00:53', 0),
-(25, 0, 1, 2, 6, 'Wow, new event page first post', '2018-08-17', '15:30:21', 0),
-(26, 0, 2, 1, 1, 'Beta post', '2018-08-17', '16:02:09', 0),
-(27, 0, 2, 2, 4, 'Party 2.0 at SGN by Beta', '2018-08-17', '16:03:21', 0),
-(28, 0, 13, 1, 8, 'A', '2018-08-19', '14:07:36', 0),
-(32, 0, 13, 2, 16, 'ABC learning time!', '2018-08-19', '14:27:09', 0),
-(33, 13, 13, 0, 1, 'Hey alpha, abc-man here', '2018-08-19', '14:27:36', 0),
-(34, 0, 10, 2, 17, 'Event I first post', '2018-08-19', '14:33:04', 0),
-(35, 0, 1, 2, 17, 'Alpha post', '2018-08-19', '14:38:53', 0),
-(36, 0, 4, 2, 21, 'Delta post on Delta event', '2018-08-19', '14:56:48', 0),
-(37, 0, 1, 2, 21, 'Alpha post on Delta event', '2018-08-19', '14:57:05', 0),
-(38, 13, 1, 0, 1, 'india', '2018-09-09', '16:28:46', 0),
-(41, 0, 1, 0, 10, 'Alpha post to India page', '2018-09-09', '16:41:19', 0),
-(42, 0, 1, 0, 1, 'Type stuff', '2018-10-28', '15:47:12', 0),
-(43, 0, 1, 0, 3, 'Type stuff', '2018-10-28', '15:47:28', 0),
-(44, 0, 1, 0, 2, 'Type a post', '2018-11-04', '16:50:22', 0),
-(45, 0, 1, 2, 25, 'This event has been long past :(', '2018-11-09', '11:25:01', 0),
-(46, 0, 1, 0, 1, 'New Alpha Post on November 9th', '2018-11-09', '17:45:32', 0),
-(47, 46, 1, 0, 1, 'A reply to my post on Nov 9th', '2018-11-09', '17:45:55', 0),
-(48, 46, 2, 0, 1, 'Beta Reply on November 9th', '2018-11-09', '17:48:19', 0),
-(49, 26, 2, 1, 1, 'Reply to Beta post', '2018-11-09', '17:58:12', 0),
-(50, 24, 2, 2, 1, 'This party is not a sham >:(', '2018-11-09', '18:03:52', 0),
-(51, 46, 1, 0, 1, 'Replying to my own post', '2018-11-10', '15:33:13', 0),
-(52, 0, 1, 2, 1, 'No post', '2018-11-10', '16:47:45', 0),
-(53, 0, 1, 2, 1, 'What the heck', '2018-11-10', '16:48:20', 0),
-(54, 0, 1, 0, 1, 'Brand new post!', '2018-11-10', '16:52:22', 0),
-(55, 0, 1, 0, 1, 'Another new post', '2018-11-10', '17:01:16', 0),
-(56, 55, 1, 0, 1, 'Reply to \"Another new post\"', '2018-11-10', '17:14:19', 0),
-(57, 53, 1, 2, 1, 'What', '2018-11-11', '12:25:29', 0),
-(58, 53, 1, 2, 1, 'the', '2018-11-11', '12:25:33', 0),
-(59, 53, 1, 2, 1, 'heck', '2018-11-11', '12:25:39', 0),
-(60, 0, 1, 2, 28, 'New post for \"New Event Name\"', '2018-11-11', '15:21:58', 0),
-(61, 44, 1, 0, 2, 'Reply to may own post', '2018-11-11', '23:01:56', 0),
-(62, 0, 1, 0, 2, 'Another new post', '2018-11-11', '23:02:14', 0),
-(64, 0, 2, 0, 1, 'Tester Beta Here', '2018-11-17', '09:08:46', 0),
-(65, 0, 18, 4, 18, 'What\'s going on', '2018-11-17', '21:58:02', 0),
-(67, 0, 18, 0, 18, 'What\'s curr', '2018-11-17', '22:07:06', 0),
-(68, 0, 18, 0, 18, 'Another\'s another post!', '2018-11-17', '22:17:32', 0),
-(69, 0, 18, 0, 18, 'Yet another one!', '2018-11-17', '22:18:41', 0),
-(70, 0, 18, 0, 18, 'Why the alert?', '2018-11-17', '22:19:07', 0),
-(71, 0, 18, 0, 18, 'No more alerts', '2018-11-17', '22:19:47', 0),
-(72, 0, 1, 0, 1, 'Waluigi Dream is Dead', '2018-11-20', '10:51:42', 0),
-(73, 0, 2, 0, 2, 'Test post', '2018-11-20', '11:46:53', 0),
-(74, 0, 1, 0, 1, 'Are you sure', '2018-11-20', '14:43:34', 0),
-(81, 0, 1, 0, 1, 'Yes, I am sure', '2018-11-21', '12:48:05', 0),
-(82, 0, 1, 0, 1, 'Wow, what the heck', '2018-11-21', '12:50:56', 0),
-(83, 82, 1, 82, 1, 'undefined', '2018-11-21', '13:04:05', 0),
-(84, 82, 1, 82, 1, 'undefined', '2018-11-21', '13:06:28', 0),
-(85, 82, 1, 82, 1, 'undefined', '2018-11-21', '13:07:26', 0),
-(86, 82, 1, 82, 1, 'undefined', '2018-11-21', '13:08:20', 0),
-(87, 82, 1, 82, 1, 'Work again', '2018-11-21', '13:08:42', 0),
-(88, 81, 1, 81, 1, 'Dynamic Replying', '2018-11-22', '19:05:22', 0),
-(89, 0, 1, 0, 1, 'Hello Vinny', '2018-11-22', '20:08:55', 0),
-(90, 89, 1, 89, 1, 'What whsat', '2018-11-22', '20:09:04', 0),
-(91, 82, 1, 82, 1, 'What', '2018-11-22', '21:04:35', 0),
-(92, 89, 1, 89, 1, 'What the heck', '2018-11-23', '14:50:26', 0),
-(93, 89, 1, 89, 1, 'Why does this work?', '2018-11-23', '14:55:30', 0);
+(1, 0, 20, 0, 20, 'kChang\'s very first post!', '2018-12-12', '22:11:16', 0),
+(2, 1, 20, 0, 20, ':o What an accomplishment', '2018-12-12', '22:11:31', 0),
+(3, 0, 20, 2, 1, 'Event post', '2018-12-12', '23:02:02', 0),
+(4, 0, 20, 0, 21, 'Hello Kim!', '2018-12-12', '23:14:02', 0),
+(5, 4, 20, 0, 21, 'Replying on Kim\'s wall', '2018-12-12', '23:14:35', 0),
+(6, 0, 22, 0, 22, 'Is this working?', '2018-12-12', '23:35:11', 0),
+(7, 0, 22, 0, 20, 'Hey kyle!', '2018-12-12', '23:35:26', 0),
+(8, 0, 23, 0, 20, ':o', '2018-12-12', '23:36:06', 0),
+(9, 0, 21, 0, 21, 'My own post', '2018-12-12', '23:58:17', 0),
+(10, 0, 22, 2, 1, 'This tournament will be hype!', '2018-12-13', '00:08:17', 0),
+(11, 0, 24, 0, 24, 'Hey there', '2018-12-13', '08:18:37', 0),
+(12, 11, 24, 0, 24, 'Hey Hey there', '2018-12-13', '08:18:47', 0),
+(13, 0, 24, 0, 20, 'Hey kChang', '2018-12-13', '08:19:21', 0);
 
 -- --------------------------------------------------------
 
@@ -553,15 +451,10 @@ CREATE TABLE `post_votes` (
 --
 
 INSERT INTO `post_votes` (`voter_id`, `voted_id`, `value`) VALUES
-(1, 26, 1),
-(1, 24, 1),
-(1, 74, 1),
-(1, 64, 1),
-(1, 56, 1),
-(1, 78, 1),
-(1, 79, 1),
-(1, 87, 1),
-(1, 89, 1);
+(20, 1, 1),
+(22, 7, 1),
+(24, 12, 1),
+(20, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -584,15 +477,6 @@ CREATE TABLE `settings` (
   `owner_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `settings`
---
-
-INSERT INTO `settings` (`owner_id`) VALUES
-(1),
-(2),
-(3);
-
 -- --------------------------------------------------------
 
 --
@@ -614,10 +498,7 @@ CREATE TABLE `tournaments` (
 --
 
 INSERT INTO `tournaments` (`tournament_id`, `host_event_id`, `tournament_name`, `tournament_date`, `tournament_time`, `started`, `twitch_stream`) VALUES
-(5, 28, 'New Tournament', '2018-10-28', '15:30:00', 1, ''),
-(6, 30, 'Tournament Arc', '2018-11-15', '19:00:00', 0, ''),
-(7, 29, 'TOURNAMENT ARC EP 2', '2018-11-13', '18:00:00', 0, ''),
-(8, 31, '222', '2222-02-22', '14:22:00', 1, 'twitchplayspokemon');
+(1, 1, 'Christmas Eve Tournament', '2018-12-24', '18:00:00', 1, 'twitchplayspokemon');
 
 -- --------------------------------------------------------
 
@@ -640,15 +521,10 @@ CREATE TABLE `tournament_matches` (
 --
 
 INSERT INTO `tournament_matches` (`match_id`, `tournament_id`, `relative_match_id`, `round`, `winner`, `participant_1_id`, `participant_2_id`) VALUES
-(1, 5, 1, 1, 1, 1, 2),
-(2, 5, 2, 1, 0, 3, 4),
-(3, 5, 1, 3, 0, NULL, 5),
-(4, 5, 1, 2, 0, 1, NULL),
-(13, 8, 1, 1, 3, 3, 5),
-(14, 8, 2, 1, 1, 1, 2),
-(15, 8, 1, 3, 1, 1, 4),
-(16, 8, 1, 2, 1, 3, 1),
-(17, 8, 0, 0, 0, 1, NULL);
+(1, 1, 1, 1, 22, 22, 23),
+(2, 1, 2, 1, 20, 20, 21),
+(3, 1, 1, 2, 20, 22, 20),
+(4, 1, 0, 0, 0, 20, NULL);
 
 -- --------------------------------------------------------
 
@@ -667,17 +543,10 @@ CREATE TABLE `tournament_participants` (
 --
 
 INSERT INTO `tournament_participants` (`tournament_id`, `participant_id`, `ordering`) VALUES
-(5, 1, 1),
-(5, 2, 2),
-(5, 3, 3),
-(5, 4, 4),
-(5, 5, 5),
-(6, 1, 1),
-(8, 2, 4),
-(8, 3, 1),
-(8, 1, 3),
-(8, 4, 5),
-(8, 5, 2);
+(1, 20, 3),
+(1, 21, 4),
+(1, 23, 2),
+(1, 22, 1);
 
 -- --------------------------------------------------------
 
@@ -702,78 +571,21 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `creation_date`, `posts_articles`, `online`) VALUES
-(1, 'doom_mood@mail.com', 'alpha', 'alpha', 'neo', 'alpha', '2018-08-12', 1, 0),
-(2, 'beta@mail.com', 'bob', 'ateb', 'Bet', 'A', '2018-08-12', 1, 0),
-(3, 'charlie@mail.com', 'Charlie', 'Eilrahc', 'Char', 'Lie', '2018-08-12', 1, 0),
-(4, 'delta@mail.com', 'delta', 'atled', 'Del', 'Ta', '2018-08-13', 0, 0),
-(5, 'echo@mail.com', 'echo', 'ohce', 'Ech', 'O', '2018-08-13', 0, 0),
-(6, 'foxtrot@mail.com', 'foxtrot', 'tortxof', 'Fox', 'Trot', '2018-08-13', 0, 0),
-(7, 'gamma@mail.com', 'gamma', 'ammag', 'Gam', 'Ma', '2018-08-13', 0, 0),
-(8, 'golf@mail.com', 'golf', 'flog', 'Gol', 'F', '2018-08-13', 0, 0),
-(9, 'hotel@mail.com', 'hotel', 'letoh', 'Ho', 'Tel', '2018-08-13', 0, 0),
-(10, 'india@mail.com', 'india', 'aidni', 'Ind', 'Ia', '2018-08-13', 0, 0),
-(13, 'abc@mail.com', 'abc', 'cba', 'ab', 'c', '2018-08-19', 0, 0),
-(14, 'bub@mail.com', 'bub', 'bub', 'bub', 'bub', '2018-09-09', 0, 0),
-(17, 'new@mail.com', 'new', 'new', 'new', 'new', '2018-11-17', 0, 0),
-(18, 'another@mail.com', 'another', 'another', 'Anthony', 'Theo', '2018-11-17', 0, 0),
-(19, 'new_user@mail.com', 'new_user', 'new_user', 'new', 'user', '2018-11-20', 0, 0);
+(20, 'kChang@mail.com', 'alpha', 'password', 'Kyle', 'Chang', '2018-12-12', 0, 0),
+(21, 'kKim@mail.com', 'kKim', 'password', 'Kevin', 'Kim', '2018-12-12', 0, 0),
+(22, 'dWong@mail.com', 'dWong', 'password', 'Deryck', 'Wong', '2018-12-12', 0, 0),
+(23, 'sahmed@mail.com', 'sAhmed', 'password', 'Saif', 'Ahmed', '2018-12-12', 0, 0),
+(24, 'tester@mail', 'tester', 'password', 'Test', 'Era', '2018-12-13', 0, 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `advertisements`
---
-ALTER TABLE `advertisements`
-  ADD PRIMARY KEY (`ad_id`);
-
---
--- Indexes for table `attendees`
---
-ALTER TABLE `attendees`
-  ADD KEY `attendee_id` (`attendee_id`),
-  ADD KEY `attended_event_id` (`attended_event_id`);
-
---
--- Indexes for table `bug_list`
---
-ALTER TABLE `bug_list`
-  ADD PRIMARY KEY (`bug_id`),
-  ADD KEY `reporter_id` (`reporter_id`);
-
---
 -- Indexes for table `chat_groups`
 --
 ALTER TABLE `chat_groups`
   ADD PRIMARY KEY (`chat_id`);
-
---
--- Indexes for table `chat_group_members`
---
-ALTER TABLE `chat_group_members`
-  ADD KEY `chat_id` (`chat_id`),
-  ADD KEY `chat_member_id` (`chat_member_id`);
-
---
--- Indexes for table `chat_group_messages`
---
-ALTER TABLE `chat_group_messages`
-  ADD PRIMARY KEY (`chat_message_id`),
-  ADD KEY `chat_writer_id` (`chat_writer_id`),
-  ADD KEY `chat_group_id` (`chat_id`);
-
---
--- Indexes for table `esports`
---
-ALTER TABLE `esports`
-  ADD PRIMARY KEY (`esport_id`,`esport_name`);
-
---
--- Indexes for table `esport_articles`
---
-ALTER TABLE `esport_articles`
-  ADD PRIMARY KEY (`article_id`);
 
 --
 -- Indexes for table `events`
@@ -785,9 +597,7 @@ ALTER TABLE `events`
 -- Indexes for table `friendships`
 --
 ALTER TABLE `friendships`
-  ADD PRIMARY KEY (`friendship_id`),
-  ADD KEY `friend_id_1` (`friend_id_1`),
-  ADD KEY `friend_id_2` (`friend_id_2`);
+  ADD PRIMARY KEY (`friendship_id`);
 
 --
 -- Indexes for table `groups`
@@ -877,126 +687,62 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `advertisements`
---
-ALTER TABLE `advertisements`
-  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `bug_list`
---
-ALTER TABLE `bug_list`
-  MODIFY `bug_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `chat_groups`
 --
 ALTER TABLE `chat_groups`
-  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `chat_group_messages`
---
-ALTER TABLE `chat_group_messages`
-  MODIFY `chat_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `esports`
---
-ALTER TABLE `esports`
-  MODIFY `esport_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `esport_articles`
---
-ALTER TABLE `esport_articles`
-  MODIFY `article_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `friendships`
 --
 ALTER TABLE `friendships`
-  MODIFY `friendship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `friendship_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tournaments`
 --
 ALTER TABLE `tournaments`
-  MODIFY `tournament_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `tournament_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tournament_matches`
 --
 ALTER TABLE `tournament_matches`
-  MODIFY `match_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `match_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `attendees`
---
-ALTER TABLE `attendees`
-  ADD CONSTRAINT `attended_event_id` FOREIGN KEY (`attended_event_id`) REFERENCES `events` (`event_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `attendee_id` FOREIGN KEY (`attendee_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `bug_list`
---
-ALTER TABLE `bug_list`
-  ADD CONSTRAINT `reporter_id` FOREIGN KEY (`reporter_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `chat_group_members`
---
-ALTER TABLE `chat_group_members`
-  ADD CONSTRAINT `chat_id` FOREIGN KEY (`chat_id`) REFERENCES `chat_groups` (`chat_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `chat_member_id` FOREIGN KEY (`chat_member_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `chat_group_messages`
---
-ALTER TABLE `chat_group_messages`
-  ADD CONSTRAINT `chat_group_id` FOREIGN KEY (`chat_id`) REFERENCES `chat_groups` (`chat_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `chat_writer_id` FOREIGN KEY (`chat_writer_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `friendships`
---
-ALTER TABLE `friendships`
-  ADD CONSTRAINT `friend_id_1` FOREIGN KEY (`friend_id_1`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `friend_id_2` FOREIGN KEY (`friend_id_2`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `group_events`
